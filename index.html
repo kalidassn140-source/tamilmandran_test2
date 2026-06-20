@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>தமிழ் மன்றம் | Tamil Mandiram</title>
+<title>தமிழ் மன்றம் | Tamil Mandram</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Tamil:wght@400;600;700&family=Noto+Sans+Tamil:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -240,12 +240,12 @@ option{background:#181210;color:#F0E8D8}
 <section class="hero" id="top">
   <div class="logo-circle" id="logo-circle">
     <div class="logo-fallback" id="logo-fallback">🪔</div>
-    <img src="assets/logo.png" alt="Tamil Mandiram Logo" id="logo-img"
+    <img src="assets/logo.png" alt="Tamil Mandram Logo" id="logo-img"
          onload="document.getElementById('logo-fallback').style.display='none'"
          onerror="this.style.display='none'">
   </div>
   <h1 class="hero-title">தமிழ் மன்றம்</h1>
-  <p class="hero-en">Tamil Mandiram</p>
+  <p class="hero-en">Tamil Mandram</p>
   <div class="kural-wrap">
     <p class="kural-ta">நன்றி மறப்பது நன்றன்று — நன்றல்லது<br>அன்றே மறப்பது நன்று</p>
     <p class="kural-lbl">திருக்குறள் — Thirukkural, Kural 108</p>
@@ -458,7 +458,7 @@ option{background:#181210;color:#F0E8D8}
   <div class="reg-wrap">
     <div class="reg-head">
       <h2>தமிழனாய் பதிவுசெய்</h2>
-      <p>Register as a Tamil Mandiram Member</p>
+      <p>Register as a Tamil Mandram Member</p>
     </div>
     <div class="reg-body">
       <div class="row2">
@@ -501,7 +501,7 @@ option{background:#181210;color:#F0E8D8}
       <div class="cert-top-line"></div>
       <div class="cert-frame">
         <p class="cert-org">தமிழ் மன்றம்</p>
-        <p class="cert-sub">TAMIL MANDIRAM</p>
+        <p class="cert-sub">TAMIL Mandram</p>
         <div class="seal-row"><div class="seal" id="seal-wrap">
           <span id="seal-emoji-fb" style="position:absolute;font-size:1.8rem;z-index:0">🪔</span>
           <img src="assets/seal.png" alt="Seal"
@@ -546,11 +546,11 @@ option{background:#181210;color:#F0E8D8}
 
 <footer>
   <div class="ft-grid">
-    <div class="ft-brand"><h3>தமிழ் மன்றம்</h3><p>Tamil Mandiram<br>தமிழை நேசிப்போருக்கான கலம்</p></div>
+    <div class="ft-brand"><h3>தமிழ் மன்றம்</h3><p>Tamil Mandram<br>தமிழை நேசிப்போருக்கான கலம்</p></div>
     <div class="ft-col"><h4>தொடர்பு / Contact</h4>
       <a href="tel:+919876543210"><span class="ft-icon">📞</span>+91 98765 43210</a>
-      <a href="mailto:tamilmandiram@gmail.com"><span class="ft-icon">✉️</span>tamilmandiram@gmail.com</a>
-      <a href="https://t.me/tamilmandiram" target="_blank"><span class="ft-icon">✈️</span>Telegram Channel</a>
+      <a href="mailto:tamilMandram@gmail.com"><span class="ft-icon">✉️</span>tamilMandram@gmail.com</a>
+      <a href="https://t.me/tamilMandram" target="_blank"><span class="ft-icon">✈️</span>Telegram Channel</a>
       <a href="https://wa.me/919876543210" target="_blank"><span class="ft-icon">💬</span>WhatsApp Group</a>
     </div>
     <div class="ft-col"><h4>இணைப்புகள்</h4><a href="#culture"><span class="ft-icon">🏛️</span>தமிழ் பாரம்பரியம்</a><a href="#register"><span class="ft-icon">📝</span>பதிவு செய்க</a></div>
@@ -996,7 +996,7 @@ async function submitForm(){
 
   // Send Telegram notification
   if(CONFIG.TELEGRAM_BOT_TOKEN && CONFIG.TELEGRAM_BOT_TOKEN !== 'YOUR_BOT_TOKEN_HERE'){
-    const msg=`🪔 *New Tamil Mandiram Member!*\n\n👤 *Name:* ${nen} | ${nta}\n🎓 *Education:* ${edu}\n🏙 *City:* ${city}\n📞 *Phone:* ${phone}\n📧 *Email:* ${email}\n🎭 *Talents:* ${member.talents}\n📅 ${member.timestamp}`;
+    const msg=`🪔 *New Tamil Mandram Member!*\n\n👤 *Name:* ${nen} | ${nta}\n🎓 *Education:* ${edu}\n🏙 *City:* ${city}\n📞 *Phone:* ${phone}\n📧 *Email:* ${email}\n🎭 *Talents:* ${member.talents}\n📅 ${member.timestamp}`;
     try{
       await fetch(`https://api.telegram.org/bot${CONFIG.TELEGRAM_BOT_TOKEN}/sendMessage`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chat_id:CONFIG.TELEGRAM_CHAT_ID,text:msg,parse_mode:'Markdown'})});
       telegramOk=true;
@@ -1605,7 +1605,7 @@ function runCertDownload(btn, origText) {
         // never inserted into the DOM, which produced silent failures
         // (or a blank about:blank tab via the old window.open() fallback).
         var link = document.createElement('a');
-        link.download = 'TamilMandiram_Certificate_' + memberName + '.png';
+        link.download = 'TamilMandram_Certificate_' + memberName + '.png';
         link.href = dataUrl;
         link.style.display = 'none';
         document.body.appendChild(link);
