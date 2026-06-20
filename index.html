@@ -550,8 +550,8 @@ option{background:#181210;color:#F0E8D8}
     <div class="ft-col"><h4>தொடர்பு / Contact</h4>
       <a href="tel:+919876543210"><span class="ft-icon">📞</span>+91 98765 43210</a>
       <a href="mailto:tamilMandram@gmail.com"><span class="ft-icon">✉️</span>tamilMandram@gmail.com</a>
-      <a href="https://t.me/tamilMandram" target="_blank"><span class="ft-icon">✈️</span>Telegram Channel</a>
-      <a href="https://wa.me/919876543210" target="_blank"><span class="ft-icon">💬</span>WhatsApp Group</a>
+      <a href="https://t.me/tamilmandran" target="_blank"><span class="ft-icon">✈️</span>Telegram Channel</a>
+      <a href="https://chat.whatsapp.com/GzBMmrqHzkoEYSjThITJkN" target="_blank"><span class="ft-icon">💬</span>WhatsApp Group</a>
     </div>
     <div class="ft-col"><h4>இணைப்புகள்</h4><a href="#culture"><span class="ft-icon">🏛️</span>தமிழ் பாரம்பரியம்</a><a href="#register"><span class="ft-icon">📝</span>பதிவு செய்க</a></div>
   </div>
@@ -987,7 +987,7 @@ async function submitForm(){
   let googleOk=false,telegramOk=false;
 
   // Send to Google Sheets
-  if(CONFIG.GOOGLE_SCRIPT_URL && CONFIG.GOOGLE_SCRIPT_URL !== 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE'){
+  if(CONFIG.GOOGLE_SCRIPT_URL && CONFIG.GOOGLE_SCRIPT_URL !== 'https://script.google.com/macros/s/AKfycbwGR_3D4MAp8WBMZoHLKkJq82UnULEOvWD331G3skIUbVj_bdQt_WTgwnw5mXHlMbDk/execYOUR_GOOGLE_APPS_SCRIPT_URL_HERE'){
     try{
       await fetch(CONFIG.GOOGLE_SCRIPT_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(member),mode:'no-cors'});
       googleOk=true;
