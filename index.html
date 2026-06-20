@@ -1,0 +1,1706 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>தமிழ் மன்றம் | Tamil Mandiram</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Tamil:wght@400;600;700&family=Noto+Sans+Tamil:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--saffron:#C8410B;--maroon:#6B1A1A;--gold:#B8860B;--stone:#F5F0E8;--dark:#1A1410;--text:#2C1F0F;--muted:#7A6855;--border:#D4C4A8;--light:#FDFAF4}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--light);color:var(--text);overflow-x:hidden}
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:4rem 1.5rem 5rem;background:radial-gradient(ellipse 90% 60% at 50% 0%,rgba(200,65,11,.07),transparent 68%),var(--light);position:relative}
+.hero::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--saffron),var(--gold),var(--saffron))}
+.logo-circle{width:100px;height:100px;border-radius:50%;border:2px solid var(--border);position:relative;background:var(--stone);margin-bottom:1.5rem;overflow:hidden;flex-shrink:0}
+.logo-circle img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:50%;display:block}
+.logo-circle .logo-fallback{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:3rem;background:var(--stone)}
+.hero-title{font-family:'Noto Serif Tamil',serif;font-size:clamp(2.8rem,9vw,5rem);font-weight:700;color:var(--saffron);line-height:1.1}
+.hero-en{font-size:.85rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-top:.3rem}
+.kural-wrap{margin:2rem auto;max-width:520px;border-left:3px solid var(--saffron);padding:1rem 1.5rem;text-align:left;background:rgba(200,65,11,.04);border-radius:0 8px 8px 0}
+.kural-ta{font-family:'Noto Serif Tamil',serif;font-size:1.1rem;color:var(--maroon);line-height:2;font-weight:600}
+.kural-lbl{font-size:.72rem;color:var(--muted);margin-top:.3rem;letter-spacing:.08em}
+.hero-tagline{font-family:'Noto Sans Tamil',sans-serif;font-size:.95rem;color:var(--muted);line-height:1.7;margin-bottom:2.5rem;max-width:440px}
+.btn-primary{display:inline-block;padding:1rem 2.5rem;background:var(--saffron);color:#fff;font-family:'Noto Sans Tamil',sans-serif;font-size:1.05rem;font-weight:600;border:none;border-radius:6px;cursor:pointer;letter-spacing:.03em;transition:background .2s,transform .15s;box-shadow:0 4px 22px rgba(200,65,11,.28)}
+.btn-primary:hover{background:#A8340A;transform:translateY(-2px)}
+.scroll-hint{position:absolute;bottom:1.5rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:5px;color:var(--muted);font-size:.72rem;letter-spacing:.1em;animation:bob 2s infinite}
+@keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(7px)}}
+.section{padding:5rem 1.5rem}.section.alt{background:#fff}
+.eyebrow{text-align:center;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--saffron);margin-bottom:.5rem}
+.sec-title{font-family:'Noto Serif Tamil',serif;font-size:1.9rem;color:var(--maroon);text-align:center;margin-bottom:.5rem;font-weight:700}
+.sec-sub{text-align:center;font-size:.9rem;color:var(--muted);max-width:480px;margin:0 auto 2.5rem;line-height:1.7}
+.tabs{display:flex;justify-content:center;gap:.6rem;flex-wrap:wrap;margin-bottom:2rem}
+.tab{padding:.4rem 1rem;border:1px solid var(--border);border-radius:30px;background:transparent;font-family:'Noto Sans Tamil',sans-serif;font-size:.8rem;color:var(--muted);cursor:pointer;transition:all .2s}
+.tab.on,.tab:hover{background:var(--saffron);color:#fff;border-color:var(--saffron)}
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.1rem;max-width:1200px;margin:0 auto}
+.c-card{border:1px solid var(--border);border-radius:12px;overflow:hidden;cursor:pointer;transition:transform .2s,box-shadow .2s;background:#fff}
+.c-card:hover{transform:translateY(-4px);box-shadow:0 12px 36px rgba(0,0,0,.1)}
+.c-img{width:100%;height:170px;display:flex;align-items:center;justify-content:center;font-size:4rem;background:var(--stone);position:relative;overflow:hidden}
+.c-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.c-img-overlay{position:absolute;bottom:0;left:0;right:0;height:55%;background:linear-gradient(transparent,rgba(107,26,26,.55));pointer-events:none}
+.c-body{padding:1rem}
+.c-era{font-size:.68rem;letter-spacing:.13em;text-transform:uppercase;color:var(--saffron);margin-bottom:.3rem}
+.c-name{font-family:'Noto Serif Tamil',serif;font-size:1rem;font-weight:700;color:var(--maroon);margin-bottom:.35rem}
+.c-brief{font-size:.82rem;line-height:1.6;color:var(--muted);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.c-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:.6rem}
+.c-tag{font-size:.68rem;padding:2px 8px;background:var(--stone);color:var(--muted);border-radius:20px;border:1px solid var(--border)}
+.c-more{font-size:.75rem;color:var(--saffron);margin-top:.5rem;font-weight:500}
+.detail-overlay{display:none;position:fixed;inset:0;background:rgba(26,20,16,.82);z-index:800;align-items:flex-start;justify-content:center;padding:1.5rem;overflow-y:auto}
+.detail-overlay.show{display:flex}
+.detail-panel{background:#fff;border-radius:16px;max-width:700px;width:100%;margin:auto;animation:slideUp .3s ease;overflow:hidden}
+@keyframes slideUp{from{transform:translateY(30px);opacity:0}to{transform:translateY(0);opacity:1}}
+.dp-header{position:relative;height:240px;background:var(--stone);display:flex;align-items:flex-end;overflow:hidden}
+.dp-header-bg{position:absolute;inset:0;font-size:8rem;display:flex;align-items:center;justify-content:center;opacity:.2}
+.dp-header-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.dp-header-grad{position:absolute;bottom:0;left:0;right:0;height:60%;background:linear-gradient(transparent,rgba(26,20,16,.85))}
+.dp-header-text{position:relative;z-index:2;padding:1.5rem}
+.dp-era-badge{display:inline-block;padding:3px 10px;background:var(--saffron);color:#fff;font-size:.7rem;border-radius:20px;margin-bottom:.4rem}
+.dp-title{font-family:'Noto Serif Tamil',serif;font-size:1.5rem;font-weight:700;color:#fff;line-height:1.2}
+.dp-close{position:absolute;top:1rem;right:1rem;z-index:3;width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,.5);border:none;color:#fff;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s}
+.dp-close:hover{background:rgba(200,65,11,.8)}
+.dp-body{padding:1.5rem}
+.dp-section{font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin:1rem 0 .5rem;font-weight:600}
+.dp-text{font-size:.92rem;line-height:1.75;color:var(--text)}
+.dp-facts{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:.6rem;margin:.75rem 0}
+.dp-fact{background:var(--stone);border-radius:8px;padding:.65rem .9rem;border:1px solid var(--border)}
+.dp-fact-key{font-size:.68rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.2rem}
+.dp-fact-val{font-size:.88rem;font-weight:600;color:var(--maroon)}
+.reg-wrap{max-width:760px;margin:0 auto;background:#fff;border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:0 4px 40px rgba(0,0,0,.07)}
+.reg-head{background:linear-gradient(135deg,var(--saffron),var(--maroon));padding:2.5rem 2rem;text-align:center;color:#fff}
+.reg-head h2{font-family:'Noto Serif Tamil',serif;font-size:1.8rem;font-weight:700;margin-bottom:.35rem}
+.reg-head p{font-size:.88rem;opacity:.88;line-height:1.6}
+.reg-body{padding:2rem}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+@media(max-width:520px){.row2{grid-template-columns:1fr}}
+.fg{margin-bottom:1rem}
+.lbl{display:block;font-size:.8rem;font-weight:600;color:var(--text);margin-bottom:.35rem}
+.req{color:var(--saffron)}
+.hint{font-weight:400;color:var(--muted);font-size:.75rem}
+input,select,textarea{width:100%;padding:.65rem .9rem;border:1.5px solid var(--border);border-radius:7px;font-family:'Inter',sans-serif;font-size:.9rem;color:var(--text);background:#fff;transition:border-color .2s,box-shadow .2s;outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--saffron);box-shadow:0 0 0 3px rgba(200,65,11,.1)}
+input.err,select.err,textarea.err{border-color:#E24B4A}
+.err-msg{font-size:.75rem;color:#E24B4A;margin-top:.3rem;display:none}
+.err-msg.show{display:block}
+.ta-f{font-family:'Noto Sans Tamil',sans-serif}
+.cond{display:none;margin-top:.75rem;padding:1rem;background:var(--stone);border-radius:8px;border:1px solid var(--border)}
+.cond.show{display:block}
+.talent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(185px,1fr));gap:.5rem;margin-bottom:.75rem}
+.ti{display:flex;align-items:center;gap:.55rem;padding:.55rem .75rem;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;transition:all .15s;background:#fff;user-select:none}
+.ti:hover,.ti.on{border-color:var(--saffron);background:rgba(200,65,11,.05)}
+.cb{width:18px;height:18px;border:2px solid var(--border);border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:11px;font-weight:700;color:#fff;transition:all .15s}
+.ti.on .cb{background:var(--saffron);border-color:var(--saffron)}
+.tl-ta{font-family:'Noto Sans Tamil',sans-serif;font-size:.82rem;color:var(--text)}
+.tl-en{font-size:.68rem;color:var(--muted)}
+.others-box{display:none;margin-top:.6rem}.others-box.show{display:block}
+.ack-box{background:rgba(200,65,11,.04);border:1px solid rgba(200,65,11,.2);border-radius:10px;padding:1.2rem;margin:1.25rem 0}
+.ack-text{font-size:.82rem;line-height:1.75;color:var(--muted);margin-bottom:.85rem}
+.ack-row{display:flex;align-items:flex-start;gap:.65rem;cursor:pointer}
+.ack-cb{width:20px;height:20px;flex-shrink:0;margin-top:2px;border:2px solid var(--border);border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:12px;color:#fff;font-weight:700;transition:all .15s}
+.ack-cb.on{background:var(--saffron);border-color:var(--saffron)}
+.ack-lbl{font-size:.84rem;color:var(--text);line-height:1.5}
+.btn-sub{width:100%;padding:1rem;background:var(--saffron);color:#fff;font-family:'Noto Sans Tamil',sans-serif;font-size:1rem;font-weight:600;border:none;border-radius:8px;cursor:pointer;transition:background .2s,transform .15s;margin-top:.5rem}
+.btn-sub:hover{background:#A8340A;transform:translateY(-1px)}
+.submit-status{text-align:center;padding:.75rem;border-radius:7px;font-size:.85rem;margin-top:.75rem;display:none}
+.submit-status.sending{display:block;background:var(--stone);color:var(--muted)}
+.submit-status.ok{display:block;background:rgba(74,154,74,.1);color:#3A7A3A;border:1px solid rgba(74,154,74,.3)}
+.submit-status.fail{display:block;background:rgba(196,64,64,.08);color:#C44040;border:1px solid rgba(196,64,64,.2)}
+.overlay{display:none;position:fixed;inset:0;background:rgba(26,20,16,.85);z-index:900;align-items:center;justify-content:center;padding:1.5rem;overflow-y:auto}
+.overlay.show{display:flex}
+.cert-modal{background:#fff;border-radius:16px;max-width:520px;width:100%;overflow:hidden;animation:pop .3s ease;margin:auto}
+@keyframes pop{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
+.cert-card{background:linear-gradient(150deg,#4A0A0A 0%,#2D0808 50%,#6B1A1A 100%);padding:2.5rem 2rem;text-align:center;position:relative;overflow:hidden}
+.cert-card::before{content:'';position:absolute;top:-60px;right:-60px;width:210px;height:210px;border-radius:50%;border:2px solid rgba(184,134,11,.25)}
+.cert-card::after{content:'';position:absolute;bottom:-45px;left:-45px;width:150px;height:150px;border-radius:50%;border:2px solid rgba(184,134,11,.18)}
+.cert-top-line{height:3px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin-bottom:1.5rem}
+.cert-frame{border:1px solid rgba(184,134,11,.35);border-radius:8px;padding:1.5rem;position:relative;z-index:1}
+.cert-org{font-family:'Noto Serif Tamil',serif;font-size:1.65rem;font-weight:700;color:#F5D78E;letter-spacing:.03em;margin-bottom:.2rem}
+.cert-sub{font-family:'Noto Sans Tamil',sans-serif;font-size:.78rem;color:rgba(245,215,142,.6);margin-bottom:.8rem}
+.seal-row{display:flex;justify-content:center;margin:.8rem 0}
+.seal{width:72px;height:72px;border-radius:50%;border:3px solid var(--gold);position:relative;background:rgba(184,134,11,.12);overflow:hidden;display:flex;align-items:center;justify-content:center}
+.seal img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.seal-placeholder{font-size:1.8rem}
+.cert-kural{font-family:'Noto Serif Tamil',serif;font-size:.85rem;color:rgba(245,215,142,.5);margin:.8rem 0;line-height:1.8;font-style:italic}
+.cert-div{width:55px;height:1.5px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:.8rem auto}
+.cert-issued{font-size:.7rem;color:rgba(245,215,142,.45);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.4rem}
+.cert-name{font-family:'Noto Serif Tamil',serif;font-size:1.9rem;font-weight:700;color:#fff;margin-bottom:.4rem}
+.cert-mem{font-size:.82rem;color:rgba(255,255,255,.68);line-height:1.6}
+.cert-yr{color:#F5D78E;font-weight:600}
+.cert-div2{width:120px;height:1px;background:linear-gradient(90deg,transparent,rgba(184,134,11,.4),transparent);margin:1rem auto}
+.sig-row{display:flex;justify-content:center;align-items:flex-end;gap:2.5rem;margin-top:.75rem;flex-wrap:wrap}
+.sig-block{display:flex;flex-direction:column;align-items:center;gap:4px}
+.sig-img{height:44px;max-width:120px;object-fit:contain;opacity:.88}
+.sig-line-small{width:100px;height:1px;background:rgba(245,215,142,.35)}
+.sig-label{font-size:.62rem;color:rgba(245,215,142,.45);letter-spacing:.08em;text-transform:uppercase}
+.cert-bottom-line{height:3px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin-top:1.5rem}
+.cert-foot{padding:1.25rem 2rem;text-align:center}
+.cert-foot p{font-size:.84rem;color:var(--muted);margin-bottom:.9rem;line-height:1.5}
+.btn-close-cert{padding:.55rem 1.4rem;border:1px solid var(--border);border-radius:6px;background:transparent;color:var(--text);font-size:.88rem;cursor:pointer;transition:background .15s}
+.btn-close-cert:hover{background:var(--stone)}
+footer{background:var(--dark);color:rgba(255,255,255,.8);padding:4rem 1.5rem 0}
+.ft-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:2rem;max-width:1000px;margin:0 auto 3rem}
+.ft-brand h3{font-family:'Noto Serif Tamil',serif;font-size:1.3rem;color:#F5D78E;font-weight:700;margin-bottom:.4rem}
+.ft-brand p{font-size:.8rem;opacity:.55;line-height:1.7}
+.ft-col h4{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:.9rem}
+.ft-col a{display:flex;align-items:center;gap:.45rem;font-size:.84rem;color:rgba(255,255,255,.6);text-decoration:none;margin-bottom:.55rem;transition:color .15s}
+.ft-col a:hover{color:#fff}
+.ft-icon{font-size:.75rem;background:rgba(255,255,255,.07);width:26px;height:26px;border-radius:5px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.admin-strip{max-width:1000px;margin:0 auto;border-top:1px solid rgba(255,255,255,.07);padding:1rem 0;display:flex;justify-content:flex-end}
+.admin-link{font-size:.72rem;color:rgba(255,255,255,.18);text-decoration:none;display:flex;align-items:center;gap:.35rem;transition:color .2s}
+.admin-link:hover{color:rgba(255,255,255,.45)}
+.ft-disclaimer{max-width:1000px;margin:0 auto;border-top:1px solid rgba(255,255,255,.05);padding:1.25rem 0 1.5rem}
+.disclaimer{font-size:.62rem;color:rgba(255,255,255,.22);line-height:1.9}
+
+/* ══ STUDENT CREATIVITY PANEL ══ */
+.sp-section{padding:5rem 1.5rem;background:var(--dark)}
+.sp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.1rem;max-width:1200px;margin:0 auto}
+.sp-card{background:#211A12;border:1px solid #3D2E1E;border-radius:12px;overflow:hidden;cursor:pointer;transition:transform .2s,box-shadow .2s}
+.sp-card:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,.5)}
+.sp-card-top{padding:1.1rem 1.1rem .6rem}
+.sp-avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--saffron),var(--maroon));display:flex;align-items:center;justify-content:center;font-family:'Noto Serif Tamil',serif;font-weight:700;color:#fff;font-size:1.1rem;flex-shrink:0}
+.sp-author{font-size:.88rem;font-weight:600;color:#F0E8D8}
+.sp-tag{font-size:.68rem;padding:2px 8px;background:rgba(200,65,11,.2);color:#E8874A;border-radius:20px;border:1px solid rgba(200,65,11,.3)}
+.sp-title{font-family:'Noto Serif Tamil',serif;font-size:1rem;font-weight:700;color:#F5D78E;margin:.55rem 0 .35rem;line-height:1.4}
+.sp-preview{font-size:.83rem;color:#8A7560;line-height:1.65;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.sp-card-bottom{padding:.6rem 1.1rem .9rem;display:flex;align-items:center;justify-content:space-between;border-top:1px solid #3D2E1E;margin-top:.6rem}
+.sp-likes{display:flex;align-items:center;gap:.35rem;font-size:.82rem;color:#8A7560;cursor:pointer;transition:color .15s;user-select:none}
+.sp-likes:hover,.sp-likes.liked{color:#E8874A}
+.sp-likes.liked .sp-heart{filter:none}
+.sp-heart{font-size:.95rem}
+.sp-comments-count{font-size:.78rem;color:#8A7560;display:flex;align-items:center;gap:.3rem}
+.sp-date{font-size:.7rem;color:#5A4A38}
+
+/* ── QUICK PREVIEW BANNER (1st click) ── */
+.sp-quick-banner{position:fixed;top:1.25rem;left:50%;transform:translateX(-50%) translateY(-16px);max-width:480px;width:calc(100% - 2.5rem);background:#211A12;border:1px solid var(--gold);border-radius:12px;padding:1rem 1.1rem;box-shadow:0 16px 50px rgba(0,0,0,.55);z-index:900;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .25s ease,transform .25s ease}
+.sp-quick-banner.show{opacity:1;transform:translateX(-50%) translateY(0);pointer-events:auto}
+.sp-quick-banner-head{display:flex;align-items:center;gap:.6rem;margin-bottom:.5rem;padding-right:1.5rem}
+.sp-quick-banner-close{position:absolute;top:.6rem;right:.7rem;width:24px;height:24px;border-radius:50%;background:rgba(0,0,0,.35);border:none;color:#8A7560;font-size:.78rem;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.sp-quick-banner-close:hover{background:rgba(200,65,11,.6);color:#fff}
+.sp-quick-banner-title{font-family:'Noto Serif Tamil',serif;font-size:1rem;font-weight:700;color:#F5D78E;margin-bottom:.3rem;line-height:1.35}
+.sp-quick-banner-excerpt{font-size:.83rem;color:#C8B89A;line-height:1.6;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.sp-quick-banner-cta{font-size:.72rem;color:var(--saffron);margin-top:.55rem;font-weight:600;letter-spacing:.03em}
+
+/* ── STUDENT DETAIL MODAL ── */
+.sp-overlay{display:none;position:fixed;inset:0;background:rgba(10,7,4,.88);z-index:850;align-items:flex-start;justify-content:center;padding:1.5rem;overflow-y:auto}
+.sp-overlay.show{display:flex}
+.sp-modal{background:#181210;border:1px solid #3D2E1E;border-radius:16px;max-width:680px;width:100%;margin:auto;animation:slideUp .3s ease;overflow:hidden}
+.sp-modal-head{position:relative;background:linear-gradient(135deg,#2D0808,#4A1010);padding:2rem 1.75rem 1.5rem}
+.sp-modal-close{position:absolute;top:1rem;right:1rem;width:34px;height:34px;border-radius:50%;background:rgba(0,0,0,.4);border:none;color:#F0E8D8;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.sp-modal-close:hover{background:rgba(200,65,11,.6)}
+.sp-modal-type{font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:var(--saffron);margin-bottom:.35rem}
+.sp-modal-title{font-family:'Noto Serif Tamil',serif;font-size:1.4rem;font-weight:700;color:#F5D78E;line-height:1.3;margin-bottom:.75rem}
+.sp-modal-meta{display:flex;align-items:center;gap:.75rem;flex-wrap:wrap}
+.sp-modal-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--saffron),var(--maroon));display:flex;align-items:center;justify-content:center;font-family:'Noto Serif Tamil',serif;font-weight:700;color:#fff;font-size:.9rem;flex-shrink:0}
+.sp-modal-author{font-size:.88rem;font-weight:600;color:#F0E8D8}
+.sp-modal-date{font-size:.75rem;color:#5A4A38}
+.sp-modal-body{padding:1.5rem 1.75rem}
+.sp-modal-content{font-family:'Noto Sans Tamil',sans-serif;font-size:.95rem;line-height:2;color:#C8B89A;white-space:pre-wrap}
+.sp-modal-actions{display:flex;align-items:center;gap:1rem;padding:1rem 1.75rem;border-top:1px solid #3D2E1E}
+.sp-like-btn{display:flex;align-items:center;gap:.5rem;padding:.5rem 1.1rem;border:1px solid #3D2E1E;border-radius:30px;background:transparent;color:#8A7560;font-size:.88rem;cursor:pointer;transition:all .2s;font-family:'Noto Sans Tamil',sans-serif}
+.sp-like-btn:hover,.sp-like-btn.liked{border-color:var(--saffron);color:var(--saffron);background:rgba(200,65,11,.08)}
+.sp-like-count{font-weight:700}
+
+/* ── COMMENTS ── */
+.sp-comments-section{padding:0 1.75rem 1.5rem}
+.sp-comments-title{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:#B8860B;margin-bottom:.85rem;padding-bottom:.4rem;border-bottom:1px solid #3D2E1E}
+.sp-comment{display:flex;gap:.65rem;margin-bottom:.85rem}
+.sp-comment-avatar{width:30px;height:30px;border-radius:50%;background:#3D2E1E;display:flex;align-items:center;justify-content:center;font-size:.75rem;color:#8A7560;flex-shrink:0;margin-top:2px}
+.sp-comment-bubble{flex:1;background:#211A12;border:1px solid #3D2E1E;border-radius:0 8px 8px 8px;padding:.6rem .85rem}
+.sp-comment-name{font-size:.75rem;font-weight:600;color:#F5D78E;margin-bottom:.2rem}
+.sp-comment-text{font-size:.83rem;color:#C8B89A;line-height:1.6;font-family:'Noto Sans Tamil',sans-serif}
+.sp-comment-time{font-size:.67rem;color:#5A4A38;margin-top:.2rem}
+.sp-comment-input-row{display:flex;gap:.6rem;margin-top:.75rem}
+.sp-comment-input{flex:1;padding:.6rem .85rem;background:#0C0906;border:1px solid #3D2E1E;border-radius:7px;color:#F0E8D8;font-family:'Noto Sans Tamil',sans-serif;font-size:.85rem;outline:none;transition:border-color .2s}
+.sp-comment-input:focus{border-color:var(--gold)}
+.sp-comment-input::placeholder{color:#5A4A38}
+.sp-comment-submit{padding:.6rem 1rem;background:var(--saffron);color:#fff;border:none;border-radius:7px;font-size:.83rem;font-weight:600;cursor:pointer;white-space:nowrap;font-family:'Noto Sans Tamil',sans-serif;transition:background .15s}
+.sp-comment-submit:hover{background:#A8340A}
+.sp-no-comments{font-size:.83rem;color:#5A4A38;font-style:italic;margin-bottom:.75rem}
+
+/* ── ADD POST BUTTON ── */
+.sp-add-btn{display:inline-flex;align-items:center;gap:.6rem;padding:.75rem 1.75rem;background:transparent;border:1.5px solid #B8860B;color:#B8860B;border-radius:7px;font-family:'Noto Sans Tamil',sans-serif;font-size:.9rem;font-weight:600;cursor:pointer;transition:all .2s}
+.sp-add-btn:hover{background:rgba(184,134,11,.1)}
+
+/* ── ADD POST MODAL ── */
+.sp-add-overlay{display:none;position:fixed;inset:0;background:rgba(10,7,4,.9);z-index:870;align-items:center;justify-content:center;padding:1.5rem}
+.sp-add-overlay.show{display:flex}
+.sp-add-modal{background:#181210;border:1px solid #3D2E1E;border-radius:14px;max-width:540px;width:100%;padding:2rem;animation:pop .25s ease}
+.sp-add-modal h3{font-family:'Noto Serif Tamil',serif;color:#F5D78E;font-size:1.2rem;margin-bottom:1.25rem}
+.sp-field{margin-bottom:1rem}
+.sp-field label{display:block;font-size:.75rem;color:#8A7560;margin-bottom:.3rem;letter-spacing:.05em}
+.sp-field input,.sp-field select,.sp-field textarea{width:100%;padding:.6rem .85rem;background:#0C0906;border:1px solid #3D2E1E;border-radius:7px;color:#F0E8D8;font-family:'Noto Sans Tamil',sans-serif;font-size:.88rem;outline:none;transition:border-color .2s}
+.sp-field input:focus,.sp-field select:focus,.sp-field textarea:focus{border-color:var(--gold)}
+.sp-field textarea{resize:vertical;min-height:120px;line-height:1.7}
+.sp-field input::placeholder,.sp-field textarea::placeholder{color:#5A4A38}
+option{background:#181210;color:#F0E8D8}
+
+</style>
+</head>
+<body>
+
+<section class="hero" id="top">
+  <div class="logo-circle" id="logo-circle">
+    <div class="logo-fallback" id="logo-fallback">🪔</div>
+    <img src="assets/logo.png" alt="Tamil Mandiram Logo" id="logo-img"
+         onload="document.getElementById('logo-fallback').style.display='none'"
+         onerror="this.style.display='none'">
+  </div>
+  <h1 class="hero-title">தமிழ் மன்றம்</h1>
+  <p class="hero-en">Tamil Mandiram</p>
+  <div class="kural-wrap">
+    <p class="kural-ta">நன்றி மறப்பது நன்றன்று — நன்றல்லது<br>அன்றே மறப்பது நன்று</p>
+    <p class="kural-lbl">திருக்குறள் — Thirukkural, Kural 108</p>
+  </div>
+  <p class="hero-tagline">தமிழை நேசிப்போருக்கும் தமிழை சுவாசிப்போருக்குமான ஒரு கலம்</p>
+  <div id="member-count-badge" style="display:inline-flex;align-items:center;gap:.6rem;background:rgba(200,65,11,.1);border:1px solid rgba(200,65,11,.25);border-radius:30px;padding:.45rem 1.1rem;margin-bottom:1.5rem">
+    <span style="font-size:.9rem">👥</span>
+    <span id="member-count-text" style="font-family:'Noto Sans Tamil',sans-serif;font-size:.85rem;color:var(--saffron);font-weight:600">...</span>
+    <span style="font-size:.8rem;color:var(--muted)">பேர் இணைந்துள்ளனர்</span>
+  </div>
+  <button class="btn-primary" onclick="document.getElementById('register').scrollIntoView({behavior:'smooth'})">தமிழனாய் பதிவுசெய்</button>
+  <div class="scroll-hint">
+    <span>கீழே காண</span>
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 9l5 4 5-4" stroke="#7A6855" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </div>
+</section>
+
+<!-- ══ NOTICE BAR ══ -->
+<section id="notice-section" style="background:#fff;border-top:3px solid var(--saffron);border-bottom:1px solid var(--border);padding:2.5rem 1.5rem">
+  <div style="max-width:960px;margin:0 auto">
+    <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:1.75rem">
+      <span style="font-size:1.3rem">📢</span>
+      <div>
+        <p style="font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--saffron);margin-bottom:.15rem">அறிவிப்புகள்</p>
+        <h2 style="font-family:'Noto Serif Tamil',serif;font-size:1.5rem;font-weight:700;color:var(--maroon)">Notice Board</h2>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.25rem">
+
+      <!-- TOP PERFORMER -->
+      <div style="background:linear-gradient(135deg,rgba(200,65,11,.06),rgba(184,134,11,.04));border:1px solid var(--border);border-radius:12px;padding:1.25rem;position:relative;overflow:hidden">
+        <div style="position:absolute;top:0;left:0;width:3px;height:100%;background:var(--saffron)"></div>
+        <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.85rem">
+          <span style="font-size:1.2rem">🏆</span>
+          <p style="font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;color:var(--saffron);font-weight:600">Top Performer</p>
+        </div>
+        <div id="top-performer-content" style="font-family:'Noto Sans Tamil',sans-serif;font-size:.9rem;line-height:1.75;color:var(--text)">
+          <p style="color:var(--muted);font-size:.82rem" id="tp-loading">⏳ Loading…</p>
+        </div>
+        <p style="font-size:.65rem;color:var(--muted);margin-top:.85rem;border-top:1px solid var(--border);padding-top:.6rem" id="tp-updated"></p>
+      </div>
+
+      <!-- UPCOMING EVENTS -->
+      <div style="background:linear-gradient(135deg,rgba(107,26,26,.05),rgba(200,65,11,.03));border:1px solid var(--border);border-radius:12px;padding:1.25rem;position:relative;overflow:hidden">
+        <div style="position:absolute;top:0;left:0;width:3px;height:100%;background:var(--maroon)"></div>
+        <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.85rem">
+          <span style="font-size:1.2rem">📅</span>
+          <p style="font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;color:var(--maroon);font-weight:600">Upcoming Events</p>
+        </div>
+        <div id="upcoming-events-content" style="font-family:'Noto Sans Tamil',sans-serif;font-size:.9rem;line-height:1.75;color:var(--text)">
+          <p style="color:var(--muted);font-size:.82rem" id="ue-loading">⏳ Loading…</p>
+        </div>
+        <p style="font-size:.65rem;color:var(--muted);margin-top:.85rem;border-top:1px solid var(--border);padding-top:.6rem" id="ue-updated"></p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ STUDENT CREATIVITY PANEL ══ -->
+<section class="sp-section" id="student-panel">
+  <div style="max-width:1200px;margin:0 auto">
+
+    <!-- Section header -->
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:2rem">
+      <div>
+        <p style="font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--saffron);margin-bottom:.4rem">மாணவர் படைப்புகள்</p>
+        <h2 style="font-family:'Noto Serif Tamil',serif;font-size:1.9rem;font-weight:700;color:#F5D78E;line-height:1.1">மாணவர் கலை மேடை</h2>
+        <p style="font-size:.88rem;color:#8A7560;margin-top:.35rem">Student Creativity Panel — Share your thoughts, poems, speeches &amp; more</p>
+      </div>
+      <div style="display:flex;gap:.75rem;flex-wrap:wrap">
+        <button class="sp-add-btn" onclick="openAddPost()">
+          ✍ படைப்பு சேர்க்க
+        </button>
+        <button class="sp-add-btn" onclick="openCreativeReg()" style="border-color:var(--gold);color:var(--gold)">
+          🎭 படைப்பு போட்டி பதிவு
+        </button>
+      </div>
+    </div>
+
+    <!-- Filter tabs -->
+    <div style="display:flex;gap:.55rem;flex-wrap:wrap;margin-bottom:1.5rem" id="sp-tabs">
+      <button class="tab on" style="background:var(--saffron);color:#fff;border-color:var(--saffron);font-size:.78rem" onclick="filterPosts('all',this)">அனைத்தும்</button>
+      <button class="tab" style="font-size:.78rem;color:#8A7560;border-color:#3D2E1E;background:transparent" onclick="filterPosts('கவிதை',this)">🖊 கவிதை</button>
+      <button class="tab" style="font-size:.78rem;color:#8A7560;border-color:#3D2E1E;background:transparent" onclick="filterPosts('பேச்சு',this)">🎙 பேச்சு</button>
+      <button class="tab" style="font-size:.78rem;color:#8A7560;border-color:#3D2E1E;background:transparent" onclick="filterPosts('கட்டுரை',this)">📝 கட்டுரை</button>
+      <button class="tab" style="font-size:.78rem;color:#8A7560;border-color:#3D2E1E;background:transparent" onclick="filterPosts('சிந்தனை',this)">💭 சிந்தனை</button>
+      <button class="tab" style="font-size:.78rem;color:#8A7560;border-color:#3D2E1E;background:transparent" onclick="filterPosts('பாடல்',this)">🎵 பாடல்</button>
+    </div>
+
+    <!-- Posts grid -->
+    <div class="sp-grid" id="sp-grid">
+      <div style="grid-column:1/-1;text-align:center;padding:3rem;color:#5A4A38;font-size:.9rem">
+        <p style="font-size:2rem;margin-bottom:.75rem">✍</p>
+        <p>இன்னும் எந்த படைப்பும் இல்லை. முதல் படைப்பை நீங்கள் சேர்க்கலாம்!</p>
+        <p style="font-size:.82rem;margin-top:.35rem">No posts yet. Be the first to share!</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- QUICK PREVIEW BANNER (shown on first click of a post card) -->
+<div class="sp-quick-banner" id="sp-quick-banner" onclick="openFromQuickPreview()">
+  <button class="sp-quick-banner-close" onclick="event.stopPropagation();closeQuickPreview()">✕</button>
+  <div class="sp-quick-banner-head">
+    <div class="sp-avatar" id="qb-avatar" style="width:34px;height:34px;font-size:.85rem"></div>
+    <div style="flex:1;min-width:0">
+      <p class="sp-author" id="qb-author" style="font-size:.8rem"></p>
+      <span class="sp-tag" id="qb-tag"></span>
+    </div>
+  </div>
+  <p class="sp-quick-banner-title" id="qb-title"></p>
+  <p class="sp-quick-banner-excerpt" id="qb-excerpt"></p>
+  <p class="sp-quick-banner-cta">தொடர்ந்து படிக்க தட்டவும் · Tap to read full post →</p>
+</div>
+
+<!-- STUDENT POST DETAIL MODAL -->
+<div class="sp-overlay" id="sp-overlay" onclick="if(event.target===this)closeSPModal()">
+  <div class="sp-modal">
+    <div class="sp-modal-head">
+      <button class="sp-modal-close" onclick="closeSPModal()">✕</button>
+      <p class="sp-modal-type" id="sp-m-type"></p>
+      <h2 class="sp-modal-title" id="sp-m-title"></h2>
+      <div class="sp-modal-meta">
+        <div class="sp-modal-avatar" id="sp-m-avatar"></div>
+        <div>
+          <p class="sp-modal-author" id="sp-m-author"></p>
+          <p class="sp-modal-date" id="sp-m-date"></p>
+        </div>
+      </div>
+    </div>
+    <div class="sp-modal-body">
+      <p class="sp-modal-content" id="sp-m-content"></p>
+    </div>
+    <div class="sp-modal-actions">
+      <button class="sp-like-btn" id="sp-like-btn" onclick="toggleLike()">
+        <span id="sp-like-heart">🤍</span>
+        <span class="sp-like-count" id="sp-like-count">0</span>
+        <span style="font-size:.82rem">பேர் விரும்புகிறார்கள்</span>
+      </button>
+    </div>
+    <div class="sp-comments-section">
+      <p class="sp-comments-title" id="sp-comments-label">💬 கருத்துகள்</p>
+      <div id="sp-comments-list"></div>
+      <div class="sp-comment-input-row">
+        <input type="text" class="sp-comment-input" id="sp-comment-name" placeholder="உங்கள் பெயர் (Your name)">
+        <input type="text" class="sp-comment-input" id="sp-comment-text" placeholder="உங்கள் கருத்து... (Your comment)" onkeydown="if(event.key==='Enter')submitComment()">
+        <button class="sp-comment-submit" onclick="submitComment()">அனுப்பு</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ADD POST MODAL -->
+<div class="sp-add-overlay" id="sp-add-overlay">
+  <div class="sp-add-modal">
+    <h3>✍ உங்கள் படைப்பை பகிரவும்</h3>
+    <div class="sp-field">
+      <label>உங்கள் பெயர் (தமிழில்) *</label>
+      <input type="text" id="sp-post-author" class="ta-f" placeholder="உங்கள் பெயர்">
+    </div>
+    <div class="sp-field">
+      <label>படைப்பு வகை *</label>
+      <select id="sp-post-type">
+        <option value="">— தேர்வு செய்க —</option>
+        <option value="கவிதை">🖊 கவிதை (Poetry)</option>
+        <option value="பேச்சு">🎙 பேச்சு (Speech)</option>
+        <option value="கட்டுரை">📝 கட்டுரை (Essay)</option>
+        <option value="சிந்தனை">💭 சிந்தனை (Thoughts)</option>
+        <option value="பாடல்">🎵 பாடல் (Song)</option>
+        <option value="மற்றவை">✨ மற்றவை (Other)</option>
+      </select>
+    </div>
+    <div class="sp-field">
+      <label>தலைப்பு (Title) *</label>
+      <input type="text" id="sp-post-title" placeholder="உங்கள் படைப்பின் தலைப்பு">
+    </div>
+    <div class="sp-field">
+      <label>உள்ளடக்கம் (Content) *</label>
+      <textarea id="sp-post-content" placeholder="இங்கே உங்கள் படைப்பை எழுதுங்கள்...&#10;கவிதையாக, கட்டுரையாக, சிந்தனையாக — எந்த வடிவத்திலும் சரியே"></textarea>
+    </div>
+    <div style="display:flex;gap:.65rem;justify-content:flex-end;margin-top:.5rem">
+      <button onclick="closeAddPost()" style="padding:.6rem 1.2rem;border:1px solid #3D2E1E;border-radius:7px;background:transparent;color:#8A7560;cursor:pointer;font-family:'Inter',sans-serif">ரத்து</button>
+      <button onclick="submitPost()" style="padding:.6rem 1.4rem;border:none;border-radius:7px;background:var(--saffron);color:#fff;font-weight:600;cursor:pointer;font-family:'Noto Sans Tamil',sans-serif;transition:background .15s">பதிவிடு — Post</button>
+    </div>
+  </div>
+</div>
+
+
+<section class="section alt" id="culture">
+  <p class="eyebrow">தமிழரின் பெருமை</p>
+  <h2 class="sec-title">தமிழ் நாகரிகத்தின் தொன்மை</h2>
+  <p class="sec-sub">ஒவ்வொரு அட்டையையும் தொட்டு முழு கதையையும் படியுங்கள்</p>
+  <div class="tabs">
+    <button class="tab on" onclick="filterCards('all',this)">அனைத்தும்</button>
+    <button class="tab" onclick="filterCards('temple',this)">கோயில்கள்</button>
+    <button class="tab" onclick="filterCards('literature',this)">இலக்கியம்</button>
+    <button class="tab" onclick="filterCards('epic',this)">காப்பியங்கள்</button>
+    <button class="tab" onclick="filterCards('art',this)">கலை &amp; இசை</button>
+    <button class="tab" onclick="filterCards('history',this)">வரலாறு</button>
+  </div>
+  <div class="cards-grid" id="cards-grid"></div>
+</section>
+
+<section class="section" id="register" style="background:var(--stone)">
+  <p class="eyebrow">சேர்ந்திடு</p>
+  <h2 class="sec-title">தமிழனா? என்னைப் பதிவுசெய்!</h2>
+  <p class="sec-sub">தமிழை நேசிப்போருக்கான இந்த கலத்தில் உங்கள் திறமையை வெளிப்படுத்துங்கள்</p>
+  <div class="reg-wrap">
+    <div class="reg-head">
+      <h2>தமிழனாய் பதிவுசெய்</h2>
+      <p>Register as a Tamil Mandiram Member</p>
+    </div>
+    <div class="reg-body">
+      <div class="row2">
+        <div class="fg"><label class="lbl">பெயர் (தமிழில்) <span class="req">*</span></label><input type="text" id="n-ta" class="ta-f" placeholder="உங்கள் பெயர்"><p class="err-msg" id="e-nta">தமிழில் பெயர் எழுதவும்</p></div>
+        <div class="fg"><label class="lbl">Name in English <span class="req">*</span></label><input type="text" id="n-en" placeholder="Your full name"><p class="err-msg" id="e-nen">Please enter your name</p></div>
+      </div>
+      <div class="fg">
+        <label class="lbl">படிப்பு / Education <span class="req">*</span></label>
+        <select id="edu" onchange="handleEdu(this.value)"><option value="">— தேர்வு செய்க —</option><option value="school">பள்ளி / School</option><option value="college">கல்லூரி / College</option><option value="work">பணி / Working</option></select>
+        <p class="err-msg" id="e-edu">Please select education</p>
+        <div class="cond" id="c-school"><div class="row2" style="margin-bottom:0"><div class="fg" style="margin-bottom:0"><label class="lbl">பள்ளி பெயர் <span class="req">*</span></label><input type="text" id="school-name" placeholder="School name"><p class="err-msg" id="e-sn">Enter school name</p></div><div class="fg" style="margin-bottom:0"><label class="lbl">வகுப்பு <span class="req">*</span></label><select id="std"><option value="">தேர்வு</option><option>6th</option><option>7th</option><option>8th</option><option>9th</option><option>10th</option><option>11th</option><option>12th</option></select><p class="err-msg" id="e-std">Select standard</p></div></div></div>
+        <div class="cond" id="c-college"><div class="row2" style="margin-bottom:0"><div class="fg" style="margin-bottom:0"><label class="lbl">கல்லூரி பெயர் <span class="req">*</span></label><input type="text" id="coll-name" placeholder="College name"><p class="err-msg" id="e-cn">Enter college name</p></div><div class="fg" style="margin-bottom:0"><label class="lbl">துறை <span class="req">*</span></label><input type="text" id="dept" placeholder="e.g. B.E. Computer Science"><p class="err-msg" id="e-dept">Enter department</p></div></div></div>
+        <div class="cond" id="c-work"><div class="row2" style="margin-bottom:0"><div class="fg" style="margin-bottom:0"><label class="lbl">நிறுவனம் <span class="req">*</span></label><input type="text" id="company" placeholder="Company / Organization"><p class="err-msg" id="e-co">Enter company</p></div><div class="fg" style="margin-bottom:0"><label class="lbl">பணி / Role <span class="req">*</span></label><input type="text" id="jobrole" placeholder="Your designation"><p class="err-msg" id="e-jr">Enter job role</p></div></div></div>
+      </div>
+      <div class="row2">
+        <div class="fg" style="margin-bottom:0"><label class="lbl">ஊர் / City <span class="req">*</span></label><input type="text" id="city" placeholder="Your town / city"><p class="err-msg" id="e-city">Enter your city</p></div>
+        <div class="fg" style="margin-bottom:0"><label class="lbl">தொலைபேசி / Phone <span class="req">*</span></label><input type="tel" id="phone" placeholder="+91 98765 43210"><p class="err-msg" id="e-phone">Enter valid 10-digit phone</p></div>
+      </div>
+      <div class="fg" style="margin-top:1rem"><label class="lbl">மின்னஞ்சல் / Email <span class="req">*</span></label><input type="email" id="email" placeholder="yourname@email.com"><p class="err-msg" id="e-email">Enter valid email</p></div>
+      <div class="fg">
+        <label class="lbl">உங்கள் திறமைகள் / Talents <span class="req">*</span> <span class="hint">(ஒன்று அல்லது மேற்பட்டவை)</span></label>
+        <div class="talent-grid" id="tgrid"></div>
+        <div class="others-box" id="others-box"><label class="lbl" style="margin-bottom:.35rem">மற்ற திறமைகள் <span class="hint">(உங்கள் சொந்த வார்த்தைகளில்)</span></label><textarea id="others-text" rows="3" placeholder="உங்கள் திறமைகளை இங்கே விவரமாக எழுதுங்கள்..."></textarea></div>
+        <p class="err-msg" id="e-talent">குறைந்தது ஒரு திறமையாவது தேர்வு செய்யவும்</p>
+      </div>
+      <div class="ack-box">
+        <p class="ack-text">உங்களுடைய எந்த ஒரு தரவும் வேறு எவரிடமும் பகிரப்படாது. உங்கள் திறமைகளை வெளிப்படுத்துவதற்கான சந்தர்ப்பங்களில் மட்டுமே நாங்கள் தொடர்பு கொள்வோம்.<br><em style="font-size:.76rem;color:#A88050">Your data will never be shared. We contact you only to showcase your talent.</em></p>
+        <div class="ack-row" onclick="toggleAck()"><div class="ack-cb" id="ack-cb"></div><span class="ack-lbl">இதை ஒப்புக்கொண்டு முன்னேறுகிறேன் — <em>I agree and wish to proceed</em></span></div>
+      </div>
+      <p class="err-msg" id="e-ack" style="margin-bottom:.5rem">Please accept the acknowledgement</p>
+      <button class="btn-sub" onclick="submitForm()">பதிவுசெய் — Submit Registration</button>
+      <div class="submit-status" id="submit-status"></div>
+    </div>
+  </div>
+</section>
+
+<div class="overlay" id="cert-overlay">
+  <div class="cert-modal">
+    <div class="cert-card" id="cert-card-main">
+      <div class="cert-top-line"></div>
+      <div class="cert-frame">
+        <p class="cert-org">தமிழ் மன்றம்</p>
+        <p class="cert-sub">TAMIL MANDIRAM</p>
+        <div class="seal-row"><div class="seal" id="seal-wrap">
+          <span id="seal-emoji-fb" style="position:absolute;font-size:1.8rem;z-index:0">🪔</span>
+          <img src="assets/seal.png" alt="Seal"
+               style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:50%;z-index:1"
+               onload="document.getElementById('seal-emoji-fb').style.display='none'"
+               onerror="this.style.display='none'">
+        </div></div>
+        <p class="cert-kural">நன்றி மறப்பது நன்றன்று — நன்றல்லது<br>அன்றே மறப்பது நன்று<br><em style="font-size:.78em;opacity:.65">— திருக்குறள் 108</em></p>
+        <div class="cert-div"></div>
+        <p class="cert-issued">இவ்வாறு சான்றளிக்கப்படுகிறது</p>
+        <!-- NAME IS SHOWN IN TAMIL ONLY -->
+        <p class="cert-name" id="cert-name">—</p>
+        <p class="cert-mem">தமிழ் மன்றத்தின் மதிப்புமிக்க உறுப்பினராக<br><span class="cert-yr">2026</span> ஆம் ஆண்டு இணைந்திருக்கிறார்</p>
+        <div class="cert-div2"></div>
+        <div class="sig-row">
+          <div class="sig-block"><img src="assets/signature.png" alt="Sig" class="sig-img" onerror="this.style.visibility='hidden'"><div class="sig-line-small"></div><span class="sig-label">இயக்குநர்</span></div>
+          <div class="sig-block"><img src="assets/signature2.png" alt="Sig2" class="sig-img" onerror="this.style.visibility='hidden'"><div class="sig-line-small"></div><span class="sig-label">தலைவர்</span></div>
+        </div>
+        <!-- DISCLAIMER: visible on screen only, hidden when downloading -->
+        <p id="cert-disclaimer-text" style="font-size:.42rem;color:rgba(245,215,142,.16);text-align:center;margin-top:.65rem;line-height:1.6;font-family:'Noto Sans Tamil',sans-serif;letter-spacing:.02em">
+          இந்த சான்றிதழ் தமிழ் மன்றத்தால் வழங்கப்பட்டது. இந்த அமைப்பு இன்னும் அரசாங்கத்தினால் பதிவு செய்யப்படவில்லை. மாணவர்களுடைய திறமை வளர்ச்சி மற்றும் ஒருங்கிணைப்பிற்காக மட்டுமே உருவாக்கப்பட்டது. தகவல்கள் எவரிடமும் பகிரப்படமாட்டாது.
+        </p>
+      </div>
+      <div class="cert-bottom-line"></div>
+    </div>
+    <div class="cert-foot">
+      <p>வரவேற்கிறோம்! உங்கள் பதிவு வெற்றிகரமாக நிறைவேறியது.<br><em style="font-size:.78rem">We will reach out to you soon.</em></p>
+      <div style="display:flex;gap:.65rem;justify-content:center;flex-wrap:wrap">
+        <button class="btn-close-cert" onclick="downloadCertImg()" style="background:var(--gold);color:#1A1410;border-color:var(--gold);font-family:'Noto Sans Tamil',sans-serif">⬇ சான்றிதழ் பதிவிறக்கம்</button>
+        <button class="btn-close-cert" onclick="document.getElementById('cert-overlay').classList.remove('show')">மூடு / Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="detail-overlay" id="detail-overlay" onclick="if(event.target===this)closeDetail()">
+  <div class="detail-panel">
+    <div class="dp-header"><div class="dp-header-bg" id="dp-emoji"></div><img id="dp-img" src="" alt="" class="dp-header-img" onerror="this.style.display='none'"><div class="dp-header-grad"></div><div class="dp-header-text"><div class="dp-era-badge" id="dp-era"></div><div class="dp-title" id="dp-title"></div></div><button class="dp-close" onclick="closeDetail()">✕</button></div>
+    <div class="dp-body" id="dp-body"></div>
+  </div>
+</div>
+
+<footer>
+  <div class="ft-grid">
+    <div class="ft-brand"><h3>தமிழ் மன்றம்</h3><p>Tamil Mandiram<br>தமிழை நேசிப்போருக்கான கலம்</p></div>
+    <div class="ft-col"><h4>தொடர்பு / Contact</h4>
+      <a href="tel:+919876543210"><span class="ft-icon">📞</span>+91 98765 43210</a>
+      <a href="mailto:tamilmandiram@gmail.com"><span class="ft-icon">✉️</span>tamilmandiram@gmail.com</a>
+      <a href="https://t.me/tamilmandiram" target="_blank"><span class="ft-icon">✈️</span>Telegram Channel</a>
+      <a href="https://wa.me/919876543210" target="_blank"><span class="ft-icon">💬</span>WhatsApp Group</a>
+    </div>
+    <div class="ft-col"><h4>இணைப்புகள்</h4><a href="#culture"><span class="ft-icon">🏛️</span>தமிழ் பாரம்பரியம்</a><a href="#register"><span class="ft-icon">📝</span>பதிவு செய்க</a></div>
+  </div>
+  <div class="admin-strip"><a class="admin-link" href="admin/dashboard.html">⚙ Admin</a></div>
+  <div class="ft-disclaimer"><p class="disclaimer">இந்த குழு இன்னும் அரசாங்கத்தினால் பதிவு செய்யப்படவில்லை. இது மாணவர்களுடைய ஒருங்கிணைப்பிற்காக மட்டுமே உருவாக்கப்பட்டு வருகிறது. மாணவர்களின் தேவையைப் பொருட்டு இதனை அரசாங்கத்தில் பதிவு செய்வது குறித்து ஆலோசித்து முடிவெடுக்கப்படும் — தமிழ் மன்ற ஒருங்கிணைப்புத் தலைவர்கள்.</p></div>
+</footer>
+
+<script>
+// ════════════════════════════════════════
+// CONFIGURATION — CHANGE THESE 3 THINGS:
+// 1. Your Google Apps Script Web App URL
+// 2. Your Telegram Bot Token
+// 3. Your Telegram Chat ID
+// ════════════════════════════════════════
+const CONFIG = {
+  GOOGLE_SCRIPT_URL: 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE',
+  TELEGRAM_BOT_TOKEN: 'YOUR_BOT_TOKEN_HERE',
+  TELEGRAM_CHAT_ID: 'YOUR_CHAT_ID_HERE',
+};
+
+// Logo load handler
+// Logo handled inline via onload/onerror attributes
+
+const ITEMS=[
+  {
+    cat:'temple',era:'7th–9th Century CE',
+    name:'மாமல்லபுரம்',nameEn:'Mahabalipuram',emoji:'🏛️',img:'assets/mahabalipuram.jpg',
+    brief:'பல்லவ மன்னர்களால் கட்டப்பட்ட யுனெஸ்கோ உலக பாரம்பரிய தலம் — கடலோர சிற்பக் கலையின் சிகரம்.',
+    tags:['UNESCO','பல்லவர்','Rock-cut','Shore Temple'],
+    history:'மாமல்லபுரம் (மகாபலிபுரம்) தமிழ்நாட்டின் கடலோர மாவட்டமான செங்கல்பட்டில் அமைந்துள்ளது. பல்லவ மன்னன் நரசிம்மவர்மன் I, "மகாமல்லன்" என்று அழைக்கப்பட்டவன், கி.பி 630 முதல் 668 வரை ஆட்சி செய்தான். அவன் காலத்தில் இந்த அற்புத கலைத்தலம் உருவானது. பல்லவர்களுக்கு முன்பே இந்த இடம் ஒரு துறைமுக நகரமாக இருந்தது. ரோமானிய நாணயங்கள் இங்கு கண்டுபிடிக்கப்பட்டுள்ளன, இது சங்க காலத்திலேயே உலக வணிகம் நடந்ததை நிரூபிக்கிறது. நரசிம்மவர்மனுக்குப் பிறகு அவன் மகன் பரமேஸ்வரவர்மன் I மற்றும் நரசிம்மவர்மன் II ஆகியோர் இந்த கலைத்தலத்தை மேலும் வளர்த்தனர். மொத்தம் 40க்கும் மேற்பட்ட சிற்பங்கள், குகைக் கோயில்கள், ஒற்றை பாறைக் கோயில்கள் இங்கு உள்ளன. ஒரே கல்லில் செதுக்கப்பட்ட ஐந்து ரதங்கள் (பஞ்சபாண்டவர் ரதங்கள்) உலகில் வேறு எங்கும் காண முடியாத தனித்துவமான படைப்பு. கடற்கரை கோயில் (Shore Temple) இந்தியாவிலேயே மிக பழமையான கல் கோயில்களில் ஒன்று. அர்ஜுனன் தபசு என்ற பாறை சிற்பம் உலகின் மிகப்பெரிய திறந்தவெளி சிற்பம் — 27 மீட்டர் நீளம், 9 மீட்டர் உயரம்.',
+    facts:[
+      ['கட்டியவர்','நரசிம்மவர்மன் I (மகாமல்லன்)'],
+      ['காலம்','கி.பி 630 – 9ஆம் நூற்றாண்டு'],
+      ['UNESCO அறிவிப்பு','1984'],
+      ['இடம்','சென்னையிலிருந்து 58 கி.மீ தெற்கே'],
+      ['முக்கிய சிற்பங்கள்','40+ குகை கோயில்கள், 5 ரதங்கள்'],
+      ['பாறை சிற்பம்','அர்ஜுனன் தபசு — 27×9 மீட்டர்'],
+      ['கடற்கரை கோயில்','இந்தியாவின் மிக பழைய கல் கோயில்'],
+      ['நுழைவு கட்டணம்','₹40 இந்தியர்கள் / ₹600 வெளிநாட்டினர்'],
+      ['திறக்கும் நேரம்','காலை 6:00 – மாலை 6:00'],
+      ['அருகிலுள்ள நகரம்','மாமல்லபுரம் நகரம்']
+    ],
+    why:'மாமல்லபுரம் திராவிட கட்டிடக்கலையின் ஆரம்ப வடிவங்களை உலகுக்கு காட்டிய தலம். ஒரே பாறையில் ஒரு முழு கோயிலை செதுக்கும் திறன் — கட்டுமானம் இல்லாமல், சேர்க்காமல், ஒரு கல்லை மட்டுமே தேர்ந்தெடுத்து உள்ளிருந்து செதுக்கி வெளியே கொண்டு வருவது — தமிழர்களின் பொறியியல் மேதமையை உலகுக்கு நிரூபிக்கிறது. அர்ஜுனன் தபசு சிற்பத்தில் 100க்கும் மேற்பட்ட தேவர்கள், மனிதர்கள், யானைகள், மிருகங்கள் செதுக்கப்பட்டுள்ளன — இது ஒரு கலைஞனின் சாதனை மட்டுமல்ல, ஒரு காலத்தின் வரலாற்று ஆவணம். கடற்கரை கோயில் 1300 ஆண்டுகளாக கடல் அலைகளை எதிர்த்து நிற்கிறது — இது தமிழர்களின் கட்டிட திறனை சாட்சியாக காட்டுகிறது. 2004 சுனாமியில் கடல் பின்வாங்கியபோது மூழ்கிய பழைய கோயில் அமைப்புகள் வெளிப்பட்டன — தமிழர்களின் நாகரிகம் இன்னும் ஆழமானது என்று இது சொல்கிறது.',
+    tourist:'சென்னை எழும்பூர் அல்லது மாம்பலம் பேருந்து நிலையத்திலிருந்து நேரடி பேருந்து கிடைக்கும் (ECR வழியாக 1.5 மணி நேரம்). கோவை, மதுரை, திருச்சியிலிருந்தும் பேருந்துகள் உண்டு. அருகிலுள்ள ரயில் நிலையம்: சிங்கப்பெருமாள்கோயில் (15 கி.மீ). காரில் வருபவர்கள்: சென்னை–மாமல்லபுரம் வழியில் ECR சாலை அழகானது. பார்க்க வேண்டியவை: (1) பஞ்சபாண்டவர் ரதங்கள் (2) அர்ஜுனன் தபசு (3) கடற்கரை கோயில் (4) கிருஷ்ணன் வெண்ணெய் உருண்டை பாறை (5) கடலோர மியூசியம். முழு பார்வைக்கு 4–5 மணி நேரம் ஒதுக்கவும். நேரம்: காலை 6–18:00. நுழைவு: ₹40 (Indian), ₹600 (Foreign). மாமல்லபுரம் நகரில் நல்ல உணவகங்களும் கடற்கரை ரிசார்ட்களும் உண்டு.'
+  },
+  {
+    cat:'temple',era:'1010 CE',
+    name:'தஞ்சை பெரிய கோயில்',nameEn:'Brihadeeswarar Temple',emoji:'⛩️',img:'assets/thanjavur.jpg',
+    brief:'இராஜராஜ சோழனால் கட்டப்பட்ட திராவிட கட்டிடக்கலையின் உச்சம் — நிழல் விழாத 66 மீட்டர் கோபுரம்.',
+    tags:['UNESCO','சோழர்','Dravidian','Big Temple'],
+    history:'தஞ்சை பெரிய கோயில் (பிரகதீஸ்வரர் கோயில்) இராஜராஜ சோழன் I ஆல் கி.பி 1003 முதல் 1010 வரை 7 ஆண்டுகளில் கட்டப்பட்டது. இராஜராஜ சோழன் I தமிழகத்தில் மட்டுமல்ல, உலக வரலாற்றிலேயே மிக சக்திவாய்ந்த மன்னர்களில் ஒருவன். அவனுடைய மகன் இராஜேந்திர சோழன் கங்கை வரை வெற்றி கொண்டு "கங்கை கொண்ட சோழன்" என்று புகழ் பெற்றான். கோயிலின் கோபுரம் 66 மீட்டர் உயரம் — அதாவது 16 மாடி கட்டிடம் அளவு. 80 டன் எடையுள்ள ஒற்றை கல் (கும்பம்) கோபுர உச்சியில் வைக்கப்பட்டுள்ளது. அதை எப்படி தூக்கி வைத்தார்கள் என்பது இன்றும் மர்மமே — நவீன கிரேன்கள் கூட சிரமப்படும் அந்த காலத்தில் கயிறு மற்றும் மண் சரிவு முறையில் தூக்கியிருப்பார்கள் என்று ஆராய்ச்சியாளர்கள் கூறுகிறார்கள். கோயிலின் கவுசாலையில் உள்ள நந்தி சிலை மொத்தம் ஒரே கல்லில் செய்யப்பட்டது — 6 மீட்டர் நீளம், 2.6 மீட்டர் உயரம், 25 டன் எடை. கோயிலின் சுவர்களில் 250க்கும் மேற்பட்ட கல்வெட்டுகள் உள்ளன — அவை சோழர் காலத்தின் நிர்வாகம், வணிகம், கலை ஆகியவற்றை விவரிக்கின்றன.',
+    facts:[
+      ['கட்டியவர்','இராஜராஜ சோழன் I'],
+      ['கட்டப்பட்ட ஆண்டு','கி.பி 1003–1010 (7 ஆண்டுகள்)'],
+      ['UNESCO அறிவிப்பு','1987'],
+      ['கோபுர உயரம்','66 மீட்டர் (16 மாடி சமம்)'],
+      ['கோபுர கல் (கும்பம்)','80 டன் எடை — ஒரே கல்'],
+      ['நந்தி சிலை','25 டன் — ஒரே கல்லில் செய்தது'],
+      ['கல்வெட்டுகள்','250க்கும் மேற்பட்டவை'],
+      ['கல் வகை','கருங்கல் (Granite)'],
+      ['நுழைவு','இலவசம் (Free)'],
+      ['திறக்கும் நேரம்','காலை 6:00 – இரவு 8:30']
+    ],
+    why:'தஞ்சை பெரிய கோயில் தமிழர்களின் கட்டிட அறிவியல், கணிதம் மற்றும் கலை ஆகியவற்றின் சிகரம். நிழல் விழாத கோபுரம் என்ற சாதனை — கோபுரத்தின் நிழல் எந்த திசையிலும் கோயில் வளாகத்தில் விழாது, நிலத்தில்தான் விழும் என்று வடிவமைக்கப்பட்டது — இது கோணியல் கணக்கீட்டின் அரிய வெளிப்பாடு. 1000 ஆண்டுகளுக்கு முன்பு, தகவல் தொழில்நுட்பம் இல்லாத காலத்தில், 80 டன் கல்லை 66 மீட்டர் உயரத்தில் வைத்தது மட்டுமே போதும் தமிழர்களின் மேதமையை உணர. கோயிலின் கட்டமைப்பு இன்றைய நிலநடுக்க எதிர்ப்பு வடிவமைப்பு கொண்டிருக்கிறது — 1000 ஆண்டுகளில் எந்த நிலநடுக்கமும் இதை அசைக்கவில்லை.',
+    tourist:'தஞ்சாவூர் ரயில் நிலையத்திலிருந்து 3 கி.மீ — ஆட்டோ அல்லது பேருந்தில் 10 நிமிடம். சென்னையிலிருந்து: திருச்சி வழியாக ரயில் அல்லது பேருந்து (350 கி.மீ, 6 மணி நேரம்). பார்க்க வேண்டியவை: (1) மூல விமானம் (கோபுரம்) (2) நந்தி மண்டபம் (3) கல்வெட்டுகள் (4) சிற்ப வேலைப்பாடுகள் (5) அருகில் உள்ள சரஸ்வதி மகால் நூலகம் — 30,000 பழைய கையெழுத்து பிரதிகள் உள்ளன. முழு பார்வைக்கு 3 மணி நேரம். கோயில் நுழைவு இலவசம். தஞ்சாவூரில் தங்க: TTDC Hotel, Ideal River View Resort.'
+  },
+  {
+    cat:'temple',era:'14th–17th Century',
+    name:'மதுரை மீனாட்சி கோயில்',nameEn:'Meenakshi Amman Temple',emoji:'🕌',img:'assets/madurai.jpg',
+    brief:'12 கோபுரங்கள், 33,000 சிற்பங்கள் — 2500 ஆண்டு தொடர்ச்சியான வழிபாட்டு தலம்.',
+    tags:['நாயக்கர்','12 Gopurams','33000 Sculptures','Meenakshi'],
+    history:'மதுரை மீனாட்சி அம்மன் கோயில் தமிழகத்தின் மிக முக்கியமான கோயில்களில் ஒன்று. மதுரை நகரமே இந்த கோயிலை மையமாக வைத்து உருவானது என்று கூறப்படுகிறது. இந்த இடத்தில் கி.மு 5ஆம் நூற்றாண்டு முதலே வழிபாடு நடந்து வருகிறது என்று சங்க இலக்கியங்கள் கூறுகின்றன. தற்போதுள்ள கோயில் கட்டமைப்பு முக்கியமாக நாயக்கர் மன்னர்கள் ஆட்சியில், குறிப்பாக திருமலை நாயக்கர் காலத்தில் (17ஆம் நூற்றாண்டு), உருவானது. கோயிலில் 12 கோபுரங்கள் உள்ளன — மிக உயரமான கோபுரம் 52 மீட்டர் (தெற்கு கோபுரம்). ஒவ்வொரு கோபுரத்திலும் ஆயிரக்கணக்கான வண்ண சிற்பங்கள் — மொத்தம் 33,000க்கும் மேற்பட்டவை. ஆயிரக்கால் மண்டபம் (1000 தூண்கள் மண்டபம்) என்று அழைக்கப்படும் இடத்தில் உண்மையில் 985 தூண்கள் உள்ளன — ஒவ்வொரு தூணும் சிற்பங்களால் அலங்கரிக்கப்பட்டுள்ளது. தட்டினால் சங்கீத சப்தம் எழுப்பும் இசை தூண்கள் (Musical Pillars) ஒரு தனி அதிசயம் — ஒரே கல்லில் செய்யப்பட்ட இந்த தூண்களில் 7 சுரங்கள் எழுப்பலாம். ஆண்டுதோறும் சித்திரை திருவிழாவில் 10 லட்சத்திற்கும் மேற்பட்ட பக்தர்கள் வருகின்றனர்.',
+    facts:[
+      ['தொடர்ச்சியான வழிபாடு','2500+ ஆண்டுகள்'],
+      ['கோபுரங்கள்','12 (மிக உயரமானது 52 மீ)'],
+      ['சிற்பங்கள்','33,000க்கும் மேல்'],
+      ['ஆயிரக்கால் மண்டபம்','985 சிற்ப தூண்கள்'],
+      ['இசை தூண்கள்','ஒரே கல்லில் 7 சுரம்'],
+      ['தினசரி பக்தர்கள்','15,000 – 20,000'],
+      ['சித்திரை திருவிழா','10 லட்சம்+ பக்தர்கள்'],
+      ['கோயில் பரப்பு','14 ஏக்கர்'],
+      ['நுழைவு','இலவசம் (கேமரா கட்டணம் ₹50)'],
+      ['நேரம்','காலை 5:00 – இரவு 10:00']
+    ],
+    why:'மதுரை மீனாட்சி கோயில் திராவிட கட்டிடக்கலையின் மிக உயர்ந்த வெளிப்பாடு. 33,000 சிற்பங்கள் என்பது வெறும் கலை மட்டுமல்ல — ஒவ்வொரு சிற்பமும் ஒரு புராண கதையை, ஒரு தத்துவத்தை, ஒரு வரலாற்று நிகழ்வை பேசுகிறது. இசை தூண்கள் என்பது தமிழர்களுக்கு கல்லில் கூட இசையை கண்டுபிடிக்கும் அறிவு இருந்தது என்பதை காட்டுகிறது. ஒவ்வொரு கோபுரத்திலும் 1000க்கும் மேற்பட்ட சிற்பங்கள் செய்ய வேண்டும், அவை வெயிலில் வெடிக்காமல், மழையில் கரையாமல் நூற்றாண்டுகள் நிற்க வேண்டும் — இது தமிழர்களின் அறிவியல் திறனை காட்டுகிறது.',
+    tourist:'மதுரை ரயில் நிலையத்திலிருந்து 2 கி.மீ — நடந்தோ அல்லது ஆட்டோவிலோ செல்லலாம். சென்னையிலிருந்து: 7 மணி நேர பேருந்து / 8 மணி நேர ரயில். பார்க்க வேண்டியவை: (1) மீனாட்சி சன்னதி (2) சுந்தரேஸ்வரர் சன்னதி (3) ஆயிரக்கால் மண்டபம் மற்றும் இசை தூண்கள் (4) பொன்னிறம் பூசிய கோபுர உச்சி (மாலை சூரியன் படும்போது அழகு இரட்டிக்கும்) (5) கோயில் யானைகள். மாலை 6-7 மணிக்கு நடக்கும் அலங்கார வழிபாடு தவிர்க்க கூடாது. நேரம்: காலை 5 – இரவு 10. நுழைவு: இலவசம். கேமரா: ₹50.'
+  },
+  {
+    cat:'temple',era:'9th Century CE',
+    name:'திருவண்ணாமலை கோயில்',nameEn:'Arunachaleswarar Temple',emoji:'🔥',img:'assets/thiruvannamalai.jpg',
+    brief:'25 ஏக்கர் பரப்பில் அமைந்த பஞ்சபூத தீ தலம் — கார்த்திகை தீபம் 30 கி.மீ தூரம் தெரியும்.',
+    tags:['பஞ்சபூதம்','Fire Temple','கிரிவலம்','கார்த்திகை'],
+    history:'திருவண்ணாமலை அருணாசலேஸ்வரர் கோயில் தமிழ்நாட்டின் மிகப்பெரிய கோயில் வளாகங்களில் ஒன்று — மொத்த பரப்பு 25 ஏக்கர். இந்த கோயில் ஒரே மன்னரால் கட்டப்படவில்லை — பல்வேறு வம்சங்கள் ஆயிரம் ஆண்டுகளாக கட்டி விரிவாக்கியது. முதலில் பல்லவர்கள் கி.பி 9ஆம் நூற்றாண்டில் கட்டினர். பின்னர் சோழர்கள் விரிவாக்கினர். விஜயநகர மன்னர்கள் பெரிய கோபுரங்களை கட்டினர். சாளுவர்கள், நாயக்கர்கள் மேலும் சேர்த்தனர். நான்கு கோபுரங்கள் நான்கு திசைகளிலும் உள்ளன — கிழக்கு கோபுரம் மிக உயரமானது (66 மீட்டர்). கார்த்திகை மாதம் (நவம்பர்–டிசம்பர்) முழு நிலவு நாளில் மலை உச்சியில் மிகப்பெரிய தீபம் கொளுத்தப்படும் — இது 10 மணி அடிக்கு அடிக்கும் குத்துவிளக்கு அளவு இருக்கும், 30 கி.மீ தூரத்திலிருந்தும் தெரியும். இந்த சமயம் சுமார் 30–50 லட்சம் பக்தர்கள் வருகிறார்கள். அருணாசலம் மலையை சுற்றி 14 கி.மீ கிரிவலம் செய்வது பக்தர்களின் வழக்கம் — ஒவ்வொரு மாத பௌர்ணமியிலும் 5–10 லட்சம் பேர் கிரிவலம் செய்கிறார்கள். ரமண மகரிஷி இந்த மலையடிவாரத்தில் வாழ்ந்தார் — அவரது ஆசிரமம் இன்றும் உள்ளது.',
+    facts:[
+      ['பஞ்சபூத தலம்','தீ (Agni) — நெருப்பு தலம்'],
+      ['கோயில் பரப்பு','25 ஏக்கர்'],
+      ['கோபுரங்கள்','4 பிரதான கோபுரங்கள்'],
+      ['மிக உயரமான கோபுரம்','66 மீட்டர் (கிழக்கு கோபுரம்)'],
+      ['கிரிவலம் தூரம்','14 கி.மீ (மலையை சுற்றி)'],
+      ['கார்த்திகை தீபம்','30+ கி.மீ தூரத்தில் தெரியும்'],
+      ['பக்தர்கள் (திருவிழா)','30–50 லட்சம்'],
+      ['ரமண மகரிஷி','இங்கே வாழ்ந்தார் — ஆசிரமம் உள்ளது'],
+      ['நுழைவு','இலவசம்'],
+      ['கிரிவலம் நேரம்','இரவு 12 தொடங்கி விடியும் வரை (பௌர்ணமி)']
+    ],
+    why:'திருவண்ணாமலை பஞ்சபூத ஸ்தலங்களில் தீயை குறிக்கும் தலம் — சிவன் தீயாக வெளிப்பட்ட இடம் என்று நம்பிக்கை. கிரிவலம் என்பது வெறும் வழிபாடு மட்டுமல்ல — 14 கி.மீ நடந்து, மலையை சுற்றி, ஒவ்வொரு அடியிலும் ஆன்மீக உணர்வை அனுபவிக்கும் பயணம். ரமண மகரிஷி போன்ற ஞானிகள் இந்த மலையை தேர்ந்தெடுத்தது — இந்த இடத்தில் ஒரு அமைதியான ஆன்மீக சக்தி உண்டு என்பதை நிரூபிக்கிறது. இந்தியாவிலேயே மிக அதிக பக்தர்கள் வரும் திருவிழாக்களில் கார்த்திகை தீபம் ஒன்று.',
+    tourist:'திருவண்ணாமலை ரயில் நிலையத்திலிருந்து 2 கி.மீ — ஆட்டோவில் 10 நிமிடம். சென்னையிலிருந்து: 180 கி.மீ, 4 மணி நேர பேருந்து. விழுப்புரம் வழியாக ரயிலிலும் வரலாம். பார்க்க வேண்டியவை: (1) கோயில் உள்ளே — 4 கோபுரங்கள் (2) கிரிவலம் (3) ரமண மகரிஷி ஆசிரமம் (4) விருபாட்ஷா குகை (ரமண மகரிஷி தவம் செய்த இடம்) (5) அருணாசலம் மலை உச்சி (4–5 மணி நேர ஏறு). கார்த்திகை தீபத்தை காண வேண்டுமென்றால் 2 நாள் முன்னதாக வர வேண்டும் — ஹோட்டல் அறை தீர்ந்து போகும். நேரம்: காலை 5:30 – இரவு 9:30.'
+  },
+  {
+    cat:'temple',era:'7th Century CE',
+    name:'சிதம்பரம் நடராஜர் கோயில்',nameEn:'Chidambaram Nataraja Temple',emoji:'💃',img:'assets/chidambaram.jpg',
+    brief:'நடனத்தின் தெய்வம் நடராஜரின் பிரதான இருப்பிடம் — CERN-ல் கூட நடராஜர் சிலை உள்ளது.',
+    tags:['பஞ்சபூதம்','ஆகாயம்','நடராஜர்','CERN Connection'],
+    history:'சிதம்பரம் நடராஜர் கோயில் தமிழகத்தின் மிக முக்கியமான தத்துவ மற்றும் கலை கோயில். ஆகாயம் (வெளி இடம்) என்ற பஞ்சபூதத்தை குறிக்கும் தலம். கி.பி 7ஆம் நூற்றாண்டில் பல்லவர்கள் கட்டினர், பின்னர் சோழர்களும் நாயக்கர்களும் விரிவாக்கினர். நடராஜர் என்ற வடிவம் — சிவன் கோசம விரிகோல படிமம் (Cosmic Dance) என்று அழைக்கப்படுகிறது. வலது கால் தூக்கி, நான்கு கைகளுடன் நடனம் ஆடுவது — இது படைப்பு, காப்பு, அழிவு, மறைவு, அருள் என்ற ஐந்து செயல்களை சித்தரிக்கிறது. இந்த வடிவத்தை உலக அணுவியல் ஆய்வகமான CERN (ஸ்விட்சர்லாந்து) தங்கள் வளாகத்தில் வைத்திருப்பது தமிழரின் தத்துவம் உலகளவில் அங்கீகரிக்கப்பட்டதற்கு சாட்சி. கோயிலில் 4 பொன் கோபுரங்கள் உள்ளன — மேல்பகுதி தங்கம் பூசப்பட்டது. சிதம்பர ரகசியம் என்ற கருவறையில் வெளிக்காடுதான் இருக்கும் — அதாவது, ஆகாயம் தான் தெய்வம், வெட்ட வெளிதான் இறைவன் என்ற அரிய தத்துவம். திக்கம்பர சித்தாந்தத்தின் உச்சம்.',
+    facts:[
+      ['பஞ்சபூத தலம்','ஆகாயம் (வெளிவெட்டம்)'],
+      ['தெய்வம்','நடராஜர் (ஆனந்த தாண்டவம்)'],
+      ['கோபுரங்கள்','4 — பொன் கோபுரங்கள்'],
+      ['CERN','ஸ்விட்சர்லாந்தில் நடராஜர் சிலை'],
+      ['சிதம்பர ரகசியம்','வெட்ட வெளி = இறைவன்'],
+      ['திக்கம்பர சித்தாந்தம்','தீட்ஷிதர் குடும்பங்கள் — பரம்பரை பூசாரிகள்'],
+      ['திருவிழா','ஆருத்திரா தரிசனம் (டிசம்பர்)'],
+      ['கோயில் பரப்பு','40 ஏக்கர்'],
+      ['நுழைவு','இலவசம்'],
+      ['நேரம்','காலை 6:00 – இரவு 8:30']
+    ],
+    why:'நடராஜர் வடிவம் தமிழர்களின் கலை, அறிவியல், தத்துவம் ஆகியவற்றின் ஒருங்கிணைந்த சிகரம். நடனம் ஆடும் சிவன் என்பது — அணு முதல் பிரபஞ்சம் வரை அனைத்தும் ஒரு தாளத்தில், ஒரு ஓட்டத்தில் இயங்குகிறது என்ற கருத்தாக்கம். இதை CERN அணுவியல் விஞ்ஞானிகள் அங்கீகரித்திருப்பது — 1500 ஆண்டுகளுக்கு முன்பே தமிழர்கள் Physics புரிந்திருந்தார்கள் என்பதற்கு சான்று. சிதம்பர ரகசியம் என்ற தத்துவம் — "ஒன்றுமில்லாமை தான் எல்லாமும்" என்பது Quantum Physics-ன் வெற்றிடம் (Vacuum state) கருத்துடன் ஒத்துப்போகிறது என்று விஞ்ஞானிகள் கூறுகிறார்கள்.',
+    tourist:'சிதம்பரம் நகரம் — சென்னையிலிருந்து 235 கி.மீ, பேருந்தில் 5 மணி நேரம். சிதம்பரம் ரயில் நிலையத்திலிருந்து 1 கி.மீ. பார்க்க வேண்டியவை: (1) நடராஜர் சன்னதி (2) சிவகாம சுந்தரி சன்னதி (3) சிதம்பர ரகசியம் கருவறை (4) ஆயிரக்கால் மண்டபம் (5) பொன் கோபுரங்கள். டிசம்பர் மாதம் ஆருத்திரா தரிசனம் நடக்கும் — அந்த நேரம் வரவும். நேரம்: காலை 6 – இரவு 8:30. நுழைவு: இலவசம்.'
+  },
+  {
+    cat:'literature',era:'1st–3rd Century CE',
+    name:'திருக்குறள்',nameEn:'Thirukkural',emoji:'📜',img:'assets/thirukkural.jpg',
+    brief:'திருவள்ளுவரின் 1330 குறள்கள் — 40+ மொழிகளில் மொழிபெயர்க்கப்பட்ட உலகப் பொது மறை.',
+    tags:['Sangam','Thiruvalluvar','World Classic','Universal Wisdom'],
+    history:'திருக்குறள் திருவள்ளுவரால் இயற்றப்பட்ட உலக இலக்கியத்தின் அரிய படைப்பு. திருவள்ளுவர் மயிலாப்பூரில் பிறந்தவர் என்று சிலர் கூறினாலும், கபிலர் என்று மற்றவர்கள் கூறுவதும் உண்டு — அவரைப் பற்றிய நிறைய விவாதங்கள் இருக்கின்றன. ஆனால் குறள் என்ற நூல் 2000 ஆண்டுகளாக தமிழரின் உயிர் நூலாக இருக்கிறது. 1330 குறள்கள் சரியாக 133 அதிகாரங்களில் பிரிக்கப்பட்டுள்ளன. ஒவ்வொரு அதிகாரத்திலும் சரியாக 10 குறள்கள். மூன்று பால்கள்: அறத்துப்பால் (38 அதிகாரங்கள்) — நீதி, ஒழுக்கம், குடும்ப வாழ்க்கை; பொருட்பால் (70 அதிகாரங்கள்) — அரசியல், பொருளாதாரம், நட்பு, போர்; காமத்துப்பால் (25 அதிகாரங்கள்) — காதல், ஆசை. 40க்கும் மேற்பட்ட மொழிகளில் மொழிபெயர்க்கப்பட்டுள்ளது — இந்தி, ஆங்கிலம், ஜெர்மன், ஃபிரஞ்சு, ரஷ்யன், சீனம் உட்பட. "Holy Kural", "Kural of Thiruvalluvar" என்று உலக அளவில் புகழ்பெற்றது. திமிழகத்தில் ஜனவரி 15 திருவள்ளுவர் தினமாக அனுசரிக்கப்படுகிறது.',
+    facts:[
+      ['ஆசிரியர்','திருவள்ளுவர்'],
+      ['மொத்த குறள்கள்','1330'],
+      ['அதிகாரங்கள்','133 (ஒவ்வொன்றும் 10 குறள்)'],
+      ['மூன்று பால்கள்','அறம், பொருள், இன்பம்'],
+      ['மொழிபெயர்ப்புகள்','40+ மொழிகள்'],
+      ['காலம்','கி.மு 1ஆம் – கி.பி 3ஆம் நூற்றாண்டு'],
+      ['திருவள்ளுவர் சிலை','133 அடி — கன்னியாகுமரி'],
+      ['திருவள்ளுவர் தினம்','ஜனவரி 15'],
+      ['சிறப்பு','உலகப் பொது மறை'],
+      ['UN அங்கீகாரம்','UNESCO கலாச்சார பாரம்பரியம்']
+    ],
+    why:'திருக்குறள் 2000 ஆண்டுகளுக்கு முன்பு எழுதப்பட்டாலும், ஒவ்வொரு குறளும் இன்றைய வாழ்க்கையிலும் பொருத்தமானது என்பது அதன் மகத்துவம். "யாதும் ஊரே யாவரும் கேளிர்" (எல்லா ஊரும் என்னூர், எல்லோரும் என்னவர்) — இந்த கருத்தாக்கம் 2000 ஆண்டுகளுக்கு முன்பே உலகாயுதம் பேசிய தமிழர்களை காட்டுகிறது. குறள் வெறும் அறிவுரை மட்டுமல்ல — அரசியல் சூழ்ச்சி, நட்பின் இயல்பு, நீரின் தேவை, மழையின் மகிமை, காதலின் ஆழம் — எல்லாவற்றையும் 2 வரிகளில் (7+5 சொற்கள்) சொல்லிவிடும் ஆற்றல் திருவள்ளுவருக்கு மட்டுமே உண்டு.',
+    tourist:'கன்னியாகுமரியில் கடலுக்கு நடுவே உள்ள 133 அடி திருவள்ளுவர் சிலை கட்டாயம் பார்க்க வேண்டும் — படகில் செல்ல வேண்டும். சென்னை மயிலாப்பூரில் திருவள்ளுவர் கோயில். சென்னை Government Museum-ல் குறள் சம்பந்தமான கலைப்பொருட்கள் உள்ளன. தமிழ்நாட்டின் ஒவ்வொரு பள்ளியிலும் குறள் போதிக்கப்படுகிறது — இது ஒரு நூல் மட்டுமல்ல, தமிழரின் அடையாளம்.'
+  },
+  {
+    cat:'literature',era:'300 BCE–300 CE',
+    name:'சங்க இலக்கியம்',nameEn:'Sangam Literature',emoji:'🗿',img:'assets/sangam.jpg',
+    brief:'கிமு 300 முதல் கி.பி 300 வரை — 473 புலவர்கள், 2381 கவிதைகள், உலகின் பழமையான இலக்கியங்களில் ஒன்று.',
+    tags:['Ancient Tamil','Akam','Puram','Ettuthokai'],
+    history:'சங்க இலக்கியம் என்பது கிமு 300 முதல் கி.பி 300 வரையிலான 600 ஆண்டுகளில் தமிழ் புலவர்களால் இயற்றப்பட்ட கவிதைகளின் தொகுப்பு. "சங்கம்" என்பது புலவர்களின் சபை — மூன்று தமிழ் சங்கங்கள் (முச்சங்கம்) நடந்தன என்று மரபு கூறுகிறது. 473 அறியப்பட்ட புலவர்கள் 2381க்கும் மேற்பட்ட கவிதைகள் இயற்றினர். எட்டுத்தொகை (8 நூல்கள்): குறுந்தொகை, நற்றிணை, அகநானூறு, புறநானூறு, ஐங்குறுநூறு, கலித்தொகை, பரிபாடல், பத்துப்பாட்டு. அகம் (காதல் கவிதைகள்): 5 தினைகளில் (குறிஞ்சி — மலை, முல்லை — காடு, மருதம் — வயல், நெய்தல் — கடல், பாலை — பாலைவனம்) வகைப்படுத்தப்பட்டது. புறம் (வீரம், போர், கொடை கவிதைகள்). ரோமானிய வரலாற்று ஆசிரியர் பிளினி (Pliny) கிமு 1ஆம் நூற்றாண்டில் தமிழ் நாட்டு வணிகத்தைப் பற்றி எழுதியுள்ளார் — இது சங்க காலத்தின் சர்வதேச தொடர்பை நிரூபிக்கிறது.',
+    facts:[
+      ['காலம்','கிமு 300 – கி.பி 300 (600 ஆண்டுகள்)'],
+      ['புலவர்கள்','473+ அறியப்பட்டவர்கள்'],
+      ['கவிதைகள்','2,381+'],
+      ['நூல் தொகுப்புகள்','எட்டுத்தொகை + பத்துப்பாட்டு'],
+      ['பிரிவுகள்','அகம் (காதல்), புறம் (வீரம், கொடை)'],
+      ['5 தினைகள்','குறிஞ்சி, முல்லை, மருதம், நெய்தல், பாலை'],
+      ['ரோம் வணிகம்','Pliny-ன் குறிப்புகளில் தமிழகம்'],
+      ['முதல் தொகுப்பு','9ஆம் நூற்றாண்டில் உவேசா பனுவல் சேர்த்தது'],
+      ['சிறப்பு','World Heritage Literary Tradition'],
+      ['ஆராய்ச்சி நிலையம்','தஞ்சாவூர் Tamil University']
+    ],
+    why:'சங்க இலக்கியம் 2300 ஆண்டுகளுக்கு முன்பே தமிழர்கள் ஒரு முழுமையான நாகரிகம் கொண்டிருந்தார்கள் என்பதற்கு மறுக்க முடியாத சான்று. காதல் கவிதைகள் — தேவகாரி என்ற இடத்தில் ஒரு பெண் தன் காதலனை நினைக்கிறாள், குறுந்தொகை 40 — இந்த உணர்வுகள் 2300 ஆண்டுகளுக்கு பிறகும் நம்மை தொடுகின்றன. புறநானூற்றில் — "யாதும் ஊரே யாவரும் கேளிர்" — உலக சகோதரத்துவத்தை பிரகடனப்படுத்திய முதல் இலக்கியம் ஒருவேளை இதுவே.',
+    tourist:'சென்னை Government Museum (Egmore) — சங்க காலத்தின் நாணயங்கள், மட்கலன்கள், ஆயுதங்கள் உள்ளன. தஞ்சாவூர் Tamil University — சங்க இலக்கிய ஆராய்ச்சி மையம், கையெழுத்து பிரதிகள் நூலகம். கீழடி (சிவகங்கை) — சங்க காலத்தின் நகர அமைப்பு அகழ்வாராய்ச்சி தளம், 2600 ஆண்டு பழமை. காவிரிப்பட்டினம் (புகார்) — சிலப்பதிகாரத்தில் குறிப்பிடப்பட்ட வணிக துறைமுக நகரம், அகழ்வாராய்ச்சி நடக்கிறது.'
+  },
+  {
+    cat:'epic',era:'2nd–3rd Century CE',
+    name:'சிலப்பதிகாரம்',nameEn:'Silappatikaram',emoji:'📖',img:'assets/silapam.jpg',
+    brief:'இளங்கோவடிகளால் இயற்றப்பட்ட ஐம்பெருங்காப்பியங்களில் முதலாவது — கண்ணகியின் நீதிப் போராட்டம்.',
+    tags:['ஐம்பெரும்காப்பியம்','கண்ணகி','இளங்கோவடிகள்','மாதவி'],
+    history:'சிலப்பதிகாரம் இளங்கோவடிகளால் இயற்றப்பட்ட ஐம்பெருங்காப்பியங்களில் முதலாவது. இளங்கோவடிகள் சேர மன்னர் குடும்பத்தைச் சேர்ந்தவர் — மன்னனாக இருந்திருக்கலாம், ஆனால் துறவு மேற்கொண்டார். நூல் மூன்று காண்டங்களாக பிரிக்கப்பட்டுள்ளது: புகார் காண்டம் — கோவலன் மற்றும் கண்ணகி மதுரையிலிருந்து புகாருக்கு வருகின்றனர்; மதுரை காண்டம் — கோவலன் கொல்லப்படுகிறான், கண்ணகி நீதிக்காக போராடுகிறாள்; வஞ்சி காண்டம் — கண்ணகி வஞ்சிக்கு செல்கிறாள். மாதவி என்ற நடனக் கலைஞரின் மகள் மணிமேகலை — இந்த சிலப்பதிகாரத்தின் தொடர்ச்சியாக மணிமேகலை காப்பியம் எழுதப்பட்டது. கோவலன் தன் மனைவி கண்ணகியை விட்டு மாதவியை காதலிக்கிறான், பின்னர் திரும்புகிறான் — மதுரையில் கள்ள சோற்றிலே உழல்பவனாக ஆகிறான். தவறான குற்றச்சாட்டில் கோவலன் கொல்லப்படுகிறான். கண்ணகி மதுரை அரசனிடம் நீதி கேட்கிறாள் — அரசன் மறுக்கிறான். கண்ணகி தன் கழுத்தணியை (cilappu) மதுரை மேல் வீசுகிறாள் — மதுரை நகரம் எரிகிறது என்ற கதை.',
+    facts:[
+      ['ஆசிரியர்','இளங்கோவடிகள் (சேர குடும்பம்)'],
+      ['காண்டங்கள்','3 (புகார், மதுரை, வஞ்சி)'],
+      ['முக்கிய கதாபாத்திரங்கள்','கண்ணகி, கோவலன், மாதவி'],
+      ['நகரங்கள்','புகார் (காவிரிப்பட்டினம்), மதுரை, வஞ்சி'],
+      ['வகை','காதல் + நீதி காப்பியம்'],
+      ['காலம்','கி.பி 2ஆம்–3ஆம் நூற்றாண்டு'],
+      ['தொடர்ச்சி','மணிமேகலை — மாதவியின் மகள் கதை'],
+      ['சிறப்பு','பெண் நீதியை பாடிய முதல் காப்பியம்'],
+      ['கண்ணகி சிலை','மதுரை, கேரளா, சென்னை'],
+      ['இலக்கிய முக்கியம்','Tamil Heritage UNESCO பட்டியல்']
+    ],
+    why:'சிலப்பதிகாரம் 2000 ஆண்டுகளுக்கு முன்பே பெண்ணுரிமையை, நீதிக்காக போராட வேண்டும் என்ற தைரியத்தை பாடிய நூல். கண்ணகி ஒரு சாதாரண மனைவி — கணவன் துரோகி, அரசன் அநீதி செய்பவன் — இருந்தாலும் கண்ணகி தோற்கவில்லை. அவள் நீதிக்கு குரல் கொடுத்தாள். இந்த கதை இன்றும் பொருத்தமானது. நூலில் சங்க கால நகர அமைப்பு, வணிகம், நடனம், இசை, கடல் வணிகம் ஆகியவை விவரிக்கப்படுகின்றன — இது ஒரு வரலாற்று ஆவணம்.',
+    tourist:'மதுரையில் கண்ணகி சிலை உள்ளது. காவிரிப்பட்டினம் (புகார்) அகழ்வாராய்ச்சி தளம் — சிலப்பதிகாரத்தில் விவரிக்கப்பட்ட துறைமுக நகர அமைப்புகள் கண்டுபிடிக்கப்பட்டுள்ளன. கேரளாவின் கோடுங்கல்லூரில் கண்ணகி அம்மன் கோயில் உள்ளது. சென்னை மெரினா கடற்கரையில் கண்ணகி சிலை உள்ளது.'
+  },
+  {
+    cat:'epic',era:'3rd–5th Century CE',
+    name:'மணிமேகலை',nameEn:'Manimekalai',emoji:'🏺',img:'assets/manimegalai.jpg',
+    brief:'சாத்தனாரால் இயற்றப்பட்ட பௌத்த காப்பியம் — அக்ஷய பாத்திரம் கொண்ட மணிமேகலை.',
+    tags:['ஐம்பெரும்காப்பியம்','Buddhism','மணிமேகலை','சாத்தனார்'],
+    history:'மணிமேகலை சாத்தனாரால் இயற்றப்பட்டது. சாத்தனார் ஒரு வணிகர் குடும்பத்தைச் சேர்ந்தவர் — பௌத்த மத நம்பிக்கையாளர். சிலப்பதிகாரத்தில் கோவலன் காதலிக்கும் மாதவி என்ற நர்த்தகியின் மகள் மணிமேகலை இந்த காப்பியத்தின் நாயகி. மணிமேகலை நடனக் கலை கற்றுக்கொண்டாலும், பௌத்த தத்துவத்தால் கவரப்பட்டு துறவியாக மாறுகிறாள். அக்ஷய பாத்திரம் — ஒரு அற்புதமான பாத்திரம், அதில் உணவு ஒருபோதும் தீராது, பசியுள்ளவர்களுக்கு தொடர்ந்து உணவளிக்கும் — என்பது இந்த காப்பியத்தின் மையம். மணிமேகலை அந்த பாத்திரத்தை பெற்று, பசியுள்ளோர் அனைவருக்கும் உணவளிக்கிறாள். நூல் 30 அத்தியாயங்களில் பௌத்த தர்மம், மனித இயல்பு, கர்மா, மறுபிறப்பு ஆகியவற்றை விவரிக்கிறது. சங்க காலத்தில் தமிழகத்தில் பௌத்தம் சிறந்திருந்தது என்பதற்கு இந்த காப்பியம் சாட்சி.',
+    facts:[
+      ['ஆசிரியர்','சாத்தனார்'],
+      ['தொடர்பு','சிலப்பதிகாரத்தின் தொடர்ச்சி'],
+      ['நாயகி','மணிமேகலை (மாதவியின் மகள்)'],
+      ['மதம்','பௌத்தம்'],
+      ['அத்தியாயங்கள்','30'],
+      ['முக்கிய கருத்தாக்கம்','அக்ஷய பாத்திரம் — பசியில்லா உலகு'],
+      ['காலம்','கி.பி 3ஆம்–5ஆம் நூற்றாண்டு'],
+      ['சிறப்பு','தமிழகத்தில் பௌத்தம் சிறந்ததற்கு சான்று'],
+      ['மொழிபெயர்ப்பு','ஆங்கிலம், ஃபிரஞ்சு உட்பட'],
+      ['ஆராய்ச்சி','Dr. S. Krishnaswami Aiyangar — 1928']
+    ],
+    why:'மணிமேகலை ஒரு நடனக்கலைஞியாக இருந்தாலும் அதை விட்டு, பசியுள்ளவர்களுக்கு உணவளிக்கும் பணியை தேர்ந்தெடுக்கிறாள் — இது 2000 ஆண்டுகளுக்கு முன்பே சமூக சேவையை மேலான கலையாக கருதிய தமிழரின் மனப்பான்மையை காட்டுகிறது. அக்ஷய பாத்திரம் என்ற கருத்தாக்கம் — பசியில்லாத உலகை கட்டமைக்க வேண்டும் — இன்றும் UN-ன் உணவு பாதுகாப்பு இலக்கோடு ஒத்துப்போகிறது.',
+    tourist:'புகார் (காவிரிப்பட்டினம்) — மணிமேகலை கதை நடந்த இடம், அகழ்வாராய்ச்சி தளம் உள்ளது. நாகப்பட்டினம் — சங்க காலத்தில் பௌத்த மையமாக இருந்த இடம். சென்னை அருங்காட்சியகம் — மணிமேகலை கால பௌத்த சிற்பங்கள் உள்ளன. காவிரிப்பட்டினம் செல்ல: நாகப்பட்டினம் ரயில் நிலையத்திலிருந்து பேருந்து.'
+  },
+  {
+    cat:'art',era:'2000+ Years',
+    name:'பரதநாட்டியம்',nameEn:'Bharatanatyam',emoji:'💃',img:'assets/bharatanatyam.jpg',
+    brief:'2000 ஆண்டு பாரம்பரியமுள்ள கோயில் நடனம் — உடல், மனம், ஆன்மா மூன்றையும் ஒருங்கிணைக்கும் கலை.',
+    tags:['Classical Dance','UNESCO 2016','Devadasi','Natyashastra'],
+    history:'பரதநாட்டியம் தமிழகத்தின் செவ்வியல் நடன வடிவம் — 2000 ஆண்டுகளுக்கும் மேலான வரலாறு கொண்டது. ஆரம்பத்தில் "சதிர் அட்டம்" என்று அழைக்கப்பட்டது — கோயில்களில் தேவரடியார்கள் (Devadasi) என்ற பெண்கள் தெய்வங்களுக்கு நடனம் ஆடினர். பரதமுனிவரின் நாட்டியசாஸ்திரம் (கி.மு 200 – கி.பி 200) இந்த நடனத்தின் அடிப்படை நூல். 20ஆம் நூற்றாண்டில் E. Krishna Iyer மற்றும் ருக்மிணி தேவி அருண்டேல் ஆகியோர் கோயிலிலிருந்து அரங்கத்திற்கு கொண்டு வந்தனர். ருக்மிணி தேவி கலாட்சேத்ரா என்ற பள்ளியை 1936ல் சென்னையில் தொடங்கினார் — இன்றும் உலக அளவில் புகழ்பெற்ற நடன பள்ளி. நடனத்தில் மூன்று அம்சங்கள்: நிருத்தம் (தாள, சைகை வேலை), நிருத்தியம் (அபிநயம் — உணர்வு வெளிப்பாடு), நாட்டியம் (கதை சொல்வது). கைகளில் 64 முத்திரைகள், கண்களில் 9 ரசங்கள், 108 காரணங்கள் (தாளம் + சைகை). 2016ல் UNESCO இதை Intangible Cultural Heritage என்று அறிவித்தது.',
+    facts:[
+      ['வரலாறு','2000+ ஆண்டுகள்'],
+      ['ஆரம்பப் பெயர்','சதிர் அட்டம் / தாசி அட்டம்'],
+      ['அடிப்படை நூல்','நாட்டியசாஸ்திரம் (பரதமுனிவர்)'],
+      ['UNESCO அறிவிப்பு','2016'],
+      ['மூன்று அம்சங்கள்','நிருத்தம், நிருத்தியம், நாட்டியம்'],
+      ['முத்திரைகள்','64 கை முத்திரைகள்'],
+      ['ரசங்கள்','9 (கண் வழி உணர்வு வெளிப்பாடு)'],
+      ['கலாட்சேத்ரா','1936, சென்னை — ருக்மிணி தேவி'],
+      ['இசை','கர்நாடக சங்கீதம்'],
+      ['இசைக்கருவிகள்','மிருதங்கம், நட்டுவாங்கம், வீணை, புல்லாங்குழல்']
+    ],
+    why:'பரதநாட்டியம் வெறும் நடனம் மட்டுமல்ல — இது ஒரு முழுமையான கலை வடிவம். உடல் ஒரு கருவி, இசை ஒரு வழி, அபிநயம் ஒரு மொழி — மூன்றும் சேர்ந்து ஒரு கவிதையை, ஒரு புராண கதையை உயிரோட்டமாக மாற்றும். ஒரு நடனத்தை பார்க்கும்போது நம் மனதில் 9 வகையான உணர்வுகள் (ரசங்கள்) தோன்றும் — இது கலையின் சக்தி. தமிழர்களுக்கு உடல் ஒரு கோயில் — அந்த கோயிலில் நடக்கும் வழிபாடே பரதநாட்டியம்.',
+    tourist:'சென்னை கலாட்சேத்ரா (அடையாறு) — உலகின் மிகப் புகழ்பெற்ற பரதநாட்டியப் பள்ளி, கார்த்திகை நாட்டிய விழா டிசம்பரில் நடக்கும். தஞ்சாவூர் நாட்டிய அரங்கம் — தஞ்சாவூர் பாரம்பரிய நடன பள்ளி. சென்னை டிசம்பர் இசை-நாட்டிய மாதம் (December Season) — சுமார் 600+ நிகழ்ச்சிகள். Chennai Music Academy, Narada Gana Sabha ஆகியவற்றில் நிகழ்ச்சிகள் நடக்கும். YouTube-ல் Alarippu, Jatiswaram, Varnam, Padam, Tillana என்று தேட — ஒரு முழு நடன அரங்கேற்றத்தின் ஒழுங்கை அறியலாம்.'
+  },
+  {
+    cat:'art',era:'Classical Period',
+    name:'கர்நாடக சங்கீதம்',nameEn:'Carnatic Music',emoji:'🎵',img:'assets/music.jpg',
+    brief:'72 மேளகர்த்த ராகங்கள் — கணிதம், தத்துவம், ஆன்மீகம் ஒன்றிணைந்த இசை மரபு.',
+    tags:['Classical Music','72 Ragas','தியாகராஜர்','December Season'],
+    history:'கர்நாடக சங்கீதம் தெற்கிந்திய செவ்வியல் இசை மரபு — 1000 ஆண்டுகளுக்கும் மேலான வரலாறு. 18ஆம் நூற்றாண்டில் தியாகராஜர் (1767–1847), முத்துஸ்வாமி தீட்சிதர் (1775–1835), ஸ்யாமா சாஸ்திரி (1762–1827) என்ற திருமூர்த்திகளால் வளர்க்கப்பட்டது. தியாகராஜர் 700க்கும் மேற்பட்ட கீர்த்தனைகளை தெலுங்கிலும் தமிழிலும் இயற்றினார் — திருவையாறில் வாழ்ந்தார். 72 மேளகர்த்த ராகங்கள் என்ற அமைப்பு சுத்த கணிதத்தின் அடிப்படையில் உருவாக்கப்பட்டது — 12 சுரங்களில் (7 சுத்த + 5 கூர்) வெவ்வேறு சேர்க்கைகளால் 72 முழு ராகங்கள் (மேளகர்த்தா) மற்றும் 484 அங்க ராகங்கள் உருவாகும். ஒவ்வொரு ராகமும் ஒரு குறிப்பிட்ட நேரத்தில் பாட வேண்டும் — காலை ராகங்கள், மாலை ராகங்கள், இரவு ராகங்கள். ஒவ்வொரு ராகமும் ஒரு குறிப்பிட்ட உணர்வை (ரசம்) கொண்டு வரும். சென்னையில் டிசம்பர் மாதம் நடக்கும் இசை மாதம் (December Season) உலகின் மிகப்பெரிய செவ்வியல் இசை திருவிழாக்களில் ஒன்று — 600க்கும் மேற்பட்ட நிகழ்ச்சிகள், 50+ அரங்கங்கள்.',
+    facts:[
+      ['வயது','1000+ ஆண்டுகள்'],
+      ['திருமூர்த்திகள்','தியாகராஜர், தீட்சிதர், ஸ்யாமா சாஸ்திரி'],
+      ['மேளகர்த்த ராகங்கள்','72'],
+      ['மொத்த ராகங்கள்','484+ (அங்க ராகங்கள் சேர்த்து)'],
+      ['தாள முறை','108 தாளங்கள்'],
+      ['முக்கிய இசைக்கருவிகள்','வீணை, மிருதங்கம், வயலின், கஞ்சீரா'],
+      ['UNESCO','Intangible Cultural Heritage'],
+      ['December Season','600+ நிகழ்ச்சிகள், 50+ அரங்கங்கள்'],
+      ['தியாகராஜர் ஆராதனை','திருவையாறு, ஜனவரி'],
+      ['இசை கல்வி','Guru-Shishya Parampara (வாய்மொழி மரபு)']
+    ],
+    why:'கர்நாடக சங்கீதம் கணிதத்தை இசையாக மாற்றியது. 72 மேளகர்த்த ராகங்கள் என்பது ஒரு அணி கணிதம் (Matrix Mathematics) — 12 சுரங்களை எடுத்து, அவற்றின் வெவ்வேறு சேர்க்கைகளை கணக்கிட்டு, 72 என்ற எண்ணை தோற்றுவித்தது ஒரு அற்புதமான கணிதப் பயிற்சி. ஒவ்வொரு ராகமும் ஒரு குறிப்பிட்ட நேரத்தில் பாட வேண்டும் — காலை பைரவி, மாலை யமன், இரவு நாட்டை — இது இயற்கையின் ஒழுங்கோடு இசையை இணைக்கும் தமிழர்களின் அறிவியல் பார்வை.',
+    tourist:'சென்னை டிசம்பர் இசை மாதம் (Season) — Music Academy, Narada Gana Sabha, Mylapore Fine Arts Club. தியாகராஜர் ஆராதனை — திருவையாறு, தஞ்சாவூர் அருகே, ஜனவரி மாதம் — உலகின் மிகப்பெரிய செவ்வியல் இசை விழா. சென்னை Doordarshan, AIR Chennai — இசை நிகழ்ச்சிகள் வானொலியில் தொடர்ந்து ஒளிபரப்பாகும். YouTube: MS Subbulakshmi, Lalgudi Jayaraman, M Balamurali Krishna ஆகியோரின் இசை கேட்கவும்.'
+  },
+  {
+    cat:'history',era:'850–1279 CE',
+    name:'சோழ சாம்ராஜ்யம்',nameEn:'Chola Empire',emoji:'👑',img:'assets/chola.jpg',
+    brief:'இந்தோனேசியா வரை பரவிய கடல் சாம்ராஜ்யம் — கட்டிட கலை, நீர்ப்பாசனம், கடல் வணிகம் ஒருங்கே.',
+    tags:['Naval Empire','சோழர்','இராஜராஜன்','Gangaikonda'],
+    history:'சோழ சாம்ராஜ்யம் கி.பி 850 முதல் 1279 வரை தமிழர்களின் பேரரசியல் வெற்றியின் உச்சம். இராஜராஜ சோழன் I (985–1014) — தஞ்சை பெரிய கோயிலை கட்டினான், இலங்கையை வென்றான், மாலத்தீவையும் கேரளாவையும் கட்டுப்படியில் வைத்தான். இராஜேந்திர சோழன் (1012–1044) — தந்தையின் வெற்றிகளை விரிவாக்கினான், கங்கை நதி வரை படை எடுத்துச் சென்றான், "கங்கை கொண்ட சோழன்" என்று பட்டம் வாங்கினான். மலேசியா, இந்தோனேசியாவிலும் படை எடுத்தான் — இது கடல் ஆதிக்கத்தை நிரூபிக்கிறது. குலோத்துங்க சோழன் I (1070–1122) — வங்காளம் வரை ஆட்சி விரிவாக்கினான். சோழர்களின் நீர்ப்பாசன அமைப்பு — கல்லணை (காவிரி ஆற்றில்), வீராணம் ஏரி — இன்றும் பயன்பாட்டில் உள்ளன. சோழர் கால கிராம சபை (ஊர் சபை) — பொதுவான வாக்களிப்பு முறை, குடியரசு நிர்வாகம் — உலகின் முதல் ஜனநாயக முறைகளில் ஒன்று என்று கருதப்படுகிறது.',
+    facts:[
+      ['காலம்','கி.பி 850–1279 (429 ஆண்டுகள்)'],
+      ['தலைநகர்கள்','தஞ்சாவூர், கங்கைகொண்ட சோழபுரம்'],
+      ['இராஜராஜ சோழன்','தஞ்சை கோயில் கட்டினான்'],
+      ['இராஜேந்திர சோழன்','கங்கை + இந்தோனேசியா வரை'],
+      ['கடல் படை','உலகின் மிகப்பெரிய — 300+ கப்பல்கள்'],
+      ['நீர்ப்பாசனம்','கல்லணை — இன்றும் பயன்பாட்டில்'],
+      ['கிராம சபை','உலகின் முதல் ஜனநாயக முறை'],
+      ['நடராஜர் சிற்பங்கள்','சோழர் கால இரும்பு வார்ப்பு'],
+      ['வரலாற்று ஆதாரம்','250+ கல்வெட்டுகள்'],
+      ['UNESCO','3 சோழர் கோயில்கள் World Heritage']
+    ],
+    why:'சோழர்கள் வெறும் மன்னர்கள் மட்டுமல்ல — கட்டிட கலைஞர்கள், பொறியாளர்கள், கடல் வணிகர்கள், நிர்வாகிகள். 1000 ஆண்டுகளுக்கு முன்பே கிராம மட்டத்தில் ஜனநாயக தேர்தல் முறை வைத்திருந்தனர் — இது உட்திராஸ் (Uttiramerur) கல்வெட்டில் பொறிக்கப்பட்டுள்ளது. இந்தோனேசியாவில் இன்றும் தமிழ் வார்த்தைகள், சைவ மதம், இந்திய கட்டிடக்கலை செல்வாக்கு காண முடிகிறது — சோழர்களின் கலாசாரப் பரம்பல் இது.',
+    tourist:'தஞ்சாவூர் — பெரிய கோயில் (UNESCO). கங்கைகொண்ட சோழபுரம் (கும்பகோணம் அருகே) — இராஜேந்திர சோழனின் தலைநகர், அழகிய கோயில். தாராசுரம் ஐராவதேஸ்வரர் கோயில் (கும்பகோணம் அருகே) — இசை தூண்கள் கொண்ட UNESCO கோயில். உட்திராஸ் — கிராம ஜனநாயகம் பற்றிய கல்வெட்டு. கும்பகோணம் — சோழர் கால மகாமகம் குளம்.'
+  },
+  {
+    cat:'history',era:'1882–1921',
+    name:'மகாகவி பாரதியார்',nameEn:'Mahakavi Bharathiyar',emoji:'✍️',img:'assets/bharathi.jpg',
+    brief:'தமிழின் மகாகவி — பெண்ணுரிமை, சுதந்திரம், சமூக சமத்துவம் பாடிய புரட்சிக் கவிஞர்.',
+    tags:['மகாகவி','Freedom Fighter','பெண்ணுரிமை','Modern Tamil'],
+    history:'சுப்பிரமணிய பாரதியார் 1882ல் எட்டயபுரத்தில் (திருநெல்வேலி மாவட்டம்) பிறந்தார். 11 வயதில் "பாரதி" என்ற பட்டம் பெற்றார் — சிறு வயதிலேயே கவிதை திறன் தெளிவானது. சென்னையில் பத்திரிக்கையாளராக பணியாற்றினார். 1905ல் வங்காளம் பகிர்வுக்கு எதிரான இயக்கத்தில் பங்கேற்றார் — பொட்டி ஸ்ரீராமுலு, பால கங்காதர திலக் ஆகியோரால் கவரப்பட்டார். ஆங்கிலேய ஆட்சிக்கு எதிரான கவிதைகளால் கைது ஆவார் என்ற பயத்தில் புதுவைக்கு (French India) தப்பி வந்தார் — அங்கே 10 ஆண்டுகள் வாழ்ந்தார். புதுவையில் அரவிந்தர் ஆசிரமத்தில் ஆன்மீக தத்துவம் கற்றார். பெண்ணுரிமை பாடியவர் — "கல்வி கற்று வா அம்மா", "சுதந்திரப்பச்சை", "குயில் பாட்டு" ஆகிய கவிதைகள். தாலி கட்டும் வழக்கத்தையும், சாதி வேற்றுமையையும் கேள்வி கேட்டார் — அந்த காலத்தில் இது புரட்சிகரம். "யாமறிந்த மொழிகளிலே தமிழ்மொழி போல் இனிதாவது எங்கும் காணோம்" என்ற வரிகள் 100 ஆண்டுகள் கடந்தும் தமிழர்களின் நெஞ்சில் தாண்டவமாடுகின்றன. 1921ல் 39 வயதிலேயே இறந்தார் — சென்னை பார்த்தசாரதி கோயிலில் யானையால் மிதிக்கப்பட்டு காயம் பட்டது முக்கிய காரணம் என்று சரித்திரம் கூறுகிறது.',
+    facts:[
+      ['பிறப்பு','1882, எட்டயபுரம், திருநெல்வேலி'],
+      ['மறைவு','1921, சென்னை (39 வயது)'],
+      ['பட்டம்','மகாகவி (11 வயதில் பெற்றார்)'],
+      ['மொத்த கவிதைகள்','400+'],
+      ['புதுவை வாசம்','1908–1918 (10 ஆண்டுகள்)'],
+      ['சாதனை 1','பெண்ணுரிமை கோஷம் — 1900களில்'],
+      ['சாதனை 2','சாதி ஒழிப்பு கோஷம்'],
+      ['சாதனை 3','தமிழ் பத்திரிக்கை — இந்தியா, விஜயா'],
+      ['புகழ்பெற்ற கவிதைகள்','குயில் பாட்டு, கண்ணன் பாட்டு, பாஞ்சாலி சபதம்'],
+      ['நினைவு தினம்','டிசம்பர் 11']
+    ],
+    why:'பாரதியார் வெறும் கவிஞர் மட்டுமல்ல — ஒரு புரட்சியாளர். அந்த காலத்தில் பெண்கள் படிக்கக்கூடாது என்று நம்பிக்கை இருந்தபோது, "கல்வி கற்று வா அம்மா" என்று பாடினார். சாதி வேற்றுமை மிகவும் கடினமாக இருந்தபோது, "சாதிகள் இல்லையடி பாப்பா" என்று பாடினார். இந்த வார்த்தைகள் வெறும் கவிதை மட்டுமல்ல — சமூகத்தை மாற்றிய ஆயுதங்கள். தமிழ் மொழியை — அதன் சொந்த மொழியிலேயே — புரட்சிகரமாக புதுப்பித்தவர் பாரதியார்.',
+    tourist:'எட்டயபுரம் (திருநெல்வேலி மாவட்டம்) — பாரதியார் பிறந்த வீடு இப்போது நினைவு இல்லமாக மாற்றப்பட்டுள்ளது. புதுவை (Pondicherry) — பாரதியார் வாழ்ந்த வீடு, நினைவு இல்லம். சென்னை — திருவல்லிக்கேணி (Triplicane) பார்த்தசாரதி கோயில் அருகே பாரதியார் வாழ்ந்தார். சென்னை — பாரதியார் நூலகம், சேப்பாக்கம். தமிழ்நாடு முழுவதும் பாரதியார் சிலைகள் உள்ளன.'
+  },
+];
+
+
+
+function renderCards(cat){
+  const grid=document.getElementById('cards-grid');grid.innerHTML='';
+  (cat==='all'?ITEMS:ITEMS.filter(i=>i.cat===cat)).forEach((item,idx)=>{
+    const div=document.createElement('div');div.className='c-card';
+    div.innerHTML=`<div class="c-img">
+      <span class="c-emoji-fallback" id="emoji-${idx}" style="position:absolute;z-index:0;font-size:4rem">${item.emoji}</span>
+      <img src="${item.img}" alt="${item.name}"
+           style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1"
+           onload="const e=document.getElementById('emoji-${idx}');if(e)e.style.display='none'"
+           onerror="this.style.display='none'">
+      <div class="c-img-overlay" style="z-index:2"></div>
+    </div>
+    <div class="c-body">
+      <p class="c-era">${item.era}</p>
+      <p class="c-name">${item.name}</p>
+      <p class="c-brief">${item.brief}</p>
+      <div class="c-tags">${item.tags.map(t=>`<span class="c-tag">${t}</span>`).join('')}</div>
+      <p class="c-more">முழுமையாக படிக்க தொடுங்கள் →</p>
+    </div>`;
+    div.onclick=()=>openDetail(item);grid.appendChild(div);
+  });
+}
+renderCards('all');
+function filterCards(cat,btn){document.querySelectorAll('.tab').forEach(b=>b.classList.remove('on'));btn.classList.add('on');renderCards(cat)}
+function openDetail(item){
+  document.getElementById('dp-emoji').textContent=item.emoji;
+  document.getElementById('dp-era').textContent=item.era;
+  document.getElementById('dp-title').textContent=item.name+' — '+item.nameEn;
+  const img=document.getElementById('dp-img');img.src=item.img;img.style.display='block';img.onerror=function(){this.style.display='none'};
+  document.getElementById('dp-body').innerHTML=`<p class="dp-section">வரலாறு / History</p><p class="dp-text">${item.history}</p><p class="dp-section">முக்கிய தகவல்கள் / Key Facts</p><div class="dp-facts">${item.facts.map(([k,v])=>`<div class="dp-fact"><div class="dp-fact-key">${k}</div><div class="dp-fact-val">${v}</div></div>`).join('')}</div><p class="dp-section">ஏன் முக்கியம்?</p><p class="dp-text">${item.why}</p><p class="dp-section">சுற்றுலா / Tourism</p><p class="dp-text">${item.tourist}</p>`;
+  document.getElementById('detail-overlay').classList.add('show');document.body.style.overflow='hidden';
+}
+function closeDetail(){document.getElementById('detail-overlay').classList.remove('show');document.body.style.overflow=''}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDetail()});
+
+const TALENTS=[
+  {ta:'பேச்சுக்கலை',en:'Public Speaking'},{ta:'கட்டுரை',en:'Essay Writing'},
+  {ta:'கவிதை',en:'Poetry'},{ta:'பாடல் எழுதுதல்',en:'Song Writing'},
+  {ta:'நாட்டியம்',en:'Classical Dance'},{ta:'இசை',en:'Music'},
+  {ta:'நாடகம்',en:'Drama / Theatre'},{ta:'ஓவியம்',en:'Drawing / Painting'},
+  {ta:'சிறுகதை',en:'Short Story'},{ta:'நடிப்பு',en:'Acting'},
+  {ta:'பாடுதல்',en:'Singing'},{ta:'வாய்ப்பாடு',en:'Vocal Music'},
+  {ta:'சிலம்பம்',en:'Silambam'},{ta:'யோகா',en:'Yoga'},
+  {ta:'வலைப்பதிவு',en:'Blogging'},{ta:'புகைப்படம்',en:'Photography'},
+  {ta:'குறும்படம்',en:'Short Films'},{ta:'கைவினை',en:'Handicrafts'},
+  {ta:'விவாதம்',en:'Debate'},{ta:'மிமிக்ரி',en:'Mimicry'},
+  {ta:'நகைச்சுவை',en:'Stand-up Comedy'},{ta:'ஒரிகாமி',en:'Origami'},
+  {ta:'தமிழ் கதை',en:'Storytelling'},{ta:'மற்றவை',en:'Others'},
+];
+const tg=document.getElementById('tgrid');
+TALENTS.forEach((t,i)=>{
+  const d=document.createElement('div');d.className='ti';d.id='ti'+i;
+  d.innerHTML=`<div class="cb" id="cb${i}"></div><div><div class="tl-ta">${t.ta}</div><div class="tl-en">(${t.en})</div></div>`;
+  d.onclick=()=>{d.classList.toggle('on');document.getElementById('cb'+i).textContent=d.classList.contains('on')?'✓':'';if(t.en==='Others')document.getElementById('others-box').classList.toggle('show',d.classList.contains('on'))};
+  tg.appendChild(d);
+});
+
+function handleEdu(v){['school','college','work'].forEach(k=>document.getElementById('c-'+k).classList.remove('show'));if(v)document.getElementById('c-'+v).classList.add('show')}
+let ackOk=false;
+function toggleAck(){ackOk=!ackOk;const cb=document.getElementById('ack-cb');cb.classList.toggle('on',ackOk);cb.textContent=ackOk?'✓':''}
+function ve(id,mid){document.getElementById(id).classList.add('err');document.getElementById(mid).classList.add('show')}
+function ce(id,mid){document.getElementById(id).classList.remove('err');document.getElementById(mid).classList.remove('show')}
+
+async function submitForm(){
+  const nta_check=document.getElementById('n-ta').value.trim();
+  const phone_check=document.getElementById('phone').value.trim();
+  const email_check=document.getElementById('email').value.trim();
+
+  // ── CHECK IF ALREADY REGISTERED ──
+  try {
+    const existing = JSON.parse(localStorage.getItem('tm_members')||'[]');
+    const dup = existing.find(m =>
+      (m.phone && m.phone.replace(/\D/g,'') === phone_check.replace(/\D/g,'') && phone_check.length >= 10) ||
+      (m.email && m.email.toLowerCase() === email_check.toLowerCase() && email_check.includes('@'))
+    );
+    if (dup) {
+      // Show their existing certificate
+      document.getElementById('cert-name').textContent = dup.nameTa || dup.nameEn || 'உறுப்பினர்';
+      const status = document.getElementById('submit-status');
+      status.className = 'submit-status ok';
+      status.textContent = '✅ நீங்கள் ஏற்கனவே பதிவு செய்துள்ளீர்கள்! You are already registered.';
+      setTimeout(()=>document.getElementById('cert-overlay').classList.add('show'), 400);
+      return;
+    }
+  } catch(e) {}
+
+  let ok=true;
+  const nta=nta_check;
+  const nen=document.getElementById('n-en').value.trim();
+  const edu=document.getElementById('edu').value;
+  const city=document.getElementById('city').value.trim();
+  const phone=document.getElementById('phone').value.trim();
+  const email=document.getElementById('email').value.trim();
+  const selT=TALENTS.filter((_,i)=>document.getElementById('ti'+i).classList.contains('on'));
+  const othTxt=document.getElementById('others-text').value.trim();
+
+  if(!nta){ve('n-ta','e-nta');ok=false}else ce('n-ta','e-nta');
+  if(!nen){ve('n-en','e-nen');ok=false}else ce('n-en','e-nen');
+  if(!edu){ve('edu','e-edu');ok=false}else ce('edu','e-edu');
+  if(edu==='school'){const sn=document.getElementById('school-name').value.trim(),st=document.getElementById('std').value;if(!sn){ve('school-name','e-sn');ok=false}else ce('school-name','e-sn');if(!st){ve('std','e-std');ok=false}else ce('std','e-std')}
+  if(edu==='college'){const cn=document.getElementById('coll-name').value.trim(),dp=document.getElementById('dept').value.trim();if(!cn){ve('coll-name','e-cn');ok=false}else ce('coll-name','e-cn');if(!dp){ve('dept','e-dept');ok=false}else ce('dept','e-dept')}
+  if(edu==='work'){const co=document.getElementById('company').value.trim(),jr=document.getElementById('jobrole').value.trim();if(!co){ve('company','e-co');ok=false}else ce('company','e-co');if(!jr){ve('jobrole','e-jr');ok=false}else ce('jobrole','e-jr')}
+  if(!city){ve('city','e-city');ok=false}else ce('city','e-city');
+  if(!phone||phone.replace(/\D/g,'').length<10){ve('phone','e-phone');ok=false}else ce('phone','e-phone');
+  if(!email||!email.includes('@')||!email.includes('.')){ve('email','e-email');ok=false}else ce('email','e-email');
+  const hasOthers=selT.some(t=>t.en==='Others')&&othTxt.length>0;
+  const hasTalent=selT.filter(t=>t.en!=='Others').length>0||hasOthers;
+  if(!hasTalent){document.getElementById('e-talent').classList.add('show');ok=false}else document.getElementById('e-talent').classList.remove('show');
+  if(!ackOk){document.getElementById('e-ack').classList.add('show');ok=false}else document.getElementById('e-ack').classList.remove('show');
+  if(!ok){document.querySelector('.err')?.scrollIntoView({behavior:'smooth',block:'center'});return}
+
+  const status=document.getElementById('submit-status');
+  status.className='submit-status sending';status.textContent='⏳ பதிவு செய்யப்படுகிறது... Submitting...';
+
+  const member={
+    timestamp:new Date().toLocaleString('en-IN'),
+    nameTa:nta,nameEn:nen,education:edu,
+    schoolName:document.getElementById('school-name')?.value||'',
+    standard:document.getElementById('std')?.value||'',
+    collegeName:document.getElementById('coll-name')?.value||'',
+    department:document.getElementById('dept')?.value||'',
+    company:document.getElementById('company')?.value||'',
+    jobRole:document.getElementById('jobrole')?.value||'',
+    city,phone,email,
+    talents:selT.map(t=>t.ta+' ('+t.en+')').join(', '),
+    othersDescription:othTxt,
+  };
+
+  // Save to localStorage as backup
+  try{const all=JSON.parse(localStorage.getItem('tm_members')||'[]');all.push({...member,id:Date.now()});localStorage.setItem('tm_members',JSON.stringify(all))}catch(e){}
+
+  let googleOk=false,telegramOk=false;
+
+  // Send to Google Sheets
+  if(CONFIG.GOOGLE_SCRIPT_URL && CONFIG.GOOGLE_SCRIPT_URL !== 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE'){
+    try{
+      await fetch(CONFIG.GOOGLE_SCRIPT_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(member),mode:'no-cors'});
+      googleOk=true;
+    }catch(e){console.error('Google Sheets error:',e)}
+  }
+
+  // Send Telegram notification
+  if(CONFIG.TELEGRAM_BOT_TOKEN && CONFIG.TELEGRAM_BOT_TOKEN !== 'YOUR_BOT_TOKEN_HERE'){
+    const msg=`🪔 *New Tamil Mandiram Member!*\n\n👤 *Name:* ${nen} | ${nta}\n🎓 *Education:* ${edu}\n🏙 *City:* ${city}\n📞 *Phone:* ${phone}\n📧 *Email:* ${email}\n🎭 *Talents:* ${member.talents}\n📅 ${member.timestamp}`;
+    try{
+      await fetch(`https://api.telegram.org/bot${CONFIG.TELEGRAM_BOT_TOKEN}/sendMessage`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chat_id:CONFIG.TELEGRAM_CHAT_ID,text:msg,parse_mode:'Markdown'})});
+      telegramOk=true;
+    }catch(e){console.error('Telegram error:',e)}
+  }
+
+  status.className='submit-status ok';
+  status.textContent='✅ பதிவு வெற்றிகரமாக நிறைவேறியது! Registration successful!';
+  // Show Tamil name only on certificate
+  document.getElementById('cert-name').textContent = nta || nen;
+  updateMemberCount();
+  setTimeout(()=>document.getElementById('cert-overlay').classList.add('show'), 600);
+}
+
+// ════════════════════════════════════════════
+// DOWNLOAD CERTIFICATE AS IMAGE
+// Hides disclaimer + buttons, captures card, saves PNG
+// ════════════════════════════════════════════
+
+
+// ════════════════════════════════════════════════════════
+// NOTICE BOARD — Google Docs Integration
+// ════════════════════════════════════════════════════════
+// STEP 1: Paste your Google Doc PUBLISHED URL below
+// (See README.md Part 11 for how to get this URL)
+//
+// HOW TO GET THE URL:
+// 1. Open your Google Doc
+// 2. Click File → Share → Publish to web
+// 3. Select "Plain text (.txt)" from the dropdown
+// 4. Click "Publish" → Copy the link
+// 5. Paste it below replacing the placeholder text
+// ════════════════════════════════════════════════════════
+
+
+// ════════════════════════════════════════════
+// MEMBER COUNT — public hero badge
+// ════════════════════════════════════════════
+function updateMemberCount() {
+  try {
+    var override = localStorage.getItem('tm_count_override');
+    var count = override !== null ? parseInt(override) : (JSON.parse(localStorage.getItem('tm_members')||'[]').length);
+    var el = document.getElementById('member-count-text');
+    if(el) el.textContent = count;
+  } catch(e) {}
+}
+updateMemberCount();
+
+// ════════════════════════════════════════════════════════
+// NOTICE BOARD — reads from localStorage (set by admin panel)
+// ════════════════════════════════════════════════════════
+function loadNoticeFromAdmin() {
+  try {
+    const nd = JSON.parse(localStorage.getItem('tm_notice_data') || '{}');
+
+    // Top Performer(s)
+    const tpEl = document.getElementById('top-performer-content');
+    const tpUpdEl = document.getElementById('tp-updated');
+    if (tpEl) {
+      if (nd.topPerformers && nd.topPerformers.length) {
+        let html = '';
+        nd.topPerformers.forEach((p, i) => {
+          if (!p.name) return;
+          html += `<div style="display:flex;align-items:flex-start;gap:.6rem;margin-bottom:.6rem;padding-bottom:.6rem;border-bottom:1px solid rgba(200,65,11,.15)">
+            <span style="background:var(--saffron);color:#fff;font-size:.65rem;font-weight:700;padding:2px 7px;border-radius:12px;flex-shrink:0;margin-top:2px">${i+1}</span>
+            <div><div style="font-weight:600;color:var(--maroon)">${p.name}</div>
+            ${p.talent?`<div style="font-size:.78rem;color:var(--saffron)">${p.talent}</div>`:''}
+            ${p.desc?`<div style="font-size:.8rem;margin-top:.2rem">${p.desc}</div>`:''}
+            </div></div>`;
+        });
+        tpEl.innerHTML = html || '<p style="color:var(--muted);font-size:.82rem;font-style:italic">தயவுசெய்து காத்திருங்கள்...</p>';
+        if (tpUpdEl) tpUpdEl.textContent = nd.updatedAt ? 'Updated: ' + new Date(nd.updatedAt).toLocaleDateString('en-IN') : '';
+      } else {
+        tpEl.innerHTML = '<p style="color:var(--muted);font-size:.82rem;font-style:italic">விரைவில் அறிவிக்கப்படும்...</p>';
+      }
+    }
+
+    // Upcoming Events
+    const ueEl = document.getElementById('upcoming-events-content');
+    const ueUpdEl = document.getElementById('ue-updated');
+    if (ueEl) {
+      if (nd.ue && nd.ue.desc) {
+        const lines = nd.ue.desc.split('\n').filter(l => l.trim());
+        ueEl.innerHTML = lines.map(l => {
+          if (l.startsWith('*') || l.startsWith('-')) return `<div style="display:flex;gap:.5rem;margin-bottom:.4rem"><span style="color:var(--saffron);flex-shrink:0">▸</span><span>${l.slice(1).trim()}</span></div>`;
+          if (l.startsWith('#')) return `<p style="font-weight:700;color:var(--maroon);margin-bottom:.35rem">${l.slice(1).trim()}</p>`;
+          return `<p style="margin-bottom:.35rem">${l}</p>`;
+        }).join('') || '<p style="color:var(--muted);font-size:.82rem;font-style:italic">விரைவில் அறிவிக்கப்படும்...</p>';
+        if (ueUpdEl) ueUpdEl.textContent = nd.updatedAt ? 'Updated: ' + new Date(nd.updatedAt).toLocaleDateString('en-IN') : '';
+      } else {
+        ueEl.innerHTML = '<p style="color:var(--muted);font-size:.82rem;font-style:italic">விரைவில் அறிவிக்கப்படும்...</p>';
+      }
+    }
+  } catch(e) { console.error('Notice load error:', e); }
+}
+
+loadNoticeFromAdmin();
+// Refresh every 30 seconds in case admin updated from same browser
+setInterval(loadNoticeFromAdmin, 30000);
+
+
+
+
+// ════════════════════════════════════════════════
+// STUDENT CREATIVITY PANEL — Full JS
+// ════════════════════════════════════════════════
+const SP_KEY = 'tm_student_posts';
+let currentPostId = null;
+let likedPosts = new Set(JSON.parse(localStorage.getItem('tm_liked_posts')||'[]'));
+
+function getPosts(){
+  try{ return JSON.parse(localStorage.getItem(SP_KEY)||'[]') }catch{ return [] }
+}
+function savePosts(arr){ localStorage.setItem(SP_KEY, JSON.stringify(arr)) }
+function saveLiked(){ localStorage.setItem('tm_liked_posts', JSON.stringify([...likedPosts])) }
+
+// ── RENDER GRID ──
+function renderPosts(filterType){
+  const grid = document.getElementById('sp-grid');
+  let posts = getPosts();
+  if(filterType && filterType !== 'all'){
+    posts = posts.filter(p => p.type === filterType);
+  }
+  // Sort: most liked first, then newest
+  posts.sort((a,b) => (b.likes||0) - (a.likes||0) || b.id - a.id);
+
+  if(!posts.length){
+    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:3rem;color:#5A4A38;font-size:.9rem">
+      <p style="font-size:2rem;margin-bottom:.75rem">✍</p>
+      <p>இன்னும் எந்த படைப்பும் இல்லை. முதல் படைப்பை நீங்கள் சேர்க்கலாம்!</p>
+      <p style="font-size:.82rem;margin-top:.35rem;color:#3D2E1E">No posts yet. Be the first to share!</p>
+    </div>`;
+    return;
+  }
+
+  grid.innerHTML = posts.map(p => {
+    const initials = (p.author||'?').charAt(0);
+    const liked = likedPosts.has(p.id);
+    const date = new Date(p.id).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
+    const preview = (p.content||'').substring(0,120) + ((p.content||'').length > 120 ? '…' : '');
+    const typeEmoji = {கவிதை:'🖊',பேச்சு:'🎙',கட்டுரை:'📝',சிந்தனை:'💭',பாடல்:'🎵',மற்றவை:'✨'}[p.type]||'✨';
+    const commCount = (p.comments||[]).length;
+    return `<div class="sp-card" onclick="quickPreview(${p.id})">
+      <div class="sp-card-top">
+        <div style="display:flex;align-items:center;gap:.65rem;margin-bottom:.6rem">
+          <div class="sp-avatar">${initials}</div>
+          <div style="flex:1;min-width:0">
+            <p class="sp-author">${p.author||'—'}</p>
+            <span class="sp-tag">${typeEmoji} ${p.type||''}</span>
+          </div>
+        </div>
+        <p class="sp-title">${p.title||''}</p>
+        <p class="sp-preview">${preview}</p>
+      </div>
+      <div class="sp-card-bottom">
+        <span class="sp-likes${liked?' liked':''}">
+          <span class="sp-heart">${liked?'🧡':'🤍'}</span>
+          <span>${p.likes||0}</span>
+        </span>
+        <span class="sp-comments-count">💬 ${commCount}</span>
+        <span class="sp-date">${date}</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function filterPosts(type, btn){
+  document.querySelectorAll('#sp-tabs .tab').forEach(b=>{
+    b.style.background='transparent';b.style.color='#8A7560';b.style.borderColor='#3D2E1E';
+  });
+  btn.style.background='var(--saffron)';btn.style.color='#fff';btn.style.borderColor='var(--saffron)';
+  renderPosts(type==='all'?null:type);
+}
+
+// ── QUICK PREVIEW BANNER (1st click on a card) ──
+let quickPreviewId = null;
+let quickPreviewTimer = null;
+function quickPreview(id){
+  const posts = getPosts();
+  const p = posts.find(x=>x.id===id);
+  if(!p) return;
+  quickPreviewId = id;
+  const typeEmoji = {கவிதை:'🖊',பேச்சு:'🎙',கட்டுரை:'📝',சிந்தனை:'💭',பாடல்:'🎵',மற்றவை:'✨'}[p.type]||'✨';
+  document.getElementById('qb-avatar').textContent = (p.author||'?').charAt(0);
+  document.getElementById('qb-author').textContent = p.author||'—';
+  document.getElementById('qb-tag').textContent = typeEmoji+' '+(p.type||'');
+  document.getElementById('qb-title').textContent = p.title||'';
+  const excerpt = (p.content||'').substring(0,160) + ((p.content||'').length>160?'…':'');
+  document.getElementById('qb-excerpt').textContent = excerpt;
+  document.getElementById('sp-quick-banner').classList.add('show');
+  clearTimeout(quickPreviewTimer);
+  quickPreviewTimer = setTimeout(closeQuickPreview, 6000);
+}
+function closeQuickPreview(){
+  document.getElementById('sp-quick-banner').classList.remove('show');
+  clearTimeout(quickPreviewTimer);
+}
+function openFromQuickPreview(){
+  const id = quickPreviewId;
+  closeQuickPreview();
+  if(id!=null) openSPModal(id);
+}
+document.addEventListener('click', function(e){
+  const banner = document.getElementById('sp-quick-banner');
+  if(!banner || !banner.classList.contains('show')) return;
+  if(banner.contains(e.target)) return;
+  if(e.target.closest && e.target.closest('.sp-card')) return;
+  closeQuickPreview();
+});
+
+// ── OPEN POST MODAL ──
+function openSPModal(id){
+  const posts = getPosts();
+  const p = posts.find(x=>x.id===id);
+  if(!p) return;
+  currentPostId = id;
+  const typeEmoji = {கவிதை:'🖊',பேச்சு:'🎙',கட்டுரை:'📝',சிந்தனை:'💭',பாடல்:'🎵',மற்றவை:'✨'}[p.type]||'✨';
+  const date = new Date(p.id).toLocaleDateString('ta-IN',{day:'2-digit',month:'long',year:'numeric'});
+  document.getElementById('sp-m-type').textContent = typeEmoji+' '+p.type;
+  document.getElementById('sp-m-title').textContent = p.title;
+  document.getElementById('sp-m-author').textContent = p.author;
+  document.getElementById('sp-m-date').textContent = date;
+  document.getElementById('sp-m-avatar').textContent = (p.author||'?').charAt(0);
+  document.getElementById('sp-m-content').textContent = p.content;
+  // Likes
+  const liked = likedPosts.has(id);
+  const likeBtn = document.getElementById('sp-like-btn');
+  likeBtn.classList.toggle('liked', liked);
+  document.getElementById('sp-like-heart').textContent = liked ? '🧡' : '🤍';
+  document.getElementById('sp-like-count').textContent = p.likes||0;
+  // Comments
+  renderComments(p.comments||[]);
+  document.getElementById('sp-overlay').classList.add('show');
+  document.body.style.overflow='hidden';
+}
+
+function closeSPModal(){
+  document.getElementById('sp-overlay').classList.remove('show');
+  document.body.style.overflow='';
+  currentPostId=null;
+}
+
+// ── LIKE TOGGLE ──
+function toggleLike(){
+  if(!currentPostId) return;
+  const posts = getPosts();
+  const idx = posts.findIndex(x=>x.id===currentPostId);
+  if(idx===-1) return;
+  const liked = likedPosts.has(currentPostId);
+  if(liked){
+    likedPosts.delete(currentPostId);
+    posts[idx].likes = Math.max(0,(posts[idx].likes||0)-1);
+  } else {
+    likedPosts.add(currentPostId);
+    posts[idx].likes = (posts[idx].likes||0)+1;
+  }
+  savePosts(posts);
+  saveLiked();
+  const nowLiked = likedPosts.has(currentPostId);
+  document.getElementById('sp-like-btn').classList.toggle('liked', nowLiked);
+  document.getElementById('sp-like-heart').textContent = nowLiked?'🧡':'🤍';
+  document.getElementById('sp-like-count').textContent = posts[idx].likes;
+  renderPosts();
+}
+
+// ── COMMENTS ──
+function renderComments(comments){
+  const list = document.getElementById('sp-comments-list');
+  const label = document.getElementById('sp-comments-label');
+  label.textContent = '💬 கருத்துகள் — '+comments.length;
+  if(!comments.length){
+    list.innerHTML='<p class="sp-no-comments">இன்னும் கருத்துகள் இல்லை. முதல் கருத்தை பகிரவும்!</p>';
+    return;
+  }
+  list.innerHTML = comments.map(c=>{
+    const t = new Date(c.id).toLocaleString('en-IN',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});
+    return `<div class="sp-comment">
+      <div class="sp-comment-avatar">${(c.name||'?').charAt(0)}</div>
+      <div class="sp-comment-bubble">
+        <p class="sp-comment-name">${c.name}</p>
+        <p class="sp-comment-text">${c.text}</p>
+        <p class="sp-comment-time">${t}</p>
+      </div>
+    </div>`;
+  }).reverse().join('');
+}
+
+function submitComment(){
+  const name = document.getElementById('sp-comment-name').value.trim();
+  const text = document.getElementById('sp-comment-text').value.trim();
+  if(!name||!text) return;
+  const posts = getPosts();
+  const idx = posts.findIndex(x=>x.id===currentPostId);
+  if(idx===-1) return;
+  if(!posts[idx].comments) posts[idx].comments=[];
+  posts[idx].comments.push({id:Date.now(), name, text});
+  savePosts(posts);
+  renderComments(posts[idx].comments);
+  document.getElementById('sp-comment-text').value='';
+  renderPosts();
+}
+
+// ── ADD POST ──
+function openAddPost(){ document.getElementById('sp-add-overlay').classList.add('show') }
+function closeAddPost(){ document.getElementById('sp-add-overlay').classList.remove('show') }
+
+function submitPost(){
+  const author = document.getElementById('sp-post-author').value.trim();
+  const type   = document.getElementById('sp-post-type').value;
+  const title  = document.getElementById('sp-post-title').value.trim();
+  const content= document.getElementById('sp-post-content').value.trim();
+  if(!author||!type||!title||!content){ alert('அனைத்து புலங்களையும் நிரப்பவும். Please fill all fields.'); return; }
+  const posts = getPosts();
+  posts.unshift({ id:Date.now(), author, type, title, content, likes:0, comments:[] });
+  savePosts(posts);
+  closeAddPost();
+  renderPosts();
+  // Clear form
+  ['sp-post-author','sp-post-title','sp-post-content'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('sp-post-type').value='';
+}
+
+// Initial render
+renderPosts();
+
+
+// ════════════════════════════════════════════
+// CREATIVE REGISTRATION
+// ════════════════════════════════════════════
+const CRK = 'tm_creative_regs';
+function getCR(){ try{return JSON.parse(localStorage.getItem(CRK)||'[]')}catch{return[]} }
+function saveCR(a){ localStorage.setItem(CRK,JSON.stringify(a)) }
+
+// Show/hide other field
+document.addEventListener('DOMContentLoaded',()=>{
+  const sel=document.getElementById('cr-type-sel');
+  if(sel) sel.addEventListener('change',()=>{
+    document.getElementById('cr-other-field').style.display=sel.value==='மற்றவை'?'block':'none';
+  });
+});
+
+function openCreativeReg(){
+  // Check if already registered by phone/email
+  const phone=document.getElementById('cr-phone')?.value||'';
+  document.getElementById('cr-reg-overlay').classList.add('show');
+}
+function closeCreativeReg(){
+  document.getElementById('cr-reg-overlay').classList.remove('show');
+}
+
+function submitCreativeReg(){
+  const nameTa=document.getElementById('cr-name-ta').value.trim();
+  const nameEn=document.getElementById('cr-name-en').value.trim();
+  const phone=document.getElementById('cr-phone').value.trim();
+  const email=document.getElementById('cr-email').value.trim();
+  const school=document.getElementById('cr-school').value.trim();
+  const type=document.getElementById('cr-type-sel').value;
+  const otherText=document.getElementById('cr-other-text').value.trim();
+  const creativeType=type==='மற்றவை'?(otherText||'மற்றவை'):type;
+  const errEl=document.getElementById('cr-err');
+
+  // Validate
+  if(!nameTa||!nameEn||!phone||!email||!school||!type){
+    errEl.textContent='அனைத்து புலங்களையும் நிரப்பவும் — Please fill all required fields.';
+    errEl.style.display='block';return;
+  }
+  if(phone.replace(/\D/g,'').length<10){
+    errEl.textContent='சரியான தொலைபேசி எண் கொடுக்கவும்.';
+    errEl.style.display='block';return;
+  }
+  if(!email.includes('@')||!email.includes('.')){
+    errEl.textContent='சரியான மின்னஞ்சல் முகவரி கொடுக்கவும்.';
+    errEl.style.display='block';return;
+  }
+  errEl.style.display='none';
+
+  // Duplicate check
+  const existing=getCR();
+  const dup=existing.find(r=>
+    r.phone.replace(/\D/g,'')===phone.replace(/\D/g,'') ||
+    r.email.toLowerCase()===email.toLowerCase()
+  );
+  if(dup){
+    errEl.textContent='நீங்கள் ஏற்கனவே பதிவு செய்துள்ளீர்கள்! Your registration ID: '+dup.regId;
+    errEl.style.display='block';return;
+  }
+
+  // Generate ID: 2026001, 2026002 ...
+  const nextNum=existing.length+1;
+  const regId='2026'+String(nextNum).padStart(3,'0');
+
+  const reg={
+    id:Date.now(), regId, nameTa, name:nameEn,
+    phone, email, school, creativeType,
+    timestamp:new Date().toLocaleString('en-IN')
+  };
+  existing.push(reg);
+  saveCR(existing);
+
+  // Show success
+  closeCreativeReg();
+  document.getElementById('cr-success-id').textContent=regId;
+  document.getElementById('cr-success-name').textContent=nameTa||nameEn;
+  document.getElementById('cr-success-overlay').classList.add('show');
+
+  // Reset form
+  ['cr-name-ta','cr-name-en','cr-phone','cr-email','cr-school','cr-other-text'].forEach(id=>{
+    const el=document.getElementById(id);if(el)el.value='';
+  });
+  document.getElementById('cr-type-sel').value='';
+  document.getElementById('cr-other-field').style.display='none';
+}
+
+// ════════════════════════════════════════════════════════
+// CERTIFICATE DOWNLOAD — draws certificate on canvas
+// Logo/seal, Tamil-only text, both signatures, no disclaimer
+// ════════════════════════════════════════════════════════
+function downloadCertImg() {
+  var btn = event.target;
+  var origText = btn.textContent;
+
+  try {
+    runCertDownload(btn, origText);
+  } catch (fatalErr) {
+    console.error('[cert] FATAL error before image generation even started:', fatalErr);
+    alert('ஒரு பிழை ஏற்பட்டது. தயவுசெய்து பக்கத்தை மீண்டும் ஏற்றி முயற்சிக்கவும்.\n(Something went wrong. Please refresh the page and try again.)\n\n' + fatalErr.message);
+    btn.textContent = origText;
+    btn.disabled = false;
+  }
+}
+
+function runCertDownload(btn, origText) {
+  btn.textContent = '⏳ தயாரிக்கிறோம்...';
+  btn.disabled = true;
+  var memberName = document.getElementById('cert-name').textContent || 'உறுப்பினர்';
+
+  var W = 1200, H = 1750;
+  var canvas = document.createElement('canvas');
+  canvas.width = W; canvas.height = H;
+  var ctx = canvas.getContext('2d');
+
+  var bg = ctx.createLinearGradient(0,0,W,H);
+  bg.addColorStop(0,'#4A0A0A'); bg.addColorStop(0.5,'#2D0808'); bg.addColorStop(1,'#5A1010');
+  ctx.fillStyle = bg; ctx.fillRect(0,0,W,H);
+
+  ctx.save(); ctx.strokeStyle='rgba(184,134,11,0.2)'; ctx.lineWidth=3;
+  ctx.beginPath(); ctx.arc(W+100,-100,400,0,Math.PI*2); ctx.stroke();
+  ctx.beginPath(); ctx.arc(-80,H+80,280,0,Math.PI*2); ctx.stroke();
+  ctx.restore();
+
+  function certGoldLine(y) {
+    var g=ctx.createLinearGradient(0,y,W,y);
+    g.addColorStop(0,'transparent'); g.addColorStop(0.5,'#B8860B'); g.addColorStop(1,'transparent');
+    ctx.fillStyle=g; ctx.fillRect(0,y,W,5);
+  }
+  certGoldLine(55); certGoldLine(H-58);
+
+  ctx.save(); ctx.strokeStyle='rgba(184,134,11,0.38)'; ctx.lineWidth=2;
+  ctx.beginPath();
+  ctx.moveTo(86,96); ctx.lineTo(W-86,96); ctx.quadraticCurveTo(W-70,96,W-70,112);
+  ctx.lineTo(W-70,H-112); ctx.quadraticCurveTo(W-70,H-96,W-86,H-96);
+  ctx.lineTo(86,H-96); ctx.quadraticCurveTo(70,H-96,70,H-112);
+  ctx.lineTo(70,112); ctx.quadraticCurveTo(70,96,86,96); ctx.closePath();
+  ctx.stroke(); ctx.restore();
+
+  function certDiv(y, w) {
+    var dw = w || 180;
+    var g=ctx.createLinearGradient(W/2-dw/2,y,W/2+dw/2,y);
+    g.addColorStop(0,'transparent'); g.addColorStop(0.5,'rgba(184,134,11,0.6)'); g.addColorStop(1,'transparent');
+    ctx.fillStyle=g; ctx.fillRect(W/2-dw/2,y,dw,2);
+  }
+
+  ctx.textAlign='center';
+  ctx.fillStyle='#F5D78E';
+  ctx.font='bold 72px serif';
+  ctx.shadowColor='rgba(0,0,0,0.4)'; ctx.shadowBlur=8;
+  ctx.fillText('தமிழ் மன்றம்', W/2, 185);
+  ctx.shadowBlur=0;
+
+  // Resolve assets relative to THIS page's own folder, stripping any
+  // query string or hash first so URL resolution never breaks.
+  var pageUrl = window.location.href.split('#')[0].split('?')[0];
+  var ASSET_BASE = new URL('assets/', pageUrl).href;
+  console.log('[cert] asset base resolved to:', ASSET_BASE);
+
+  function loadSeal(callback) {
+    var img1 = new Image();
+    // NOTE: crossOrigin must NOT be set for same-origin local files.
+    // Setting crossOrigin='anonymous' on a same-origin image with no CORS
+    // headers makes the browser silently fail to load it (and would also
+    // taint the canvas). That was the bug causing seal/signatures/logo
+    // to be missing from the downloaded PNG even though the files existed.
+    img1.onload = function() { console.log('[cert] seal.png loaded'); callback(img1); };
+    img1.onerror = function() {
+      console.warn('[cert] seal.png missing, trying logo.png');
+      var img2 = new Image();
+      img2.onload = function() { console.log('[cert] logo.png loaded as seal fallback'); callback(img2); };
+      img2.onerror = function() { console.warn('[cert] logo.png also missing — drawing text fallback'); callback(null); };
+      img2.src = ASSET_BASE + 'logo.png';
+    };
+    img1.src = ASSET_BASE + 'seal.png';
+  }
+
+  loadSeal(function(sealImg) {
+    var sY=320, sR=105;
+    ctx.save();
+    ctx.beginPath(); ctx.arc(W/2,sY,sR,0,Math.PI*2);
+    ctx.strokeStyle='#B8860B'; ctx.lineWidth=6; ctx.stroke();
+    ctx.fillStyle='rgba(184,134,11,0.1)'; ctx.fill();
+    ctx.restore();
+    ctx.save();
+    ctx.beginPath(); ctx.arc(W/2,sY,sR-5,0,Math.PI*2); ctx.clip();
+    if(sealImg && sealImg.naturalWidth>0) {
+      ctx.drawImage(sealImg, W/2-(sR-5), sY-(sR-5), (sR-5)*2, (sR-5)*2);
+    } else {
+      ctx.fillStyle='rgba(184,134,11,0.15)';
+      ctx.fillRect(W/2-(sR-5), sY-(sR-5), (sR-5)*2, (sR-5)*2);
+      ctx.fillStyle='#F5D78E'; ctx.font='bold 28px serif';
+      ctx.textAlign='center';
+      ctx.fillText('தமிழ்', W/2, sY-8); ctx.fillText('மன்றம்', W/2, sY+32);
+    }
+    ctx.restore();
+    ctx.save(); ctx.beginPath(); ctx.arc(W/2,sY,sR,0,Math.PI*2);
+    ctx.strokeStyle='#B8860B'; ctx.lineWidth=6; ctx.stroke(); ctx.restore();
+
+    ctx.fillStyle='rgba(245,215,142,0.5)';
+    ctx.font='italic 32px serif'; ctx.textAlign='center';
+    ctx.fillText('நன்றி மறப்பது நன்றன்று — நன்றல்லது', W/2, 493);
+    ctx.fillText('அன்றே மறப்பது நன்று', W/2, 541);
+    ctx.fillStyle='rgba(245,215,142,0.32)';
+    ctx.font='italic 25px serif';
+    ctx.fillText('— திருக்குறள் 108', W/2, 585);
+
+    certDiv(626);
+
+    ctx.fillStyle='rgba(245,215,142,0.38)';
+    ctx.font='400 26px serif'; ctx.textAlign='center';
+    ctx.fillText('இவ்வாறு சான்றளிக்கப்படுகிறது', W/2, 692);
+
+    ctx.fillStyle='#FFFFFF';
+    ctx.shadowColor='rgba(0,0,0,0.55)'; ctx.shadowBlur=18;
+    ctx.font='bold 92px serif';
+    ctx.fillText(memberName, W/2, 820);
+    ctx.shadowBlur=0;
+
+    ctx.fillStyle='rgba(255,255,255,0.62)';
+    ctx.font='400 33px serif';
+    ctx.fillText('தமிழ் மன்றத்தின் மதிப்புமிக்க உறுப்பினராக', W/2, 906);
+    ctx.fillStyle='#F5D78E'; ctx.font='bold 40px sans-serif';
+    ctx.fillText('2026', W/2, 958);
+    ctx.fillStyle='rgba(255,255,255,0.62)';
+    ctx.font='400 33px serif';
+    ctx.fillText('ஆம் ஆண்டு இணைந்திருக்கிறார்', W/2, 1010);
+
+    certDiv(1058, 400);
+
+    var s1=new Image(), s2=new Image();
+    var sigLoaded=0;
+    var sigFinished = false;
+    function sigDone() {
+      sigLoaded++;
+      if(sigLoaded>=2 && !sigFinished) {
+        sigFinished = true;
+        if(s1.naturalWidth>0) { console.log('[cert] signature.png drawn'); ctx.drawImage(s1, W/2-330, 1080, 240, 90); } else { console.warn('[cert] signature.png missing'); }
+        if(s2.naturalWidth>0) { console.log('[cert] signature2.png drawn'); ctx.drawImage(s2, W/2+90,  1080, 240, 90); } else { console.warn('[cert] signature2.png missing'); }
+
+        ctx.strokeStyle='rgba(245,215,142,0.32)'; ctx.lineWidth=1.5;
+        ctx.beginPath(); ctx.moveTo(W/2-340,1188); ctx.lineTo(W/2-70,1188); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(W/2+80, 1188); ctx.lineTo(W/2+350,1188); ctx.stroke();
+
+        ctx.fillStyle='rgba(245,215,142,0.42)';
+        ctx.font='400 26px serif'; ctx.textAlign='center';
+        ctx.fillText('இயக்குநர்', W/2-205, 1232);
+        ctx.fillText('தலைவர்',   W/2+215, 1232);
+
+        certDiv(1282, 240);
+        ctx.fillStyle='rgba(245,215,142,0.45)';
+        ctx.font='italic 29px serif'; ctx.textAlign='center';
+        ctx.fillText('யாதும் ஊரே யாவரும் கேளிர்', W/2, 1338);
+        certDiv(1365, 240);
+
+        // ── FINALIZE: build a real data URL and trigger download reliably ──
+        var dataUrl;
+        try {
+          dataUrl = canvas.toDataURL('image/png');
+        } catch (e) {
+          console.error('[cert] toDataURL failed:', e);
+          if (window.location.protocol === 'file:') {
+            alert('சான்றிதழைப் பதிவிறக்க முடியவில்லை.\nஇந்தப் பக்கம் கணினியில் நேரடியாகத் (file://) திறக்கப்பட்டுள்ளதால் உலாவியின் பாதுகாப்புக் காரணமாக படத்தைச் சேமிக்க முடியவில்லை.\nஇந்த இணையதளத்தை ஓர் இணைய சேவையகத்தில் (host) வைத்துப் பயன்படுத்தினால் இச்சிக்கல் தீரும்.\n\n(Could not download the certificate. This page is currently open directly from your computer\'s file system (file://) — browsers block saving canvas images in that mode for security reasons. This will work correctly once the website is hosted online (your domain, GitHub Pages, Netlify, etc.) instead of opened as a local file.)');
+          } else {
+            alert('சான்றிதழை உருவாக்க முடியவில்லை. தயவுசெய்து பக்கத்தை மீண்டும் ஏற்றி மீண்டும் முயற்சிக்கவும்.\n(Could not generate certificate image. Please refresh the page and try again.)');
+          }
+          btn.textContent = origText; btn.disabled = false;
+          return;
+        }
+
+        if (!dataUrl || dataUrl === 'data:,') {
+          console.error('[cert] canvas produced an empty data URL');
+          alert('சான்றிதழ் காலியாக உருவானது. மீண்டும் முயற்சிக்கவும்.\n(Certificate came out blank. Please try again.)');
+          btn.textContent = origText; btn.disabled = false;
+          return;
+        }
+
+        // Build the download link and attach it to the document before
+        // clicking — some browsers ignore .click() on anchors that were
+        // never inserted into the DOM, which produced silent failures
+        // (or a blank about:blank tab via the old window.open() fallback).
+        var link = document.createElement('a');
+        link.download = 'TamilMandiram_Certificate_' + memberName + '.png';
+        link.href = dataUrl;
+        link.style.display = 'none';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        console.log('[cert] download triggered:', link.download);
+
+        btn.textContent = origText; btn.disabled = false;
+      }
+    }
+    s1.onload=sigDone; s1.onerror=sigDone;
+    s2.onload=sigDone; s2.onerror=sigDone;
+    s1.src=ASSET_BASE+'signature.png';
+    s2.src=ASSET_BASE+'signature2.png';
+    // Safety net: if images stall (slow network), force-finish after 4s
+    setTimeout(function(){ if(!sigFinished){ console.warn('[cert] signature load timeout — finishing anyway'); sigLoaded=2; sigDone(); } }, 4000);
+  });
+}
+
+</script>
+<!-- CREATIVE REGISTRATION MODAL -->
+<div class="sp-add-overlay" id="cr-reg-overlay">
+  <div class="sp-add-modal" style="max-width:580px">
+    <h3 style="margin-bottom:.25rem">🎭 படைப்பு போட்டி பதிவு</h3>
+    <p style="font-size:.78rem;color:#8A7560;margin-bottom:1.5rem;line-height:1.6">Creative Activity Registration · உங்கள் விவரங்களை நிரப்புங்கள்<br><em style="font-size:.72rem;opacity:.7">ஒவ்வொரு நபரும் ஒருமுறை மட்டுமே பதிவு செய்யலாம்</em></p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem">
+      <div class="sp-field">
+        <label>பெயர் (தமிழில்) *</label>
+        <input type="text" id="cr-name-ta" class="ta-f" placeholder="உங்கள் பெயர்">
+      </div>
+      <div class="sp-field">
+        <label>Name (English) *</label>
+        <input type="text" id="cr-name-en" placeholder="Your name">
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem">
+      <div class="sp-field">
+        <label>தொலைபேசி / Phone *</label>
+        <input type="tel" id="cr-phone" placeholder="+91 98765 43210">
+      </div>
+      <div class="sp-field">
+        <label>மின்னஞ்சல் / Email *</label>
+        <input type="email" id="cr-email" placeholder="yourname@email.com">
+      </div>
+    </div>
+    <div class="sp-field">
+      <label>பள்ளி / கல்லூரி பெயர் *</label>
+      <input type="text" id="cr-school" placeholder="School or College name">
+    </div>
+    <div class="sp-field">
+      <label>படைப்பு வகை / Creative Activity *</label>
+      <select id="cr-type-sel">
+        <option value="">— தேர்வு செய்க —</option>
+        <option value="கவிதை">🖊 கவிதை (Poetry)</option>
+        <option value="பேச்சு">🎙 பேச்சு (Speech / Elocution)</option>
+        <option value="கட்டுரை">📝 கட்டுரை (Essay Writing)</option>
+        <option value="பாடல்">🎵 பாடல் (Singing / Song)</option>
+        <option value="நாடகம்">🎭 நாடகம் (Drama / Skit)</option>
+        <option value="ஓவியம்">🎨 ஓவியம் (Drawing / Painting)</option>
+        <option value="நடனம்">💃 நடனம் (Dance)</option>
+        <option value="மற்றவை">✨ மற்றவை (Other)</option>
+      </select>
+    </div>
+    <div class="sp-field" id="cr-other-field" style="display:none">
+      <label>மற்ற படைப்பு விவரம்</label>
+      <input type="text" id="cr-other-text" placeholder="Specify your creative activity">
+    </div>
+    <div style="background:rgba(200,65,11,.08);border:1px solid rgba(200,65,11,.2);border-radius:8px;padding:.85rem;margin-top:.25rem;font-size:.78rem;color:#8A7560;line-height:1.7">
+      உங்கள் தரவு யாரிடமும் பகிரப்படாது. இந்த பதிவு உங்கள் படைப்புத் திறனை வெளிப்படுத்துவதற்காக மட்டுமே.<br>
+      <em style="font-size:.73rem">Your data will not be shared. This registration is solely for showcasing your creative talent.</em>
+    </div>
+    <div id="cr-err" style="font-size:.78rem;color:#E24B4A;margin-top:.6rem;display:none"></div>
+    <div style="display:flex;gap:.65rem;justify-content:flex-end;margin-top:1rem">
+      <button onclick="closeCreativeReg()" style="padding:.6rem 1.2rem;border:1px solid #3D2E1E;border-radius:7px;background:transparent;color:#8A7560;cursor:pointer;font-family:'Inter',sans-serif">ரத்து</button>
+      <button onclick="submitCreativeReg()" style="padding:.6rem 1.4rem;border:none;border-radius:7px;background:var(--saffron);color:#fff;font-weight:600;cursor:pointer;font-family:'Noto Sans Tamil',sans-serif">பதிவிடு — Register</button>
+    </div>
+  </div>
+</div>
+
+<!-- CREATIVE SUCCESS MODAL -->
+<div class="sp-add-overlay" id="cr-success-overlay">
+  <div class="sp-add-modal" style="max-width:440px;text-align:center">
+    <div style="font-size:3rem;margin-bottom:.75rem">🎭</div>
+    <h3 style="margin-bottom:.5rem">பதிவு வெற்றி!</h3>
+    <p style="font-size:.85rem;color:#8A7560;margin-bottom:1rem;line-height:1.65">உங்கள் படைப்பு பதிவு வெற்றிகரமாக நிறைவேறியது!</p>
+    <div style="background:rgba(184,134,11,.1);border:1px solid rgba(184,134,11,.3);border-radius:10px;padding:1.25rem;margin-bottom:1.25rem">
+      <p style="font-size:.75rem;color:#8A7560;margin-bottom:.35rem;letter-spacing:.1em;text-transform:uppercase">உங்கள் பதிவு எண் / Your Registration ID</p>
+      <p id="cr-success-id" style="font-family:monospace;font-size:2rem;font-weight:700;color:#F5D78E;letter-spacing:.05em"></p>
+      <p id="cr-success-name" style="font-family:'Noto Serif Tamil',serif;font-size:1rem;color:rgba(245,215,142,.7);margin-top:.35rem"></p>
+    </div>
+    <p style="font-size:.78rem;color:#5A4A38;margin-bottom:1rem">இந்த எண்ணை குறித்து வைத்துக் கொள்ளுங்கள். நாங்கள் விரைவில் தொடர்பு கொள்வோம்.</p>
+    <button onclick="document.getElementById('cr-success-overlay').classList.remove('show')" style="padding:.65rem 2rem;border:none;border-radius:7px;background:var(--saffron);color:#fff;font-weight:600;cursor:pointer;font-family:'Noto Sans Tamil',sans-serif">மூடு</button>
+  </div>
+</div>
+
+
+</body>
+</html>

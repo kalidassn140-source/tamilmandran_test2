@@ -1,0 +1,26 @@
+Put your image files in this folder (assets/).
+
+REQUIRED FOR WEBSITE:
+  logo.png          → Your Tamil Mandiram logo
+  seal.png          → Your organization seal (for certificate)
+  signature.png     → Director signature (use remove.bg to remove background)
+  signature2.png    → President signature
+
+CULTURAL SECTION IMAGES (download free from commons.wikimedia.org):
+  mahabalipuram.jpg
+  thanjavur.jpg
+  madurai.jpg
+  thiruvannamalai.jpg
+  chidambaram.jpg
+  thirukkural.jpg
+  sangam.jpg
+  tolkappiyam.jpg
+  silapam.jpg
+  manimegalai.jpg
+  bharatanatyam.jpg
+  music.jpg
+  painting.jpg
+  chola.jpg
+  bharathi.jpg
+
+See README.md for full instructions.

@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — தமிழ் மன்றம்</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Tamil:wght@400;700&family=Noto+Sans+Tamil:wght@400;500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0C0906;--s1:#181210;--s2:#211A12;--border:#3D2E1E;--text:#F0E8D8;--muted:#8A7560;--accent:#F5D78E;--saffron:#C8410B;--gold:#B8860B;--green:#4A9A4A;--red:#C44040}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+#login-page{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:2rem;background:radial-gradient(ellipse at 50% 30%,rgba(184,134,11,.06),transparent 60%),var(--bg)}
+.login-box{background:var(--s1);border:1px solid var(--border);border-radius:16px;padding:2.5rem;max-width:400px;width:100%;text-align:center}
+.login-logo-wrap{width:72px;height:72px;border-radius:50%;border:2px solid var(--border);margin:0 auto 1.25rem;position:relative;overflow:hidden;background:var(--s2);display:flex;align-items:center;justify-content:center}
+.login-logo-wrap .fb{position:absolute;font-size:1.8rem;z-index:0}
+.login-logo-wrap img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:50%;z-index:1}
+.login-box h2{font-family:'Noto Serif Tamil',serif;color:var(--accent);font-size:1.3rem;margin-bottom:.2rem}
+.login-box p{font-size:.8rem;color:var(--muted);margin-bottom:1.75rem}
+.lf{margin-bottom:.85rem;text-align:left}
+.lf label{display:block;font-size:.72rem;color:var(--muted);margin-bottom:.28rem;letter-spacing:.06em;text-transform:uppercase}
+.lf input{width:100%;padding:.65rem .9rem;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--accent);font-family:'Inter',sans-serif;font-size:.9rem;outline:none;transition:border-color .2s}
+.lf input:focus{border-color:var(--gold)}
+.lf input::placeholder{color:#3D2E1E}
+.btn-login{width:100%;padding:.8rem;background:var(--gold);color:var(--bg);font-weight:700;border:none;border-radius:8px;font-size:.95rem;cursor:pointer;margin-top:.5rem;transition:background .2s;font-family:'Inter',sans-serif}
+.btn-login:hover{background:#C49A15}
+.login-err{font-size:.78rem;color:#E24B4A;margin-top:.75rem;display:none;padding:.5rem;background:rgba(196,64,64,.1);border-radius:6px}
+.back-link{display:inline-block;margin-top:1.25rem;font-size:.78rem;color:var(--muted);text-decoration:none}
+.back-link:hover{color:var(--text)}
+#app{display:none;min-height:100vh;flex-direction:column}
+#app.show{display:flex}
+.topbar{background:var(--s1);border-bottom:1px solid var(--border);padding:.85rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.topbar-logo{width:38px;height:38px;border-radius:50%;border:1px solid rgba(255,255,255,.15);overflow:hidden;position:relative;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:var(--s2)}
+.topbar-logo .fb{position:absolute;font-size:1.1rem;z-index:0}
+.topbar-logo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:50%;z-index:1}
+.topbar-brand{font-family:'Noto Serif Tamil',serif;color:var(--accent);font-size:1.05rem;font-weight:700}
+.topbar-sub{font-size:.68rem;color:var(--muted)}
+.admin-badge{font-size:.68rem;padding:3px 10px;background:rgba(184,134,11,.15);border:1px solid rgba(184,134,11,.3);border-radius:20px;color:var(--gold);font-weight:600}
+.btn-logout{padding:.4rem .9rem;border:1px solid var(--border);border-radius:6px;background:transparent;color:var(--muted);font-size:.78rem;cursor:pointer;font-family:'Inter',sans-serif}
+.btn-logout:hover{border-color:var(--red);color:var(--red)}
+.nav-tabs{background:var(--s1);border-bottom:1px solid var(--border);padding:0 1.5rem;display:flex;overflow-x:auto}
+.nav-tab{padding:.75rem 1rem;border:none;background:transparent;color:var(--muted);font-size:.8rem;cursor:pointer;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap;font-family:'Inter',sans-serif}
+.nav-tab:hover{color:var(--text)}
+.nav-tab.on{color:var(--accent);border-bottom-color:var(--gold)}
+.main{flex:1;padding:1.5rem;overflow-x:auto}
+.tsec{display:none}.tsec.on{display:block}
+.slabel{font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--saffron);margin-bottom:1rem}
+.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:.85rem;margin-bottom:1.5rem}
+.sc{background:var(--s1);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem}
+.sc-icon{font-size:1.1rem;margin-bottom:.4rem}
+.sc-val{font-size:2rem;font-weight:700;color:var(--accent);line-height:1}
+.sc-lbl{font-size:.7rem;color:var(--muted);margin-top:.3rem}
+.toolbar{display:flex;gap:.65rem;flex-wrap:wrap;margin-bottom:1rem;align-items:center}
+.si{flex:1;min-width:180px;padding:.55rem .85rem;background:var(--s1);border:1px solid var(--border);border-radius:7px;color:var(--text);font-family:'Inter',sans-serif;font-size:.85rem;outline:none}
+.si:focus{border-color:var(--gold)}
+.si::placeholder{color:var(--muted)}
+.fsel{padding:.55rem .85rem;background:var(--s1);border:1px solid var(--border);border-radius:7px;color:var(--text);font-size:.82rem;outline:none;cursor:pointer;font-family:'Inter',sans-serif}
+option{background:var(--s1);color:var(--text)}
+.bg{padding:.5rem 1rem;border:1px solid var(--gold);border-radius:6px;background:transparent;color:var(--gold);font-size:.8rem;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif}
+.bg:hover{background:rgba(184,134,11,.1)}
+.bs2{padding:.5rem 1rem;border:none;border-radius:6px;background:var(--saffron);color:#fff;font-size:.8rem;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif}
+.bs2:hover{background:#A8340A}
+.tw{border:1px solid var(--border);border-radius:10px;overflow:hidden;overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:700px}
+thead{background:var(--s2)}
+th{padding:.65rem .9rem;text-align:left;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600;border-bottom:1px solid var(--border)}
+td{padding:.7rem .9rem;border-bottom:1px solid rgba(61,46,30,.5);font-size:.82rem;vertical-align:top}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(255,255,255,.02)}
+.badge{display:inline-block;padding:2px 8px;border-radius:12px;font-size:.67rem;font-weight:600}
+.bsc{background:rgba(200,65,11,.18);color:#E8874A}
+.bcc{background:rgba(184,134,11,.18);color:#D4A017}
+.bwc{background:rgba(74,154,74,.18);color:#65B065}
+.pills{display:flex;flex-wrap:wrap;gap:3px;max-width:200px}
+.pill{font-size:.62rem;padding:2px 6px;background:rgba(245,215,142,.07);border:1px solid rgba(245,215,142,.18);border-radius:10px;color:var(--accent);white-space:nowrap}
+.bsm{padding:3px 8px;border:1px solid var(--border);border-radius:5px;background:transparent;color:var(--muted);font-size:.71rem;cursor:pointer;font-family:'Inter',sans-serif}
+.bsm:hover{border-color:var(--gold);color:var(--gold)}
+.bdel{padding:3px 8px;border:1px solid transparent;border-radius:5px;background:transparent;color:var(--muted);font-size:.71rem;cursor:pointer;font-family:'Inter',sans-serif}
+.bdel:hover{color:var(--red)}
+.nd{text-align:center;padding:3rem;color:var(--muted);font-size:.88rem}
+.pag{display:flex;align-items:center;justify-content:space-between;margin-top:.85rem;flex-wrap:wrap;gap:.5rem}
+.pag-info{font-size:.75rem;color:var(--muted)}
+.pag-btns{display:flex;gap:.35rem}
+.pb{padding:.3rem .7rem;border:1px solid var(--border);border-radius:5px;background:transparent;color:var(--muted);font-size:.75rem;cursor:pointer;font-family:'Inter',sans-serif}
+.pb.on,.pb:hover{background:var(--saffron);color:#fff;border-color:var(--saffron)}
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.82);z-index:500;align-items:center;justify-content:center;padding:1.5rem}
+.modal-bg.show{display:flex}
+.modal{background:var(--s1);border:1px solid var(--border);border-radius:14px;max-width:520px;width:100%;max-height:90vh;overflow-y:auto;animation:pop .25s ease}
+@keyframes pop{from{transform:scale(.93);opacity:0}to{transform:scale(1);opacity:1}}
+.mh{padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:flex-start}
+.mh h3{font-family:'Noto Serif Tamil',serif;color:var(--accent);font-size:1.05rem}
+.mh span{font-size:.73rem;color:var(--muted);display:block;margin-top:.2rem}
+.bmc{background:transparent;border:1px solid var(--border);border-radius:6px;color:var(--muted);padding:.3rem .7rem;cursor:pointer;font-size:.8rem;font-family:'Inter',sans-serif}
+.mb{padding:1.5rem}
+.ms2{font-size:.67rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin:1rem 0 .5rem;padding-bottom:.3rem;border-bottom:1px solid var(--border)}
+.mr2{display:flex;gap:.75rem;margin-bottom:.6rem;font-size:.82rem}
+.mk2{color:var(--muted);width:120px;flex-shrink:0;font-size:.75rem}
+.mv2{color:var(--text);flex:1;line-height:1.5}
+/* NOTICE */
+.ngrid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem}
+@media(max-width:640px){.ngrid{grid-template-columns:1fr}}
+.ncard{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:1.25rem}
+.ncard h4{font-size:.85rem;font-weight:600;color:var(--accent);margin-bottom:.85rem}
+.nlive{font-family:'Noto Sans Tamil',sans-serif;font-size:.85rem;color:var(--muted);margin-bottom:.75rem;min-height:40px;padding:.5rem;background:var(--s2);border-radius:6px;line-height:1.7;white-space:pre-wrap}
+.ni{width:100%;padding:.6rem .85rem;background:var(--bg);border:1px solid var(--border);border-radius:7px;color:var(--text);font-family:'Noto Sans Tamil',sans-serif;font-size:.85rem;outline:none;margin-bottom:.65rem;transition:border-color .2s}
+.ni:focus{border-color:var(--gold)}
+.nta{width:100%;padding:.65rem .85rem;background:var(--bg);border:1px solid var(--border);border-radius:7px;color:var(--text);font-family:'Noto Sans Tamil',sans-serif;font-size:.85rem;outline:none;resize:vertical;min-height:90px;line-height:1.7;transition:border-color .2s}
+.nta:focus{border-color:var(--gold)}
+.pi{background:var(--s2);border:1px solid var(--border);border-radius:8px;padding:1rem;margin-bottom:.65rem}
+.plbl{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.3rem}
+.ptxt{font-size:.85rem;color:var(--text);line-height:1.6;margin-bottom:.5rem;font-family:'Noto Sans Tamil',sans-serif}
+.pfrm{font-size:.72rem;color:var(--muted);margin-bottom:.6rem}
+.pact{display:flex;gap:.5rem}
+.bapp{padding:.4rem .9rem;border:none;border-radius:5px;background:var(--green);color:#fff;font-size:.78rem;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif}
+.brej{padding:.4rem .9rem;border:1px solid var(--border);border-radius:5px;background:transparent;color:var(--muted);font-size:.78rem;cursor:pointer;font-family:'Inter',sans-serif}
+.brej:hover{color:var(--red)}
+/* ADMINS */
+.agrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem}
+.acard{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:1.25rem}
+.ahead{display:flex;align-items:center;gap:.85rem;margin-bottom:1rem}
+.aavt{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;border:2px solid var(--border)}
+.aname{font-weight:600;color:var(--text);font-size:.92rem}
+.arole{font-size:.72rem;color:var(--muted);margin-top:.15rem}
+.pr{display:flex;align-items:center;gap:.5rem;font-size:.78rem;color:var(--muted);margin-bottom:.35rem}
+.pd{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.dg{background:var(--green)}.dr{background:#5A3A3A}
+/* LIKE MODAL */
+.lm{display:none;position:fixed;inset:0;background:rgba(0,0,0,.82);z-index:600;align-items:center;justify-content:center;padding:1.5rem}
+.lm.show{display:flex}
+.lmb{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:2rem;max-width:360px;width:100%;animation:pop .2s ease}
+/* CERT PREVIEW */
+.ce-wrap{display:flex;justify-content:center;margin-top:.5rem}
+</style>
+</head>
+<body>
+
+<div id="login-page">
+  <div class="login-box">
+    <div class="login-logo-wrap">
+      <span class="fb">🪔</span>
+      <img src="../assets/logo.png" alt="Logo" onload="this.style.zIndex=2;this.previousElementSibling.style.display='none'" onerror="this.style.display='none'">
+    </div>
+    <h2>நிர்வாக உள்நுழைவு</h2>
+    <p>Admin Login · Tamil Mandiram</p>
+    <div class="lf"><label>Username</label><input type="text" id="au" placeholder="Enter username" autocomplete="off"></div>
+    <div class="lf"><label>Email</label><input type="email" id="ae" placeholder="Enter email"></div>
+    <div class="lf"><label>Password</label><input type="password" id="ap" placeholder="Enter password" onkeydown="if(event.key==='Enter')doLogin()"></div>
+    <button class="btn-login" onclick="doLogin()">உள்நுழை — Login</button>
+    <p class="login-err" id="lerr">❌ Invalid credentials. Please try again.</p>
+    <a class="back-link" href="../index.html">← Back to Website</a>
+  </div>
+</div>
+
+<div id="app">
+  <div class="topbar">
+    <div style="display:flex;align-items:center;gap:.75rem">
+      <div class="topbar-logo">
+        <span class="fb">🪔</span>
+        <img src="../assets/logo.png" alt="" onload="this.style.zIndex=2;this.previousElementSibling.style.display='none'" onerror="this.style.display='none'">
+      </div>
+      <div>
+        <div class="topbar-brand">தமிழ் மன்றம்</div>
+        <div class="topbar-sub" id="topsub">Admin Dashboard</div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:.75rem">
+      <span class="admin-badge" id="abadge">—</span>
+      <button class="btn-logout" onclick="doLogout()">Logout</button>
+    </div>
+  </div>
+  <div class="nav-tabs" id="nav-tabs"></div>
+  <div class="main">
+
+    <!-- MEMBERS -->
+    <div class="tsec" id="tab-members">
+      <p class="slabel">REGISTERED MEMBERS</p>
+      <div class="stats-row" id="top-stats"></div>
+      <div id="count-box" style="display:none;background:var(--s1);border:1px solid var(--border);border-radius:10px;padding:1rem 1.25rem;margin-bottom:1.25rem;display:none;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem">
+        <div>
+          <p style="font-size:.82rem;font-weight:600;color:var(--accent)">👑 Adjust displayed member count on website</p>
+          <p style="font-size:.75rem;color:var(--muted);margin-top:.2rem">This changes the public-facing number only — not actual data</p>
+        </div>
+        <div style="display:flex;align-items:center;gap:.65rem">
+          <input type="number" id="cnt-val" min="0" style="width:90px;padding:.5rem .7rem;background:var(--bg);border:1px solid var(--border);border-radius:6px;color:var(--accent);font-size:1rem;font-weight:700;outline:none;text-align:center">
+          <button class="bs2" onclick="saveCnt()">Save</button>
+          <button class="bg" onclick="resetCnt()">Reset</button>
+        </div>
+      </div>
+      <div class="toolbar">
+        <input type="text" class="si" id="search" placeholder="🔍 Search name, city…" oninput="renderTable()">
+        <select class="fsel" id="f-edu" onchange="renderTable()"><option value="">All Education</option><option value="school">School</option><option value="college">College</option><option value="work">Working</option></select>
+        <select class="fsel" id="f-talent" onchange="renderTable()"><option value="">All Talents</option></select>
+        <div style="display:flex;gap:.5rem;margin-left:auto" id="export-btns" style="display:none">
+          <button class="bg" onclick="exportCSV()">⬇ CSV</button>
+          <button class="bs2" onclick="exportExcel()">⬇ Excel</button>
+        </div>
+      </div>
+      <div class="tw"><table><thead><tr id="tbl-head"></tr></thead><tbody id="tbl-body"></tbody></table><div class="nd" id="no-data" style="display:none">No members found.</div></div>
+      <div class="pag" id="pag"></div>
+    </div>
+
+    <!-- NOTICE -->
+    <div class="tsec" id="tab-notice">
+      <p class="slabel">NOTICE BOARD MANAGEMENT</p>
+      <div id="pending-sec" style="margin-bottom:1.5rem">
+        <p style="font-size:.82rem;color:var(--accent);font-weight:600;margin-bottom:.75rem">📥 Pending Recommendations</p>
+        <div id="pending-list"></div>
+      </div>
+      <div class="ngrid">
+        <div class="ncard">
+          <h4>🏆 Top Performer</h4>
+          <div class="nlive" id="tp-live">Not set yet</div>
+          <div id="tp-ed" style="display:none">
+            <p style="font-size:.75rem;color:var(--muted);margin-bottom:.75rem">Add 1 to 5 top performers. Leave unused slots empty.</p>
+            <div style="background:var(--s2);border-radius:8px;padding:.75rem;margin-bottom:.55rem">
+              <p style="font-size:.7rem;color:var(--gold);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.5rem">🥇 முதல் இடம்</p>
+              <input class="ni" id="tp-name-1" placeholder="பெயர் (Name)">
+              <input class="ni" id="tp-talent-1" placeholder="திறமை (Talent)">
+              <input class="ni" id="tp-desc-1" placeholder="சாதனை (Achievement)">
+            </div>
+            <div style="background:var(--s2);border-radius:8px;padding:.75rem;margin-bottom:.55rem">
+              <p style="font-size:.7rem;color:var(--gold);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.5rem">🥈 இரண்டாம் இடம்</p>
+              <input class="ni" id="tp-name-2" placeholder="பெயர் (Name)">
+              <input class="ni" id="tp-talent-2" placeholder="திறமை (Talent)">
+              <input class="ni" id="tp-desc-2" placeholder="சாதனை (Achievement)">
+            </div>
+            <div style="background:var(--s2);border-radius:8px;padding:.75rem;margin-bottom:.55rem">
+              <p style="font-size:.7rem;color:var(--gold);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.5rem">🥉 மூன்றாம் இடம்</p>
+              <input class="ni" id="tp-name-3" placeholder="பெயர் (Name)">
+              <input class="ni" id="tp-talent-3" placeholder="திறமை (Talent)">
+              <input class="ni" id="tp-desc-3" placeholder="சாதனை (Achievement)">
+            </div>
+            <div style="background:var(--s2);border-radius:8px;padding:.75rem;margin-bottom:.55rem">
+              <p style="font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.5rem">⭐ நான்காம் இடம் (optional)</p>
+              <input class="ni" id="tp-name-4" placeholder="பெயர் (Name)">
+              <input class="ni" id="tp-talent-4" placeholder="திறமை (Talent)">
+              <input class="ni" id="tp-desc-4" placeholder="சாதனை (Achievement)">
+            </div>
+            <div style="background:var(--s2);border-radius:8px;padding:.75rem;margin-bottom:.55rem">
+              <p style="font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.5rem">⭐ ஐந்தாம் இடம் (optional)</p>
+              <input class="ni" id="tp-name-5" placeholder="பெயர் (Name)">
+              <input class="ni" id="tp-talent-5" placeholder="திறமை (Talent)">
+              <input class="ni" id="tp-desc-5" placeholder="சாதனை (Achievement)">
+            </div>
+            <div style="display:flex;gap:.5rem;margin-top:.5rem">
+              <button class="bs2" onclick="saveNt('tp')" style="flex:1">Publish All</button>
+              <button class="bg" onclick="cancelEd('tp')">Cancel</button>
+            </div>
+          </div>
+          <div id="tp-act"></div>
+        </div>
+        <div class="ncard">
+          <h4>📅 Upcoming Events</h4>
+          <div class="nlive" id="ue-live">Not set yet</div>
+          <div id="ue-ed" style="display:none">
+            <textarea class="nta" id="ue-desc" placeholder="Events...&#10;One event per line" rows="5"></textarea>
+            <div style="display:flex;gap:.5rem;margin-top:.5rem">
+              <button class="bs2" onclick="saveNt('ue')" style="flex:1">Publish</button>
+              <button class="bg" onclick="cancelEd('ue')">Cancel</button>
+            </div>
+          </div>
+          <div id="ue-act"></div>
+        </div>
+      </div>
+      <div id="rec-form" style="display:none;background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:1.25rem;margin-top:1rem">
+        <p style="font-size:.85rem;font-weight:600;color:var(--accent);margin-bottom:.5rem">📤 Recommend to President</p>
+        <p style="font-size:.78rem;color:var(--muted);margin-bottom:1rem;line-height:1.65">Your recommendation goes to the President for approval before it appears on the website.</p>
+        <select class="fsel" id="rec-type" style="width:100%;margin-bottom:.65rem;padding:.6rem .85rem" onchange="toggleRecFields()"><option value="">— Select type —</option><option value="tp">🏆 Top Performer</option><option value="ue">📅 Event Suggestion</option></select>
+        <input class="ni" id="rec-from" placeholder="Your name">
+        <div id="rec-tp-fields" style="display:none">
+          <input class="ni" id="rec-perf-name" placeholder="Performer's name *">
+          <input class="ni" id="rec-perf-talent" placeholder="Talent (e.g. Singing, Poetry)">
+        </div>
+        <textarea class="nta" id="rec-text" placeholder="Type your recommendation..." rows="4"></textarea>
+        <button class="bs2" style="margin-top:.65rem;width:100%" onclick="submitRec()">Send Recommendation</button>
+      </div>
+    </div>
+
+    <!-- POSTS -->
+    <div class="tsec" id="tab-posts">
+      <p class="slabel">STUDENT CREATIVITY PANEL</p>
+      <div class="toolbar">
+        <input type="text" class="si" id="post-search" placeholder="🔍 Search posts…" oninput="renderPosts()">
+        <select class="fsel" id="post-type" onchange="renderPosts()"><option value="">All Types</option><option value="கவிதை">🖊 கவிதை</option><option value="பேச்சு">🎙 பேச்சு</option><option value="கட்டுரை">📝 கட்டுரை</option><option value="சிந்தனை">💭 சிந்தனை</option><option value="பாடல்">🎵 பாடல்</option></select>
+      </div>
+      <div class="tw"><table style="min-width:650px"><thead><tr><th>#</th><th>Title / Author</th><th>Type</th><th>Likes</th><th>Comments</th><th>Posted</th><th></th></tr></thead><tbody id="posts-tbody"></tbody></table><div class="nd" id="posts-nd" style="display:none">No posts found.</div></div>
+    </div>
+
+    <!-- ADMINS (president only) -->
+    <div class="tsec" id="tab-admins">
+      <p class="slabel">ADMIN ACCOUNTS & PERMISSIONS</p>
+      <div class="agrid" id="agrid"></div>
+    </div>
+
+    <!-- CREATIVE REGISTRATION (President only) -->
+    <div class="tsec" id="tab-creative">
+      <p class="slabel">CREATIVE ACTIVITY REGISTRATIONS</p>
+      <p style="font-size:.84rem;color:var(--muted);margin-bottom:1.25rem;line-height:1.75">Members who register for creative activities. Each gets a unique ID starting from <b style="color:var(--accent)">2026001</b>.</p>
+      <div class="toolbar">
+        <input type="text" class="si" id="cr-search" placeholder="🔍 Search name, ID…" oninput="renderCreative()">
+        <select class="fsel" id="cr-type" onchange="renderCreative()"><option value="">All Types</option><option value="கவிதை">🖊 கவிதை</option><option value="பேச்சு">🎙 பேச்சு</option><option value="கட்டுரை">📝 கட்டுரை</option><option value="பாடல்">🎵 பாடல்</option><option value="நாடகம்">🎭 நாடகம்</option><option value="ஓவியம்">🎨 ஓவியம்</option><option value="நடனம்">💃 நடனம்</option></select>
+        <div style="margin-left:auto;display:flex;gap:.5rem">
+          <button class="bg" onclick="exportCreativeCSV()">⬇ CSV</button>
+          <button class="bs2" onclick="exportCreativeExcel()">⬇ Excel</button>
+        </div>
+      </div>
+      <div class="stats-row" id="cr-stats" style="margin-bottom:1rem"></div>
+      <div class="tw"><table style="min-width:750px"><thead><tr><th>ID</th><th>Name</th><th>School/College</th><th>Phone</th><th>Email</th><th>Creative Type</th><th>Registered</th><th></th></tr></thead><tbody id="cr-tbody"></tbody></table><div class="nd" id="cr-nd" style="display:none">No creative registrations yet.</div></div>
+    </div>
+
+    <!-- CERTIFICATE -->
+    <div class="tsec" id="tab-cert">
+      <p class="slabel">CERTIFICATE PREVIEW</p>
+      <p style="font-size:.84rem;color:var(--muted);margin-bottom:1.25rem;line-height:1.75">This is exactly what members receive. Logo, seal, kural, Tamil name, and both signatures appear in the download.</p>
+      <div style="background:var(--s1);border:1px solid var(--border);border-radius:10px;padding:1rem;margin-bottom:1.5rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap">
+        <label style="font-size:.8rem;color:var(--muted)">Preview name:</label>
+        <input type="text" value="கார்த்திக் குமார்" style="padding:.5rem .85rem;background:var(--bg);border:1px solid var(--border);border-radius:6px;color:var(--accent);font-family:'Noto Sans Tamil',sans-serif;font-size:.9rem;outline:none;flex:1;min-width:200px" oninput="document.getElementById('pcn').textContent=this.value||'உறுப்பினர்'">
+      </div>
+      <div class="ce-wrap">
+        <div style="width:500px;max-width:100%;background:linear-gradient(150deg,#4A0A0A,#2D0808 55%,#6B1A1A);border-radius:12px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.7)">
+          <div style="padding:2.25rem 2rem;position:relative">
+            <div style="height:3px;background:linear-gradient(90deg,transparent,#B8860B,transparent);margin-bottom:1.5rem"></div>
+            <div style="border:1px solid rgba(184,134,11,.38);border-radius:8px;padding:1.5rem;text-align:center">
+              <p style="font-family:'Noto Serif Tamil',serif;font-size:1.65rem;font-weight:700;color:#F5D78E">தமிழ் மன்றம்</p>
+              <p style="font-size:.74rem;color:rgba(245,215,142,.52);letter-spacing:.08em;margin-bottom:.8rem">T A M I L &nbsp; M A N D I R A M</p>
+              <div style="width:70px;height:70px;border-radius:50%;border:3px solid #B8860B;background:rgba(184,134,11,.1);margin:.75rem auto;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center">
+                <span id="adm-seal-fb" style="position:absolute;font-size:1.8rem;z-index:0">🪔</span>
+                <img src="../assets/seal.png" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:50%;z-index:1" onerror="this.style.display='none'" onload="document.getElementById('adm-seal-fb').style.display='none'">
+              </div>
+              <p style="font-family:'Noto Serif Tamil',serif;font-size:.84rem;color:rgba(245,215,142,.48);line-height:1.85;margin:.75rem 0;font-style:italic">நன்றி மறப்பது நன்றன்று — நன்றல்லது<br>அன்றே மறப்பது நன்று</p>
+              <div style="width:55px;height:1.5px;background:linear-gradient(90deg,transparent,#B8860B,transparent);margin:.75rem auto"></div>
+              <p style="font-size:.65rem;color:rgba(245,215,142,.35);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.3rem">இவ்வாறு சான்றளிக்கப்படுகிறது</p>
+              <p id="pcn" style="font-family:'Noto Serif Tamil',serif;font-size:1.9rem;font-weight:700;color:#fff;margin-bottom:.4rem">கார்த்திக் குமார்</p>
+              <p style="font-family:'Noto Sans Tamil',sans-serif;font-size:.82rem;color:rgba(255,255,255,.65);line-height:1.7">தமிழ் மன்றத்தின் மதிப்புமிக்க உறுப்பினராக<br><span style="color:#F5D78E;font-weight:700">2026</span> ஆம் ஆண்டு இணைந்திருக்கிறார்</p>
+              <div style="width:120px;height:1px;background:linear-gradient(90deg,transparent,rgba(184,134,11,.4),transparent);margin:1rem auto"></div>
+              <div style="display:flex;justify-content:center;gap:2.5rem">
+                <div style="text-align:center">
+                  <div style="height:40px;display:flex;align-items:center;justify-content:center"><img src="../assets/signature.png" style="height:38px;max-width:110px;object-fit:contain;opacity:.85" onerror="this.style.visibility='hidden'"></div>
+                  <div style="width:100px;height:1px;background:rgba(245,215,142,.3);margin:.3rem auto .25rem"></div>
+                  <span style="font-size:.58rem;color:rgba(245,215,142,.42);letter-spacing:.08em;text-transform:uppercase;font-family:'Noto Sans Tamil',sans-serif">இயக்குநர்</span>
+                </div>
+                <div style="text-align:center">
+                  <div style="height:40px;display:flex;align-items:center;justify-content:center"><img src="../assets/signature2.png" style="height:38px;max-width:110px;object-fit:contain;opacity:.85" onerror="this.style.visibility='hidden'"></div>
+                  <div style="width:100px;height:1px;background:rgba(245,215,142,.3);margin:.3rem auto .25rem"></div>
+                  <span style="font-size:.58rem;color:rgba(245,215,142,.42);letter-spacing:.08em;text-transform:uppercase;font-family:'Noto Sans Tamil',sans-serif">தலைவர்</span>
+                </div>
+              </div>
+            </div>
+            <div style="height:3px;background:linear-gradient(90deg,transparent,#B8860B,transparent);margin-top:1.5rem"></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:1.5rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.85rem">
+        <div style="background:var(--s1);border:1px solid var(--border);border-radius:10px;padding:1rem"><p style="font-size:.7rem;color:var(--saffron);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.4rem">🔤 Name</p><p style="font-size:.8rem;color:var(--text);line-height:1.65">Certificate always shows the Tamil name only. English name is never printed.</p></div>
+        <div style="background:var(--s1);border:1px solid var(--border);border-radius:10px;padding:1rem"><p style="font-size:.7rem;color:var(--saffron);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.4rem">⬇ Download</p><p style="font-size:.8rem;color:var(--text);line-height:1.65">Member downloads high-resolution PNG with logo, seal, kural, name and both signatures.</p></div>
+        <div style="background:var(--s1);border:1px solid var(--border);border-radius:10px;padding:1rem"><p style="font-size:.7rem;color:var(--saffron);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.4rem">📋 Disclaimer</p><p style="font-size:.8rem;color:var(--text);line-height:1.65">Tiny disclaimer visible on screen only. Never included in the downloaded certificate image.</p></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- MEMBER DETAIL MODAL -->
+<div class="modal-bg" id="modal-bg">
+  <div class="modal">
+    <div class="mh"><div><h3 id="m-name">—</h3><span id="m-date">—</span></div><button class="bmc" onclick="document.getElementById('modal-bg').classList.remove('show')">✕ Close</button></div>
+    <div class="mb" id="m-body"></div>
+  </div>
+</div>
+
+<!-- LIKE EDIT MODAL -->
+<div class="lm" id="like-modal">
+  <div class="lmb">
+    <h3 style="font-family:'Noto Serif Tamil',serif;color:var(--accent);margin-bottom:.25rem">Like Count மாற்றவும்</h3>
+    <p style="font-size:.78rem;color:var(--muted);margin-bottom:1.1rem">Set the like count for this post.</p>
+    <p id="le-title" style="font-size:.85rem;color:var(--text);padding:.5rem;background:var(--s2);border-radius:6px;margin-bottom:.85rem"></p>
+    <label style="font-size:.72rem;color:var(--muted);display:block;margin-bottom:.3rem">New Like Count</label>
+    <input type="number" id="le-val" min="0" style="width:100%;padding:.6rem .85rem;background:var(--bg);border:1px solid var(--border);border-radius:7px;color:var(--accent);font-size:1.1rem;font-weight:700;outline:none;margin-bottom:1rem;text-align:center" onkeydown="if(event.key==='Enter')saveLike()">
+    <div style="display:flex;gap:.65rem;justify-content:flex-end">
+      <button class="bmc" onclick="document.getElementById('like-modal').classList.remove('show')">Cancel</button>
+      <button class="bs2" onclick="saveLike()">சேமி — Save</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const ADMINS=[
+  {username:'tamiladmin', email:'admin@tamilmandiram.com',    password:'Tamil@2026',    role:'Director',    emoji:'👑',access:'limited'},
+  {username:'president',  email:'president@tamilmandiram.com',password:'Mandiram@2026', role:'President',   emoji:'🏛️',access:'full'},
+  {username:'coordinator',email:'coord@tamilmandiram.com',    password:'Coord@2026',    role:'Coordinator', emoji:'📋',access:'limited'},
+];
+const STORE='tm_members',SPK='tm_student_posts',NK='tm_notice_data',PK='tm_notice_pending',COK='tm_count_override';
+let CA=null,filtered=[],pg=1,likeId=null;
+const PER=12;
+const gM=()=>{try{return JSON.parse(localStorage.getItem(STORE)||'[]')}catch{return[]}};
+const sM=a=>localStorage.setItem(STORE,JSON.stringify(a));
+const gSP=()=>{try{return JSON.parse(localStorage.getItem(SPK)||'[]')}catch{return[]}};
+const sSP=a=>localStorage.setItem(SPK,JSON.stringify(a));
+const gN=()=>{try{return JSON.parse(localStorage.getItem(NK)||'{}')}catch{return{}}};
+const sN=d=>localStorage.setItem(NK,JSON.stringify(d));
+const gP=()=>{try{return JSON.parse(localStorage.getItem(PK)||'[]')}catch{return[]}};
+const sP=a=>localStorage.setItem(PK,JSON.stringify(a));
+
+function doLogin(){
+  const u=document.getElementById('au').value.trim(),e=document.getElementById('ae').value.trim(),p=document.getElementById('ap').value;
+  const f=ADMINS.find(a=>a.username===u&&a.email===e&&a.password===p);
+  if(f){CA=f;sessionStorage.setItem('tm_admin',JSON.stringify({username:f.username}));boot();}
+  else{const err=document.getElementById('lerr');err.style.display='block';setTimeout(()=>err.style.display='none',4000);}
+}
+function doLogout(){sessionStorage.removeItem('tm_admin');location.reload()}
+window.addEventListener('DOMContentLoaded',()=>{
+  const s=sessionStorage.getItem('tm_admin');
+  if(s){try{const sv=JSON.parse(s);CA=ADMINS.find(a=>a.username===sv.username)||null;if(CA)boot();}catch{}}
+});
+
+function boot(){
+  document.getElementById('login-page').style.display='none';
+  document.getElementById('app').classList.add('show');
+  document.getElementById('abadge').textContent=CA.role+' — '+CA.username;
+  document.getElementById('topsub').textContent='Tamil Mandiram · '+CA.role;
+  buildNav();buildHead();buildTalentFilter();renderStats();renderTable();renderNotice();renderPosts();
+  if(CA.access==='full')renderAdmins();
+}
+
+function buildNav(){
+  const isFull=CA.access==='full';
+  const tabs=[
+    {id:'members',label:'👥 Members'},
+    {id:'notice', label:'📢 Notice Board'},
+    {id:'posts',  label:'✍ Student Posts'},
+    ...(isFull?[{id:'admins',label:'🔐 Accounts'},{id:'creative',label:'🎭 Creative Reg.'}]:[]),
+    {id:'cert',   label:'🏅 Certificate'},
+  ];
+  document.getElementById('nav-tabs').innerHTML=tabs.map((t,i)=>`<button class="nav-tab${i===0?' on':''}" onclick="showT('${t.id}',this)">${t.label}</button>`).join('');
+  document.getElementById('tab-members').classList.add('on');
+  // show export for president
+  if(isFull){
+    document.getElementById('export-btns').style.display='flex';
+    const cb=document.getElementById('count-box');
+    cb.style.display='flex';
+    const ov=localStorage.getItem(COK);
+    document.getElementById('cnt-val').value=ov!==null?ov:gM().length;
+  }
+}
+function showT(id,btn){
+  document.querySelectorAll('.tsec').forEach(s=>s.classList.remove('on'));
+  document.querySelectorAll('.nav-tab').forEach(b=>b.classList.remove('on'));
+  const el=document.getElementById('tab-'+id);if(el)el.classList.add('on');
+  if(btn)btn.classList.add('on');
+  if(id==='posts')renderPosts();
+  if(id==='notice')renderNotice();
+}
+
+function buildHead(){
+  const isFull=CA.access==='full';
+  document.getElementById('tbl-head').innerHTML=`<th>#</th><th>Name</th><th>Education</th><th>City</th>${isFull?'<th>Phone</th><th>Email</th>':''}<th>Talents</th><th>Joined</th><th></th>`;
+}
+
+function buildTalentFilter(){
+  const all=new Set();
+  gM().forEach(x=>(x.talents||'').split(', ').forEach(t=>{if(t)all.add(t.split(' (')[0])}));
+  const sel=document.getElementById('f-talent');
+  all.forEach(t=>{const o=document.createElement('option');o.value=t;o.textContent=t;sel.appendChild(o)});
+}
+
+function renderStats(){
+  const m=gM(),sp=gSP();
+  const s={total:m.length,school:m.filter(x=>x.education==='school').length,college:m.filter(x=>x.education==='college').length,work:m.filter(x=>x.education==='work').length};
+  document.getElementById('top-stats').innerHTML=`
+    <div class="sc"><div class="sc-icon">👥</div><div class="sc-val">${s.total}</div><div class="sc-lbl">Total Members</div></div>
+    <div class="sc"><div class="sc-icon">🏫</div><div class="sc-val">${s.school}</div><div class="sc-lbl">School</div></div>
+    <div class="sc"><div class="sc-icon">🎓</div><div class="sc-val">${s.college}</div><div class="sc-lbl">College</div></div>
+    <div class="sc"><div class="sc-icon">💼</div><div class="sc-val">${s.work}</div><div class="sc-lbl">Working</div></div>
+    <div class="sc"><div class="sc-icon">✍</div><div class="sc-val">${sp.length}</div><div class="sc-lbl">Student Posts</div></div>`;
+}
+
+function saveCnt(){
+  const v=parseInt(document.getElementById('cnt-val').value)||0;
+  localStorage.setItem(COK,v);
+  const el=document.getElementById('member-count-text');if(el)el.textContent=v;
+  alert('✅ Member count updated to '+v+' on website.');
+}
+function resetCnt(){
+  localStorage.removeItem(COK);
+  const a=gM().length;
+  document.getElementById('cnt-val').value=a;
+  const el=document.getElementById('member-count-text');if(el)el.textContent=a;
+  alert('✅ Reset to actual count: '+a);
+}
+
+function renderTable(){
+  const isFull=CA.access==='full';
+  const q=(document.getElementById('search').value||'').toLowerCase();
+  const fe=document.getElementById('f-edu').value;
+  const ft=document.getElementById('f-talent').value;
+  filtered=gM().filter(m=>{
+    const txt=(m.nameEn+m.nameTa+m.city+(isFull?m.email+m.phone:'')).toLowerCase();
+    return(!q||txt.includes(q))&&(!fe||m.education===fe)&&(!ft||(m.talents||'').includes(ft));
+  });
+  const total=filtered.length,pages=Math.ceil(total/PER)||1;
+  if(pg>pages)pg=1;
+  const slice=filtered.slice((pg-1)*PER,pg*PER);
+  document.getElementById('no-data').style.display=total===0?'block':'none';
+  if(!total){document.getElementById('tbl-body').innerHTML='';renderPag(0,1);return}
+  document.getElementById('tbl-body').innerHTML=slice.map((m,i)=>{
+    const el={school:'School',college:'College',work:'Working'}[m.education]||m.education;
+    const bc={school:'bsc',college:'bcc',work:'bwc'}[m.education]||'';
+    const joined=m.timestamp||m.joinedAt||(m.id?new Date(m.id).toLocaleDateString('en-IN'):'—');
+    const tarr=(m.talents||'').split(', ').filter(Boolean);
+    const pills=tarr.slice(0,3).map(t=>`<span class="pill">${t.split(' (')[0]}</span>`).join('');
+    const more=tarr.length>3?`<span class="pill">+${tarr.length-3}</span>`:'';
+    const n=(pg-1)*PER+i+1;
+    const ms=JSON.stringify(m).replace(/'/g,"&#39;").replace(/`/g,'&#96;');
+    return `<tr>
+      <td style="color:var(--muted);font-size:.76rem">${n}</td>
+      <td><div style="font-weight:600">${m.nameEn||'—'}</div><div style="font-family:'Noto Sans Tamil',sans-serif;font-size:.74rem;color:var(--muted)">${m.nameTa||''}</div></td>
+      <td><span class="badge ${bc}">${el}</span><div style="font-size:.7rem;color:var(--muted);margin-top:3px">${m.schoolName||m.collegeName||m.company||''}</div></td>
+      <td style="font-size:.8rem">${m.city||'—'}</td>
+      ${isFull?`<td style="font-size:.77rem">${m.phone||'—'}</td><td style="font-size:.74rem">${m.email||'—'}</td>`:''}
+      <td><div class="pills">${pills}${more}</div></td>
+      <td style="font-size:.71rem;color:var(--muted)">${joined}</td>
+      <td style="white-space:nowrap">
+        <button class="bsm" onclick='viewM(${ms})'>View</button>
+        ${isFull?`<button class="bdel" onclick="delM('${m.id||m.timestamp}')">✕</button>`:''}
+      </td></tr>`;
+  }).join('');
+  renderPag(total,pages);
+}
+function renderPag(total,pages){
+  const pag=document.getElementById('pag');if(!total){pag.innerHTML='';return}
+  const s=(pg-1)*PER+1,e=Math.min(pg*PER,total);
+  let btns='';for(let i=1;i<=pages;i++)btns+=`<button class="pb${i===pg?' on':''}" onclick="goP(${i})">${i}</button>`;
+  pag.innerHTML=`<span class="pag-info">Showing ${s}–${e} of ${total}</span><div class="pag-btns">${btns}</div>`;
+}
+function goP(n){pg=n;renderTable()}
+function delM(id){
+  if(!confirm('Delete this member?'))return;
+  sM(gM().filter(m=>m.id!==id&&m.timestamp!==id));
+  renderStats();renderTable();
+}
+function viewM(m){
+  const isFull=CA.access==='full';
+  document.getElementById('m-name').textContent=m.nameTa||m.nameEn||'Member';
+  document.getElementById('m-date').textContent=m.timestamp||m.joinedAt||'—';
+  const eduD=m.education==='school'?`${m.schoolName||'—'}, ${m.standard||'—'}`:m.education==='college'?`${m.collegeName||'—'} — ${m.department||'—'}`:`${m.company||'—'} — ${m.jobRole||'—'}`;
+  document.getElementById('m-body').innerHTML=`
+    <p class="ms2">Personal</p>
+    <div class="mr2"><span class="mk2">Name (EN)</span><span class="mv2">${m.nameEn||'—'}</span></div>
+    <div class="mr2"><span class="mk2">பெயர்</span><span class="mv2" style="font-family:'Noto Sans Tamil',sans-serif">${m.nameTa||'—'}</span></div>
+    <div class="mr2"><span class="mk2">City</span><span class="mv2">${m.city||'—'}</span></div>
+    ${isFull
+      ?`<div class="mr2"><span class="mk2">Phone</span><span class="mv2">${m.phone||'—'}</span></div><div class="mr2"><span class="mk2">Email</span><span class="mv2">${m.email||'—'}</span></div>`
+      :`<div class="mr2"><span class="mk2">Phone / Email</span><span class="mv2" style="color:var(--muted);font-style:italic">🔒 President access only</span></div>`}
+    <p class="ms2">Education</p>
+    <div class="mr2"><span class="mk2">Type</span><span class="mv2">${m.education||'—'}</span></div>
+    <div class="mr2"><span class="mk2">Details</span><span class="mv2">${eduD}</span></div>
+    <p class="ms2">Talents</p>
+    <div class="pills" style="max-width:100%;gap:5px">${(m.talents||'').split(', ').filter(Boolean).map(t=>`<span class="pill" style="font-size:.75rem;padding:4px 9px">${t}</span>`).join('')||'—'}</div>
+    ${m.othersDescription?`<div class="mr2" style="margin-top:.75rem"><span class="mk2">Other</span><span class="mv2">${m.othersDescription}</span></div>`:''}`;
+  document.getElementById('modal-bg').classList.add('show');
+}
+
+function toRows(){
+  const isFull=CA.access==='full';
+  return gM().map((m,i)=>({'#':i+1,'Name(EN)':m.nameEn||'','பெயர்':m.nameTa||'','Education':m.education||'','School':m.schoolName||'','Standard':m.standard||'','College':m.collegeName||'','Dept':m.department||'','Company':m.company||'','Role':m.jobRole||'','City':m.city||'','Phone':isFull?(m.phone||''):'—','Email':isFull?(m.email||''):'—','Talents':m.talents||'','Other':m.othersDescription||'','Joined':m.timestamp||m.joinedAt||''}));
+}
+function exportExcel(){const r=toRows();if(!r.length){alert('No members.');return}const ws=XLSX.utils.json_to_sheet(r);const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,'Members',ws);XLSX.writeFile(wb,'TamilMandiram_'+new Date().toISOString().slice(0,10)+'.xlsx')}
+function exportCSV(){const r=toRows();if(!r.length){alert('No members.');return}const h=Object.keys(r[0]);const csv=[h.join(','),...r.map(row=>h.map(k=>'"'+(row[k]+'').replace(/"/g,'""')+'"').join(','))].join('\n');const b=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='TamilMandiram_'+new Date().toISOString().slice(0,10)+'.csv';a.click()}
+
+// NOTICE
+function renderNotice(){
+  const nd=gN(),isFull=CA.access==='full';
+  const tpl=document.getElementById('tp-live');
+  const performers=nd.topPerformers||((nd.tp&&nd.tp.name)?[nd.tp]:[]);
+  if(performers.length&&performers[0].name){
+    tpl.innerHTML=performers.map((p,i)=>p.name?`<div style="margin-bottom:.35rem"><b style="color:var(--accent)">${i+1}. ${p.name}</b>${p.talent?' — '+p.talent:''}</div>`:'').join('');
+    tpl.style.color='';tpl.style.fontStyle='';
+  } else {tpl.textContent='Not set yet';tpl.style.color='#5A4A38';tpl.style.fontStyle='italic';}
+  const uel=document.getElementById('ue-live');
+  if(nd.ue&&nd.ue.desc){uel.textContent=nd.ue.desc;uel.style.color='';uel.style.fontStyle='';}
+  else{uel.textContent='Not set yet';uel.style.color='#5A4A38';uel.style.fontStyle='italic';}
+  document.getElementById('tp-act').innerHTML=isFull?`<button class="bs2" style="margin-top:.5rem;width:100%" onclick="editN('tp')">✏ Edit Top Performer</button>`:'';
+  document.getElementById('ue-act').innerHTML=isFull?`<button class="bs2" style="margin-top:.5rem;width:100%" onclick="editN('ue')">✏ Edit Events</button>`:'';
+  document.getElementById('rec-form').style.display=isFull?'none':'block';
+  // Pending
+  const pending=gP();
+  const pl=document.getElementById('pending-list');
+  if(!pending.length){pl.innerHTML='<p style="font-size:.82rem;color:#5A4A38;font-style:italic">No pending recommendations.</p>';return}
+  pl.innerHTML=pending.map((r,i)=>`<div class="pi">
+    <p class="plbl">${r.type==='tp'?'🏆 Top Performer — '+(r.perfName||'(no name given)')+(r.perfTalent?' · '+r.perfTalent:''):'📅 Event Suggestion'}</p>
+    <p class="ptxt">${r.text}</p>
+    <p class="pfrm">By: <b style="color:var(--accent)">${r.from||'—'}</b> · ${new Date(r.id).toLocaleDateString('en-IN')}</p>
+    ${isFull?`<div class="pact"><button class="bapp" onclick="approveR(${i})">✅ Approve & Publish</button><button class="brej" onclick="rejectR(${i})">✕ Reject</button></div>`:'<p style="font-size:.73rem;color:#5A4A38;font-style:italic">Awaiting President approval</p>'}
+  </div>`).join('');
+}
+function editN(t){
+  document.getElementById(t+'-ed').style.display='block';
+  document.getElementById(t+'-act').style.display='none';
+  const nd=gN();
+  if(t==='tp'){
+    const performers=nd.topPerformers||[nd.tp].filter(Boolean);
+    for(let i=1;i<=5;i++){
+      const p=performers[i-1]||{};
+      const ne=document.getElementById('tp-name-'+i);
+      const te=document.getElementById('tp-talent-'+i);
+      const de=document.getElementById('tp-desc-'+i);
+      if(ne)ne.value=p.name||'';
+      if(te)te.value=p.talent||'';
+      if(de)de.value=p.desc||'';
+    }
+  }
+  if(t==='ue'&&nd.ue)document.getElementById('ue-desc').value=nd.ue.desc||'';
+}
+function cancelEd(t){document.getElementById(t+'-ed').style.display='none';document.getElementById(t+'-act').style.display='block';}
+function saveNt(t){
+  const nd=gN();
+  if(t==='tp'){
+    // collect up to 5 performers
+    const performers=[];
+    for(let i=1;i<=5;i++){
+      const nm=(document.getElementById('tp-name-'+i)||{}).value?.trim()||'';
+      const tl=(document.getElementById('tp-talent-'+i)||{}).value?.trim()||'';
+      const dc=(document.getElementById('tp-desc-'+i)||{}).value?.trim()||'';
+      if(nm) performers.push({name:nm,talent:tl,desc:dc});
+    }
+    nd.topPerformers=performers;
+  } else {
+    nd.ue={desc:document.getElementById('ue-desc').value.trim()};
+  }
+  nd.updatedAt=Date.now();
+  sN(nd);cancelEd(t);renderNotice();syncNotice();
+}
+function syncNotice(){
+  const nd=gN();
+  // Top performers (new format)
+  const tpEl=document.getElementById('top-performer-content');
+  if(tpEl){
+    const performers=nd.topPerformers||((nd.tp&&nd.tp.name)?[nd.tp]:[]);
+    if(performers.length){
+      let html='';
+      performers.forEach((p,i)=>{
+        if(!p||!p.name)return;
+        const medals=['🥇','🥈','🥉','⭐','⭐'];
+        html+=`<div style="display:flex;align-items:flex-start;gap:.6rem;margin-bottom:.6rem;padding-bottom:.6rem;border-bottom:1px solid rgba(200,65,11,.15)">
+          <span style="background:var(--saffron);color:#fff;font-size:.65rem;font-weight:700;padding:2px 7px;border-radius:12px;flex-shrink:0;margin-top:2px">${i+1}</span>
+          <div><div style="font-weight:600;color:var(--maroon)">${p.name}</div>
+          ${p.talent?`<div style="font-size:.78rem;color:var(--saffron)">${p.talent}</div>`:''}
+          ${p.desc?`<div style="font-size:.8rem;margin-top:.2rem">${p.desc}</div>`:''}
+          </div></div>`;
+      });
+      tpEl.innerHTML=html||'<p style="color:var(--muted);font-size:.82rem;font-style:italic">விரைவில் அறிவிக்கப்படும்...</p>';
+    }
+  }
+  // Upcoming events
+  if(nd.ue&&nd.ue.desc){const el=document.getElementById('upcoming-events-content');if(el)el.innerHTML=nd.ue.desc.split('\n').filter(l=>l.trim()).map(l=>{if(l.startsWith('*')||l.startsWith('-'))return`<div style="display:flex;gap:.5rem;margin-bottom:.4rem"><span style="color:var(--saffron)">▸</span><span>${l.slice(1).trim()}</span></div>`;if(l.startsWith('#'))return`<p style="font-weight:700;color:var(--maroon);margin-bottom:.35rem">${l.slice(1).trim()}</p>`;return`<p style="margin-bottom:.35rem">${l}</p>`;}).join('');}
+}
+function toggleRecFields(){
+  const t=document.getElementById('rec-type').value;
+  document.getElementById('rec-tp-fields').style.display=t==='tp'?'block':'none';
+  document.getElementById('rec-text').placeholder=t==='tp'?'Achievement / why they deserve it...':'Type your recommendation...';
+}
+function submitRec(){
+  const t=document.getElementById('rec-type').value,f=document.getElementById('rec-from').value.trim(),tx=document.getElementById('rec-text').value.trim();
+  if(!t||!f||!tx){alert('Please fill all fields.');return}
+  const rec={id:Date.now(),type:t,from:f,text:tx};
+  if(t==='tp'){
+    const pn=document.getElementById('rec-perf-name').value.trim();
+    if(!pn){alert("Please enter the performer's name.");return}
+    rec.perfName=pn;
+    rec.perfTalent=document.getElementById('rec-perf-talent').value.trim();
+  }
+  const p=gP();p.push(rec);sP(p);
+  document.getElementById('rec-type').value='';document.getElementById('rec-from').value='';document.getElementById('rec-text').value='';
+  document.getElementById('rec-perf-name').value='';document.getElementById('rec-perf-talent').value='';
+  toggleRecFields();
+  alert('✅ Recommendation sent to President for approval!');renderNotice();
+}
+function approveR(i){
+  const p=gP();const r=p[i];if(!r)return;
+  const nd=gN();
+  if(r.type==='tp'){
+    if(!Array.isArray(nd.topPerformers)) nd.topPerformers=(nd.tp&&nd.tp.name)?[nd.tp]:[];
+    if(nd.topPerformers.length>=5){alert('All 5 Top Performer slots are full. Remove or edit an existing entry first (Edit Top Performer), then approve this recommendation.');return}
+    nd.topPerformers.push({name:r.perfName||r.from,talent:r.perfTalent||'',desc:r.text});
+  } else {
+    nd.ue=(nd.ue&&nd.ue.desc)?{desc:nd.ue.desc+'\n'+r.text}:{desc:r.text};
+  }
+  sN(nd);p.splice(i,1);sP(p);renderNotice();syncNotice();
+}
+function rejectR(i){if(!confirm('Reject this recommendation?'))return;const p=gP();p.splice(i,1);sP(p);renderNotice();}
+
+// POSTS
+function renderPosts(){
+  const isFull=CA.access==='full';
+  const q=(document.getElementById('post-search').value||'').toLowerCase();
+  const ft=document.getElementById('post-type').value;
+  let posts=gSP().filter(p=>{const txt=(p.title+p.author).toLowerCase();return(!q||txt.includes(q))&&(!ft||p.type===ft);}).sort((a,b)=>b.id-a.id);
+  const tbody=document.getElementById('posts-tbody');
+  document.getElementById('posts-nd').style.display=posts.length?'none':'block';
+  if(!posts.length){tbody.innerHTML='';return}
+  const te={கவிதை:'🖊',பேச்சு:'🎙',கட்டுரை:'📝',சிந்தனை:'💭',பாடல்:'🎵',மற்றவை:'✨'};
+  tbody.innerHTML=posts.map((p,i)=>`<tr>
+    <td style="color:var(--muted);font-size:.76rem">${i+1}</td>
+    <td><div style="font-weight:600;font-size:.85rem">${p.title||'—'}</div><div style="font-family:'Noto Sans Tamil',sans-serif;font-size:.75rem;color:var(--muted)">${p.author||''}</div></td>
+    <td>${te[p.type]||'✨'} ${p.type||''}</td>
+    <td><span style="font-weight:700;color:var(--accent)">${p.likes||0}</span>${isFull?` <button class="bsm" style="border-color:var(--gold);color:var(--gold)" onclick="openLike(${p.id})">✏</button>`:''}</td>
+    <td>${(p.comments||[]).length}</td>
+    <td style="font-size:.71rem;color:var(--muted)">${new Date(p.id).toLocaleDateString('en-IN')}</td>
+    <td><button class="bsm" onclick="viewPost(${p.id})">View</button>${isFull?` <button class="bdel" onclick="delPost(${p.id})">✕</button>`:''}</td>
+  </tr>`).join('');
+}
+function openLike(id){const p=gSP().find(x=>x.id===id);if(!p)return;likeId=id;document.getElementById('le-title').textContent=p.title;document.getElementById('le-val').value=p.likes||0;document.getElementById('like-modal').classList.add('show');setTimeout(()=>document.getElementById('le-val').focus(),100);}
+function saveLike(){const v=parseInt(document.getElementById('le-val').value)||0;const posts=gSP();const i=posts.findIndex(x=>x.id===likeId);if(i!==-1){posts[i].likes=Math.max(0,v);sSP(posts);}document.getElementById('like-modal').classList.remove('show');likeId=null;renderPosts();}
+function delPost(id){if(!confirm('Delete this post?'))return;sSP(gSP().filter(p=>p.id!==id));renderPosts();}
+function viewPost(id){
+  const p=gSP().find(x=>x.id===id);if(!p)return;
+  const comms=(p.comments||[]).map(c=>`<div style="background:var(--s2);border-radius:6px;padding:.5rem .75rem;margin-bottom:.5rem"><b style="color:var(--accent);font-size:.78rem">${c.name}</b><p style="font-size:.82rem;color:var(--text);margin-top:.2rem">${c.text}</p></div>`).join('');
+  document.getElementById('m-name').textContent=p.title;
+  document.getElementById('m-date').textContent=p.author+' · '+new Date(p.id).toLocaleString('en-IN');
+  document.getElementById('m-body').innerHTML=`<p class="ms2">Content</p><p style="font-family:'Noto Sans Tamil',sans-serif;font-size:.88rem;line-height:1.85;color:var(--text);white-space:pre-wrap">${p.content}</p><p class="ms2" style="margin-top:1.25rem">Comments (${(p.comments||[]).length})</p>${comms||'<p style="color:var(--muted);font-size:.82rem">No comments</p>'}`;
+  document.getElementById('modal-bg').classList.add('show');
+}
+
+// ADMINS
+function renderAdmins(){
+  const grid=document.getElementById('agrid');if(!grid)return;
+  grid.innerHTML=ADMINS.map(a=>{
+    const isFull=a.access==='full';
+    const perms=[
+      [true,'View member names, city, education, talents'],
+      [isFull,'View phone numbers and email addresses'],
+      [isFull,'Delete member records'],
+      [isFull,'Export data to Excel / CSV'],
+      [true,'View all student posts'],
+      [isFull,'Edit like counts on posts'],
+      [isFull,'Delete student posts'],
+      [true,'Recommend Top Performer and Events'],
+      [isFull,'Approve or reject recommendations'],
+      [isFull,'Publish notice board directly'],
+      [isFull,'Adjust displayed member count on website'],
+    ];
+    return `<div class="acard">
+      <div class="ahead">
+        <div class="aavt" style="background:${isFull?'linear-gradient(135deg,#B8860B,#7A5000)':'var(--s2)'}">${a.emoji}</div>
+        <div><div class="aname">${a.role}</div><div class="arole" style="color:${isFull?'var(--gold)':'var(--muted)'}">${isFull?'Full Access':'Limited Access'}</div></div>
+      </div>
+      ${perms.map(([ok,txt])=>`<div class="pr"><div class="pd ${ok?'dg':'dr'}"></div><span style="color:${ok?'var(--muted)':'#4A3030'}">${txt}</span></div>`).join('')}
+    </div>`;
+  }).join('');
+}
+
+// ════════════════════════════════════════════
+// CREATIVE REGISTRATIONS (President only)
+// ════════════════════════════════════════════
+const CRK = 'tm_creative_regs';
+function getCR(){ try{return JSON.parse(localStorage.getItem(CRK)||'[]')}catch{return[]} }
+function saveCR(a){ localStorage.setItem(CRK, JSON.stringify(a)) }
+
+function renderCreative(){
+  const q=(document.getElementById('cr-search')||{}).value?.toLowerCase()||'';
+  const ft=(document.getElementById('cr-type')||{}).value||'';
+  let regs=getCR().filter(r=>{
+    const txt=(r.name+r.id+(r.phone||'')).toLowerCase();
+    return(!q||txt.includes(q))&&(!ft||r.creativeType===ft);
+  }).sort((a,b)=>a.id-b.id);
+
+  // Stats
+  const cs=document.getElementById('cr-stats');
+  if(cs){
+    const total=getCR().length;
+    const types={};
+    getCR().forEach(r=>{types[r.creativeType]=(types[r.creativeType]||0)+1});
+    const topType=Object.entries(types).sort((a,b)=>b[1]-a[1])[0];
+    cs.innerHTML=`<div class="sc"><div class="sc-icon">🎭</div><div class="sc-val">${total}</div><div class="sc-lbl">Total Registrations</div></div>
+    <div class="sc"><div class="sc-icon">🏷</div><div class="sc-val">${Object.keys(types).length}</div><div class="sc-lbl">Activity Types</div></div>
+    ${topType?`<div class="sc"><div class="sc-icon">⭐</div><div class="sc-val" style="font-size:1.2rem">${topType[0]}</div><div class="sc-lbl">Most Popular (${topType[1]})</div></div>`:''}`;
+  }
+
+  const tbody=document.getElementById('cr-tbody');
+  const nd=document.getElementById('cr-nd');
+  if(!tbody)return;
+  nd.style.display=regs.length?'none':'block';
+  if(!regs.length){tbody.innerHTML='';return}
+  const te={கவிதை:'🖊',பேச்சு:'🎙',கட்டுரை:'📝',பாடல்:'🎵',நாடகம்:'🎭',ஓவியம்:'🎨',நடனம்:'💃'};
+  tbody.innerHTML=regs.map(r=>`<tr>
+    <td><span style="font-family:monospace;font-size:.82rem;color:var(--gold);font-weight:700">${r.regId}</span></td>
+    <td><div style="font-weight:600">${r.name}</div><div style="font-family:'Noto Sans Tamil',sans-serif;font-size:.74rem;color:var(--muted)">${r.nameTa||''}</div></td>
+    <td style="font-size:.8rem">${r.school||'—'}</td>
+    <td style="font-size:.77rem">${r.phone||'—'}</td>
+    <td style="font-size:.74rem">${r.email||'—'}</td>
+    <td>${te[r.creativeType]||'✨'} ${r.creativeType||'—'}</td>
+    <td style="font-size:.71rem;color:var(--muted)">${new Date(r.id).toLocaleDateString('en-IN')}</td>
+    <td><button class="bdel" onclick="delCR(${r.id})">✕</button></td>
+  </tr>`).join('');
+}
+
+function delCR(id){
+  if(!confirm('Remove this creative registration?'))return;
+  saveCR(getCR().filter(r=>r.id!==id));
+  renderCreative();
+}
+
+function exportCreativeExcel(){
+  const rows=getCR().map((r,i)=>({'Reg ID':r.regId,'Name (EN)':r.name,'பெயர்':r.nameTa||'','School/College':r.school||'','Phone':r.phone||'','Email':r.email||'','Creative Type':r.creativeType||'','Registered':new Date(r.id).toLocaleString('en-IN')}));
+  if(!rows.length){alert('No registrations.');return}
+  const ws=XLSX.utils.json_to_sheet(rows);const wb=XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb,'Creative',ws);
+  XLSX.writeFile(wb,'TamilMandiram_Creative_'+new Date().toISOString().slice(0,10)+'.xlsx');
+}
+function exportCreativeCSV(){
+  const rows=getCR().map(r=>({'Reg ID':r.regId,'Name (EN)':r.name,'பெயர்':r.nameTa||'','School/College':r.school||'','Phone':r.phone||'','Email':r.email||'','Creative Type':r.creativeType||'','Registered':new Date(r.id).toLocaleString('en-IN')}));
+  if(!rows.length){alert('No registrations.');return}
+  const h=Object.keys(rows[0]);
+  const csv=[h.join(','),...rows.map(r=>h.map(k=>'"'+(r[k]+'').replace(/"/g,'""')+'"').join(','))].join('\n');
+  const b=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(b);
+  a.download='TamilMandiram_Creative_'+new Date().toISOString().slice(0,10)+'.csv';a.click();
+}
+</script>
+</body>
+</html>

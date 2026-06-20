@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tamil Mandiram Certificate</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Tamil:wght@400;600;700&family=Noto+Sans+Tamil:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<!--
+════════════════════════════════════════════════════════════
+  TAMIL MANDIRAM — MEMBERSHIP CERTIFICATE
+  HOW TO EDIT THIS CERTIFICATE:
+
+  CHANGE ORGANISATION NAME:
+    Search for: தமிழ் மன்றம்   ← change this
+    Below it:   Tamil Mandiram  ← change the English name too
+
+  CHANGE THE KURAL:
+    Search for: நன்றி மறப்பது  ← replace with any Thirukkural
+
+  CHANGE THE YEAR:
+    Search for: 2026            ← change to current year
+
+  CHANGE DIRECTOR LABEL:
+    Search for: இயக்குநர்       ← change role name
+
+  CHANGE PRESIDENT LABEL:
+    Search for: தலைவர்          ← change role name
+
+  CHANGE DISCLAIMER TEXT:
+    Search for: இந்த சான்றிதழ்  ← change the disclaimer
+
+  HOW TO ADD THIS CERTIFICATE TO index.html:
+    1. Open index.html in Notepad
+    2. Press Ctrl+F → search for: id="cert-name"
+    3. The certificate block starts above it
+    4. Copy whatever you changed here into the same section there
+
+════════════════════════════════════════════════════════════
+-->
+
+<style>
+* { margin:0; padding:0; box-sizing:border-box }
+:root {
+  --gold: #B8860B;
+  --maroon: #6B1A1A;
+  --saffron: #C8410B;
+  --cream: #FDFAF4;
+}
+body {
+  font-family: 'Inter', sans-serif;
+  background: #1A1410;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  gap: 1.5rem;
+}
+
+/* ── CERTIFICATE CARD ── */
+#cert-card {
+  width: 580px;
+  max-width: 100%;
+  background: linear-gradient(150deg, #4A0A0A 0%, #2D0808 50%, #6B1A1A 100%);
+  border-radius: 12px;
+  padding: 0;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0,0,0,.6);
+}
+
+/* Decorative corner rings */
+#cert-card::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 220px; height: 220px;
+  border-radius: 50%;
+  border: 2px solid rgba(184,134,11,.2);
+  pointer-events: none;
+}
+#cert-card::after {
+  content: '';
+  position: absolute;
+  bottom: -45px; left: -45px;
+  width: 160px; height: 160px;
+  border-radius: 50%;
+  border: 2px solid rgba(184,134,11,.15);
+  pointer-events: none;
+}
+
+.cert-inner {
+  padding: 2.5rem 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* Gold lines top and bottom */
+.gold-line {
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  margin-bottom: 1.5rem;
+}
+.gold-line-bottom {
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  margin-top: 1.5rem;
+}
+
+/* Decorative frame inside */
+.cert-frame {
+  border: 1px solid rgba(184,134,11,.4);
+  border-radius: 8px;
+  padding: 1.75rem 1.5rem;
+  text-align: center;
+}
+
+/* ── ORGANISATION NAME ──
+   TO CHANGE: edit the text between the tags below */
+.cert-org {
+  font-family: 'Noto Serif Tamil', serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #F5D78E;
+  letter-spacing: .03em;
+  margin-bottom: .2rem;
+}
+.cert-sub {
+  font-family: 'Noto Sans Tamil', sans-serif;
+  font-size: .8rem;
+  color: rgba(245,215,142,.6);
+  margin-bottom: 1rem;
+  letter-spacing: .08em;
+}
+
+/* ── SEAL ── */
+.seal-row {
+  display: flex;
+  justify-content: center;
+  margin: .9rem 0;
+}
+.seal {
+  width: 78px;
+  height: 78px;
+  border-radius: 50%;
+  border: 3px solid var(--gold);
+  background: rgba(184,134,11,.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  font-size: 2rem;
+}
+.seal img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+/* ── KURAL ──
+   TO CHANGE: edit the Tamil text below */
+.cert-kural {
+  font-family: 'Noto Serif Tamil', serif;
+  font-size: .88rem;
+  color: rgba(245,215,142,.5);
+  line-height: 1.85;
+  font-style: italic;
+  margin: .9rem 0;
+}
+
+.cert-divider {
+  width: 60px;
+  height: 1.5px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  margin: .85rem auto;
+}
+.cert-divider-wide {
+  width: 130px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(184,134,11,.4), transparent);
+  margin: 1rem auto;
+}
+
+.cert-issued-label {
+  font-size: .68rem;
+  color: rgba(245,215,142,.4);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  margin-bottom: .35rem;
+  font-family: 'Inter', sans-serif;
+}
+
+/* ── MEMBER NAME (Tamil) ──
+   This is filled automatically from the form.
+   In the standalone preview below, edit id="preview-name" */
+.cert-name {
+  font-family: 'Noto Serif Tamil', serif;
+  font-size: 2.1rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: .45rem;
+  text-shadow: 0 2px 10px rgba(0,0,0,.4);
+}
+
+/* ── MEMBERSHIP TEXT ──
+   TO CHANGE: edit the Tamil text below */
+.cert-mem-text {
+  font-family: 'Noto Sans Tamil', sans-serif;
+  font-size: .85rem;
+  color: rgba(255,255,255,.68);
+  line-height: 1.75;
+}
+.cert-year {
+  color: #F5D78E;
+  font-weight: 700;
+}
+
+/* ── SIGNATURES ── */
+.sig-row {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 3rem;
+  margin-top: .85rem;
+  flex-wrap: wrap;
+}
+.sig-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.sig-img {
+  height: 46px;
+  max-width: 130px;
+  object-fit: contain;
+  opacity: .88;
+}
+.sig-line {
+  width: 110px;
+  height: 1px;
+  background: rgba(245,215,142,.35);
+}
+.sig-label {
+  font-family: 'Noto Sans Tamil', sans-serif;
+  font-size: .62rem;
+  color: rgba(245,215,142,.45);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+/* ── DISCLAIMER (screen only — hidden when printing/downloading) ──
+   This shows on screen but NOT in the downloaded PDF/image */
+.cert-disclaimer {
+  font-size: .45rem;
+  color: rgba(245,215,142,.18);
+  text-align: center;
+  margin-top: .6rem;
+  line-height: 1.6;
+  letter-spacing: .02em;
+  font-family: 'Inter', sans-serif;
+}
+
+/* ── BUTTONS (below the card, NOT part of the certificate) ── */
+.btn-row {
+  display: flex;
+  gap: .85rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.btn {
+  padding: .7rem 1.6rem;
+  border-radius: 7px;
+  font-size: .9rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  font-family: 'Inter', sans-serif;
+  transition: all .2s;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+.btn-download {
+  background: var(--gold);
+  color: #1A1410;
+}
+.btn-download:hover { background: #C49A15; transform: translateY(-1px) }
+.btn-close-btn {
+  background: transparent;
+  color: rgba(255,255,255,.5);
+  border: 1px solid rgba(255,255,255,.2);
+}
+.btn-close-btn:hover { color: #fff; border-color: rgba(255,255,255,.5) }
+
+/* Welcome message below card */
+.welcome-msg {
+  color: rgba(255,255,255,.55);
+  font-size: .85rem;
+  text-align: center;
+  line-height: 1.6;
+}
+
+/* ── PRINT / DOWNLOAD STYLES ──
+   When user downloads as image, disclaimer is hidden */
+@media print {
+  body { background: white; }
+  .btn-row, .welcome-msg { display: none; }
+  .cert-disclaimer { display: none !important; }
+  #cert-card { box-shadow: none; width: 100%; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════
+     CERTIFICATE CARD
+     This is what the user sees and downloads.
+     Edit text inside this div to customise.
+══════════════════════════════════════════ -->
+<div id="cert-card">
+  <div class="cert-inner">
+    <div class="gold-line"></div>
+    <div class="cert-frame">
+
+      <!-- ORGANISATION NAME — change here -->
+      <p class="cert-org">தமிழ் மன்றம்</p>
+      <p class="cert-sub">TAMIL MANDIRAM</p>
+
+      <!-- SEAL — put seal.png in assets/ folder -->
+      <div class="seal-row">
+        <div class="seal">
+          <img src="assets/seal.png" alt="Seal"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <span style="display:none;font-size:2rem">🪔</span>
+        </div>
+      </div>
+
+      <!-- KURAL — change the Tamil text here -->
+      <p class="cert-kural">
+        நன்றி மறப்பது நன்றன்று — நன்றல்லது<br>
+        அன்றே மறப்பது நன்று<br>
+        <em style="font-size:.8em;opacity:.7">— திருக்குறள் 108</em>
+      </p>
+
+      <div class="cert-divider"></div>
+
+      <p class="cert-issued-label">இவ்வாறு சான்றளிக்கப்படுகிறது</p>
+
+      <!-- MEMBER NAME — filled automatically from form (Tamil name) -->
+      <!-- In this preview file, edit the text below to test -->
+      <p class="cert-name" id="cert-name-display">உறுப்பினர் பெயர்</p>
+
+      <!-- MEMBERSHIP TEXT — change year or wording here -->
+      <p class="cert-mem-text">
+        தமிழ் மன்றத்தின் மதிப்புமிக்க உறுப்பினராக<br>
+        <span class="cert-year">2026</span> ஆம் ஆண்டு இணைந்திருக்கிறார்
+      </p>
+
+      <div class="cert-divider-wide"></div>
+
+      <!-- SIGNATURES — put signature.png and signature2.png in assets/ -->
+      <div class="sig-row">
+        <div class="sig-block">
+          <img src="assets/signature.png" alt="" class="sig-img"
+               onerror="this.style.visibility='hidden'">
+          <div class="sig-line"></div>
+          <!-- Change role label here -->
+          <span class="sig-label">இயக்குநர்</span>
+        </div>
+        <div class="sig-block">
+          <img src="assets/signature2.png" alt="" class="sig-img"
+               onerror="this.style.visibility='hidden'">
+          <div class="sig-line"></div>
+          <!-- Change role label here -->
+          <span class="sig-label">தலைவர்</span>
+        </div>
+      </div>
+
+      <!-- DISCLAIMER — visible only on screen, hidden in download -->
+      <!-- Change the Tamil text here if needed -->
+      <p class="cert-disclaimer" id="screen-disclaimer">
+        இந்த சான்றிதழ் தமிழ் மன்றத்தால் வழங்கப்பட்டது. இந்த அமைப்பு இன்னும் அரசாங்கத்தினால் பதிவு செய்யப்படவில்லை.
+        மாணவர்களுடைய திறமை வளர்ச்சிக்காக மட்டுமே உருவாக்கப்பட்டது. தகவல்கள் எவரிடமும் பகிரப்படமாட்டாது.
+      </p>
+
+    </div>
+    <div class="gold-line-bottom"></div>
+  </div>
+</div>
+
+<!-- BUTTONS — these do NOT appear in the downloaded image -->
+<div class="welcome-msg" id="welcome-msg">
+  வரவேற்கிறோம்! உங்கள் பதிவு வெற்றிகரமாக நிறைவேறியது.<br>
+  <em style="font-size:.82rem;opacity:.7">Welcome! We will reach out to you soon.</em>
+</div>
+
+<div class="btn-row" id="btn-row">
+  <button class="btn btn-download" onclick="downloadCert()">
+    ⬇ சான்றிதழ் பதிவிறக்கம் — Download Certificate
+  </button>
+  <button class="btn btn-close-btn" onclick="window.close()">
+    மூடு / Close
+  </button>
+</div>
+
+<script>
+// ════════════════════════════════════════════
+// Get the member's Tamil name from URL parameter
+// When called from index.html, it passes ?name=TAMIL_NAME
+// ════════════════════════════════════════════
+const params = new URLSearchParams(window.location.search);
+const memberName = params.get('name');
+if (memberName) {
+  document.getElementById('cert-name-display').textContent = decodeURIComponent(memberName);
+}
+
+// ════════════════════════════════════════════
+// DOWNLOAD CERTIFICATE AS IMAGE
+// Steps:
+// 1. Hides buttons, welcome message, and disclaimer
+// 2. Takes a screenshot of the certificate card
+// 3. Saves it as a PNG image
+// 4. Restores everything back
+// ════════════════════════════════════════════
+async function downloadCert() {
+  const btn = document.querySelector('.btn-download');
+  btn.textContent = '⏳ தயாரிக்கிறோம்...';
+  btn.disabled = true;
+
+  // Load html2canvas library dynamically
+  if (!window.html2canvas) {
+    const script = document.createElement('script');
+    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+    document.head.appendChild(script);
+    await new Promise(resolve => script.onload = resolve);
+  }
+
+  // Hide elements that should NOT appear in download
+  const hideEls = ['btn-row', 'welcome-msg', 'screen-disclaimer'];
+  hideEls.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.style.visibility = 'hidden';
+  });
+
+  try {
+    const card = document.getElementById('cert-card');
+    const canvas = await html2canvas(card, {
+      scale: 3,            // High resolution (3x)
+      useCORS: true,
+      backgroundColor: null,
+      logging: false,
+    });
+
+    // Save as PNG
+    const link = document.createElement('a');
+    const name = document.getElementById('cert-name-display').textContent || 'member';
+    link.download = 'TamilMandiram_Certificate_' + name + '.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+
+  } catch(e) {
+    alert('Download failed. Please try again or take a screenshot.');
+    console.error(e);
+  }
+
+  // Restore hidden elements
+  hideEls.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.style.visibility = 'visible';
+  });
+
+  btn.textContent = '⬇ சான்றிதழ் பதிவிறக்கம் — Download Certificate';
+  btn.disabled = false;
+}
+</script>
+</body>
+</html>
