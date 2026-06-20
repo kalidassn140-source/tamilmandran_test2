@@ -3,17 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tamil Mandiram Certificate</title>
+<title>Tamil Mandram Certificate</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Tamil:wght@400;600;700&family=Noto+Sans+Tamil:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
 <!--
 ════════════════════════════════════════════════════════════
-  TAMIL MANDIRAM — MEMBERSHIP CERTIFICATE
+  TAMIL Mandram — MEMBERSHIP CERTIFICATE
   HOW TO EDIT THIS CERTIFICATE:
 
   CHANGE ORGANISATION NAME:
     Search for: தமிழ் மன்றம்   ← change this
-    Below it:   Tamil Mandiram  ← change the English name too
+    Below it:   Tamil Mandram  ← change the English name too
 
   CHANGE THE KURAL:
     Search for: நன்றி மறப்பது  ← replace with any Thirukkural
@@ -328,7 +328,7 @@ body {
 
       <!-- ORGANISATION NAME — change here -->
       <p class="cert-org">தமிழ் மன்றம்</p>
-      <p class="cert-sub">TAMIL MANDIRAM</p>
+      <p class="cert-sub">TAMIL Mandram</p>
 
       <!-- SEAL — put seal.png in assets/ folder -->
       <div class="seal-row">
@@ -458,7 +458,7 @@ async function downloadCert() {
     // Save as PNG
     const link = document.createElement('a');
     const name = document.getElementById('cert-name-display').textContent || 'member';
-    link.download = 'TamilMandiram_Certificate_' + name + '.png';
+    link.download = 'TamilMandram_Certificate_' + name + '.png';
     link.href = canvas.toDataURL('image/png');
     link.click();
 
