@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>தமிழ் மன்றம் | Tamil Mandram</title>
+<title>தமிழ் மன்றம் | Tamil Mandiram</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Tamil:wght@400;600;700&family=Noto+Sans+Tamil:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -240,12 +240,12 @@ option{background:#181210;color:#F0E8D8}
 <section class="hero" id="top">
   <div class="logo-circle" id="logo-circle">
     <div class="logo-fallback" id="logo-fallback">🪔</div>
-    <img src="assets/logo.png" alt="Tamil Mandram Logo" id="logo-img"
+    <img src="assets/logo.png" alt="Tamil Mandiram Logo" id="logo-img"
          onload="document.getElementById('logo-fallback').style.display='none'"
          onerror="this.style.display='none'">
   </div>
   <h1 class="hero-title">தமிழ் மன்றம்</h1>
-  <p class="hero-en">Tamil Mandram</p>
+  <p class="hero-en">Tamil Mandiram</p>
   <div class="kural-wrap">
     <p class="kural-ta">நன்றி மறப்பது நன்றன்று — நன்றல்லது<br>அன்றே மறப்பது நன்று</p>
     <p class="kural-lbl">திருக்குறள் — Thirukkural, Kural 108</p>
@@ -458,7 +458,7 @@ option{background:#181210;color:#F0E8D8}
   <div class="reg-wrap">
     <div class="reg-head">
       <h2>தமிழனாய் பதிவுசெய்</h2>
-      <p>Register as a Tamil Mandram Member</p>
+      <p>Register as a Tamil Mandiram Member</p>
     </div>
     <div class="reg-body">
       <div class="row2">
@@ -501,7 +501,7 @@ option{background:#181210;color:#F0E8D8}
       <div class="cert-top-line"></div>
       <div class="cert-frame">
         <p class="cert-org">தமிழ் மன்றம்</p>
-        <p class="cert-sub">TAMIL Mandram</p>
+        <p class="cert-sub">TAMIL MANDIRAM</p>
         <div class="seal-row"><div class="seal" id="seal-wrap">
           <span id="seal-emoji-fb" style="position:absolute;font-size:1.8rem;z-index:0">🪔</span>
           <img src="assets/seal.png" alt="Seal"
@@ -546,12 +546,12 @@ option{background:#181210;color:#F0E8D8}
 
 <footer>
   <div class="ft-grid">
-    <div class="ft-brand"><h3>தமிழ் மன்றம்</h3><p>Tamil Mandram<br>தமிழை நேசிப்போருக்கான கலம்</p></div>
+    <div class="ft-brand"><h3>தமிழ் மன்றம்</h3><p>Tamil Mandiram<br>தமிழை நேசிப்போருக்கான கலம்</p></div>
     <div class="ft-col"><h4>தொடர்பு / Contact</h4>
       <a href="tel:+919876543210"><span class="ft-icon">📞</span>+91 98765 43210</a>
-      <a href="mailto:tamilMandram@gmail.com"><span class="ft-icon">✉️</span>tamilMandram@gmail.com</a>
-      <a href="https://t.me/tamilmandran" target="_blank"><span class="ft-icon">✈️</span>Telegram Channel</a>
-      <a href="https://chat.whatsapp.com/GzBMmrqHzkoEYSjThITJkN" target="_blank"><span class="ft-icon">💬</span>WhatsApp Group</a>
+      <a href="mailto:tamilmandiram@gmail.com"><span class="ft-icon">✉️</span>tamilmandiram@gmail.com</a>
+      <a href="https://t.me/tamilmandiram" target="_blank"><span class="ft-icon">✈️</span>Telegram Channel</a>
+      <a href="https://wa.me/919876543210" target="_blank"><span class="ft-icon">💬</span>WhatsApp Group</a>
     </div>
     <div class="ft-col"><h4>இணைப்புகள்</h4><a href="#culture"><span class="ft-icon">🏛️</span>தமிழ் பாரம்பரியம்</a><a href="#register"><span class="ft-icon">📝</span>பதிவு செய்க</a></div>
   </div>
@@ -567,10 +567,36 @@ option{background:#181210;color:#F0E8D8}
 // 3. Your Telegram Chat ID
 // ════════════════════════════════════════
 const CONFIG = {
-  GOOGLE_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbysqo7BsD97Ew1siHZevMUS29lZTVGcXhFWnhuhhOundP7Iv18q8kWQerta6cMshCMl/exec',
+  GOOGLE_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbwsGhrir85AT5YzBfBWeqyEsG_q7IcDfDX3oH9vOnHHhOVfXGWR6pe0fCpY8Gb61-v94g/exec',
+  CLOUD_KEY: 'KALIdass63804271182006.',
   TELEGRAM_BOT_TOKEN: 'YOUR_BOT_TOKEN_HERE',
   TELEGRAM_CHAT_ID: 'YOUR_CHAT_ID_HERE',
 };
+
+// ── SHARED CLOUD STORAGE (Google Sheets via Apps Script) ──
+// Falls back silently to whatever's in localStorage if the
+// script URL hasn't been configured yet.
+function cloudReady(){ return CONFIG.GOOGLE_SCRIPT_URL && CONFIG.GOOGLE_SCRIPT_URL !== 'https://script.google.com/macros/s/AKfycbwsGhrir85AT5YzBfBWeqyEsG_q7IcDfDX3oH9vOnHHhOVfXGWR6pe0fCpY8Gb61-v94g/exec'; }
+async function cloudList(sheetName){
+  if(!cloudReady()) return null;
+  try{
+    const res = await fetch(CONFIG.GOOGLE_SCRIPT_URL+'?action=list&sheet='+encodeURIComponent(sheetName));
+    const j = await res.json();
+    return j.ok ? j.rows : null;
+  }catch(e){ console.error('[cloud] list failed:', e); return null; }
+}
+async function cloudSave(sheetName, id, data){
+  if(!cloudReady()) return null;
+  try{
+    const res = await fetch(CONFIG.GOOGLE_SCRIPT_URL, {
+      method:'POST',
+      headers:{'Content-Type':'text/plain;charset=utf-8'},
+      body: JSON.stringify({ action:'save', sheet:sheetName, id:id, data:data, key:CONFIG.CLOUD_KEY })
+    });
+    const j = await res.json();
+    return j.ok ? j.row : null;
+  }catch(e){ console.error('[cloud] save failed:', e); return null; }
+}
 
 // Logo load handler
 // Logo handled inline via onload/onerror attributes
@@ -921,9 +947,11 @@ async function submitForm(){
   const phone_check=document.getElementById('phone').value.trim();
   const email_check=document.getElementById('email').value.trim();
 
-  // ── CHECK IF ALREADY REGISTERED ──
+  // ── CHECK IF ALREADY REGISTERED (shared across all devices) ──
   try {
-    const existing = JSON.parse(localStorage.getItem('tm_members')||'[]');
+    const local = JSON.parse(localStorage.getItem('tm_members')||'[]');
+    const cloud = await cloudList('Members');
+    const existing = cloud ? [...cloud, ...local.filter(l=>!cloud.some(c=>String(c.id)===String(l.id)))] : local;
     const dup = existing.find(m =>
       (m.phone && m.phone.replace(/\D/g,'') === phone_check.replace(/\D/g,'') && phone_check.length >= 10) ||
       (m.email && m.email.toLowerCase() === email_check.toLowerCase() && email_check.includes('@'))
@@ -982,21 +1010,21 @@ async function submitForm(){
   };
 
   // Save to localStorage as backup
-  try{const all=JSON.parse(localStorage.getItem('tm_members')||'[]');all.push({...member,id:Date.now()});localStorage.setItem('tm_members',JSON.stringify(all))}catch(e){}
+  const memberId = Date.now();
+  try{const all=JSON.parse(localStorage.getItem('tm_members')||'[]');all.push({...member,id:memberId});localStorage.setItem('tm_members',JSON.stringify(all))}catch(e){}
 
   let googleOk=false,telegramOk=false;
 
-  // Send to Google Sheets
-  if(CONFIG.GOOGLE_SCRIPT_URL && CONFIG.GOOGLE_SCRIPT_URL !== 'https://script.google.com/macros/s/AKfycbysqo7BsD97Ew1siHZevMUS29lZTVGcXhFWnhuhhOundP7Iv18q8kWQerta6cMshCMl/exec'){
-    try{
-      await fetch(CONFIG.GOOGLE_SCRIPT_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(member),mode:'no-cors'});
-      googleOk=true;
-    }catch(e){console.error('Google Sheets error:',e)}
+  // Save to shared cloud Sheet, so this registration is visible to every
+  // admin and visitor immediately, not just this browser
+  if(cloudReady()){
+    const saved = await cloudSave('Members', memberId, member);
+    googleOk = !!saved;
   }
 
   // Send Telegram notification
   if(CONFIG.TELEGRAM_BOT_TOKEN && CONFIG.TELEGRAM_BOT_TOKEN !== 'YOUR_BOT_TOKEN_HERE'){
-    const msg=`🪔 *New Tamil Mandram Member!*\n\n👤 *Name:* ${nen} | ${nta}\n🎓 *Education:* ${edu}\n🏙 *City:* ${city}\n📞 *Phone:* ${phone}\n📧 *Email:* ${email}\n🎭 *Talents:* ${member.talents}\n📅 ${member.timestamp}`;
+    const msg=`🪔 *New Tamil Mandiram Member!*\n\n👤 *Name:* ${nen} | ${nta}\n🎓 *Education:* ${edu}\n🏙 *City:* ${city}\n📞 *Phone:* ${phone}\n📧 *Email:* ${email}\n🎭 *Talents:* ${member.talents}\n📅 ${member.timestamp}`;
     try{
       await fetch(`https://api.telegram.org/bot${CONFIG.TELEGRAM_BOT_TOKEN}/sendMessage`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chat_id:CONFIG.TELEGRAM_CHAT_ID,text:msg,parse_mode:'Markdown'})});
       telegramOk=true;
@@ -1035,10 +1063,16 @@ async function submitForm(){
 // ════════════════════════════════════════════
 // MEMBER COUNT — public hero badge
 // ════════════════════════════════════════════
-function updateMemberCount() {
+async function updateMemberCount() {
   try {
     var override = localStorage.getItem('tm_count_override');
-    var count = override !== null ? parseInt(override) : (JSON.parse(localStorage.getItem('tm_members')||'[]').length);
+    var count;
+    if (override !== null) {
+      count = parseInt(override);
+    } else {
+      const cloudRows = await cloudList('Members');
+      count = cloudRows ? cloudRows.length : JSON.parse(localStorage.getItem('tm_members')||'[]').length;
+    }
     var el = document.getElementById('member-count-text');
     if(el) el.textContent = count;
   } catch(e) {}
@@ -1048,9 +1082,14 @@ updateMemberCount();
 // ════════════════════════════════════════════════════════
 // NOTICE BOARD — reads from localStorage (set by admin panel)
 // ════════════════════════════════════════════════════════
-function loadNoticeFromAdmin() {
+async function loadNoticeFromAdmin() {
   try {
-    const nd = JSON.parse(localStorage.getItem('tm_notice_data') || '{}');
+    let nd = JSON.parse(localStorage.getItem('tm_notice_data') || '{}');
+    const cloudRows = await cloudList('Notices');
+    if (cloudRows) {
+      const cur = cloudRows.find(r => r.id === 'current');
+      if (cur) { nd = cur; localStorage.setItem('tm_notice_data', JSON.stringify(nd)); }
+    }
 
     // Top Performer(s)
     const tpEl = document.getElementById('top-performer-content');
@@ -1112,6 +1151,15 @@ function getPosts(){
 }
 function savePosts(arr){ localStorage.setItem(SP_KEY, JSON.stringify(arr)) }
 function saveLiked(){ localStorage.setItem('tm_liked_posts', JSON.stringify([...likedPosts])) }
+async function syncPostsFromCloud(){
+  const cloudRows = await cloudList('CreativePosts');
+  if(!cloudRows) return;
+  const local = getPosts();
+  const merged = [...cloudRows, ...local.filter(l=>!cloudRows.some(c=>String(c.id)===String(l.id)))];
+  merged.sort((a,b)=>b.id-a.id);
+  savePosts(merged);
+  renderPosts();
+}
 
 // ── RENDER GRID ──
 function renderPosts(filterType){
@@ -1254,6 +1302,7 @@ function toggleLike(){
     posts[idx].likes = (posts[idx].likes||0)+1;
   }
   savePosts(posts);
+  cloudSave('CreativePosts', posts[idx].id, posts[idx]);
   saveLiked();
   const nowLiked = likedPosts.has(currentPostId);
   document.getElementById('sp-like-btn').classList.toggle('liked', nowLiked);
@@ -1294,6 +1343,7 @@ function submitComment(){
   if(!posts[idx].comments) posts[idx].comments=[];
   posts[idx].comments.push({id:Date.now(), name, text});
   savePosts(posts);
+  cloudSave('CreativePosts', posts[idx].id, posts[idx]);
   renderComments(posts[idx].comments);
   document.getElementById('sp-comment-text').value='';
   renderPosts();
@@ -1310,8 +1360,10 @@ function submitPost(){
   const content= document.getElementById('sp-post-content').value.trim();
   if(!author||!type||!title||!content){ alert('அனைத்து புலங்களையும் நிரப்பவும். Please fill all fields.'); return; }
   const posts = getPosts();
-  posts.unshift({ id:Date.now(), author, type, title, content, likes:0, comments:[] });
+  const newPost = { id:Date.now(), author, type, title, content, likes:0, comments:[] };
+  posts.unshift(newPost);
   savePosts(posts);
+  cloudSave('CreativePosts', newPost.id, newPost);
   closeAddPost();
   renderPosts();
   // Clear form
@@ -1321,6 +1373,7 @@ function submitPost(){
 
 // Initial render
 renderPosts();
+syncPostsFromCloud();
 
 
 // ════════════════════════════════════════════
@@ -1347,7 +1400,7 @@ function closeCreativeReg(){
   document.getElementById('cr-reg-overlay').classList.remove('show');
 }
 
-function submitCreativeReg(){
+async function submitCreativeReg(){
   const nameTa=document.getElementById('cr-name-ta').value.trim();
   const nameEn=document.getElementById('cr-name-en').value.trim();
   const phone=document.getElementById('cr-phone').value.trim();
@@ -1373,11 +1426,13 @@ function submitCreativeReg(){
   }
   errEl.style.display='none';
 
-  // Duplicate check
-  const existing=getCR();
+  // Duplicate check (shared across all devices)
+  const local=getCR();
+  const cloudRows = await cloudList('CreativeRegistrations');
+  const existing = cloudRows ? [...cloudRows, ...local.filter(l=>!cloudRows.some(c=>String(c.id)===String(l.id)))] : local;
   const dup=existing.find(r=>
-    r.phone.replace(/\D/g,'')===phone.replace(/\D/g,'') ||
-    r.email.toLowerCase()===email.toLowerCase()
+    (r.phone||'').replace(/\D/g,'')===phone.replace(/\D/g,'') ||
+    (r.email||'').toLowerCase()===email.toLowerCase()
   );
   if(dup){
     errEl.textContent='நீங்கள் ஏற்கனவே பதிவு செய்துள்ளீர்கள்! Your registration ID: '+dup.regId;
@@ -1394,7 +1449,8 @@ function submitCreativeReg(){
     timestamp:new Date().toLocaleString('en-IN')
   };
   existing.push(reg);
-  saveCR(existing);
+  saveCR([...local, reg]);
+  cloudSave('CreativeRegistrations', reg.id, reg);
 
   // Show success
   closeCreativeReg();
@@ -1605,7 +1661,7 @@ function runCertDownload(btn, origText) {
         // never inserted into the DOM, which produced silent failures
         // (or a blank about:blank tab via the old window.open() fallback).
         var link = document.createElement('a');
-        link.download = 'TamilMandram_Certificate_' + memberName + '.png';
+        link.download = 'TamilMandiram_Certificate_' + memberName + '.png';
         link.href = dataUrl;
         link.style.display = 'none';
         document.body.appendChild(link);
