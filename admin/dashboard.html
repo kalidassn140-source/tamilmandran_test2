@@ -141,7 +141,7 @@ tr:hover td{background:rgba(255,255,255,.02)}
       <img src="../assets/logo.png" alt="Logo" onload="this.style.zIndex=2;this.previousElementSibling.style.display='none'" onerror="this.style.display='none'">
     </div>
     <h2>நிர்வாக உள்நுழைவு</h2>
-    <p>Admin Login · Tamil Mandiram</p>
+    <p>Admin Login · Tamil Mandram</p>
     <div class="lf"><label>Username</label><input type="text" id="au" placeholder="Enter username" autocomplete="off"></div>
     <div class="lf"><label>Email</label><input type="email" id="ae" placeholder="Enter email"></div>
     <div class="lf"><label>Password</label><input type="password" id="ap" placeholder="Enter password" onkeydown="if(event.key==='Enter')doLogin()"></div>
@@ -385,9 +385,9 @@ tr:hover td{background:rgba(255,255,255,.02)}
 
 <script>
 const ADMINS=[
-  {username:'tamiladmin', email:'admin@tamilmandiram.com',    password:'Tamil@2026',    role:'Director',    emoji:'👑',access:'limited'},
-  {username:'president',  email:'president@tamilmandiram.com',password:'Mandiram@2026', role:'President',   emoji:'🏛️',access:'full'},
-  {username:'coordinator',email:'coord@tamilmandiram.com',    password:'Coord@2026',    role:'Coordinator', emoji:'📋',access:'limited'},
+  {username:'tamiladmin', email:'admin@tamilMandram.com',    password:'Tamil@2026',    role:'Director',    emoji:'👑',access:'limited'},
+  {username:'president',  email:'president@tamilMandram.com',password:'Mandram@2026', role:'President',   emoji:'🏛️',access:'full'},
+  {username:'coordinator',email:'coord@tamilMandram.com',    password:'Coord@2026',    role:'Coordinator', emoji:'📋',access:'limited'},
 ];
 const STORE='tm_members',SPK='tm_student_posts',NK='tm_notice_data',PK='tm_notice_pending',COK='tm_count_override';
 let CA=null,filtered=[],pg=1,likeId=null;
@@ -479,7 +479,7 @@ function boot(){
   document.getElementById('login-page').style.display='none';
   document.getElementById('app').classList.add('show');
   document.getElementById('abadge').textContent=CA.role+' — '+CA.username;
-  document.getElementById('topsub').textContent='Tamil Mandiram · '+CA.role;
+  document.getElementById('topsub').textContent='Tamil Mandram · '+CA.role;
   buildNav();buildHead();buildTalentFilter();renderStats();renderTable();renderNotice();renderPosts();
   if(CA.access==='full')renderAdmins();
   syncFromCloud();
@@ -628,8 +628,8 @@ function toRows(){
   const isFull=CA.access==='full';
   return gM().map((m,i)=>({'#':i+1,'Name(EN)':m.nameEn||'','பெயர்':m.nameTa||'','Education':m.education||'','School':m.schoolName||'','Standard':m.standard||'','College':m.collegeName||'','Dept':m.department||'','Company':m.company||'','Role':m.jobRole||'','City':m.city||'','Phone':isFull?(m.phone||''):'—','Email':isFull?(m.email||''):'—','Talents':m.talents||'','Other':m.othersDescription||'','Joined':m.timestamp||m.joinedAt||''}));
 }
-function exportExcel(){const r=toRows();if(!r.length){alert('No members.');return}const ws=XLSX.utils.json_to_sheet(r);const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,'Members',ws);XLSX.writeFile(wb,'TamilMandiram_'+new Date().toISOString().slice(0,10)+'.xlsx')}
-function exportCSV(){const r=toRows();if(!r.length){alert('No members.');return}const h=Object.keys(r[0]);const csv=[h.join(','),...r.map(row=>h.map(k=>'"'+(row[k]+'').replace(/"/g,'""')+'"').join(','))].join('\n');const b=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='TamilMandiram_'+new Date().toISOString().slice(0,10)+'.csv';a.click()}
+function exportExcel(){const r=toRows();if(!r.length){alert('No members.');return}const ws=XLSX.utils.json_to_sheet(r);const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,'Members',ws);XLSX.writeFile(wb,'TamilMandram_'+new Date().toISOString().slice(0,10)+'.xlsx')}
+function exportCSV(){const r=toRows();if(!r.length){alert('No members.');return}const h=Object.keys(r[0]);const csv=[h.join(','),...r.map(row=>h.map(k=>'"'+(row[k]+'').replace(/"/g,'""')+'"').join(','))].join('\n');const b=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='TamilMandram_'+new Date().toISOString().slice(0,10)+'.csv';a.click()}
 
 // NOTICE
 function renderNotice(){
@@ -870,7 +870,7 @@ function exportCreativeExcel(){
   if(!rows.length){alert('No registrations.');return}
   const ws=XLSX.utils.json_to_sheet(rows);const wb=XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb,'Creative',ws);
-  XLSX.writeFile(wb,'TamilMandiram_Creative_'+new Date().toISOString().slice(0,10)+'.xlsx');
+  XLSX.writeFile(wb,'TamilMandram_Creative_'+new Date().toISOString().slice(0,10)+'.xlsx');
 }
 function exportCreativeCSV(){
   const rows=getCR().map(r=>({'Reg ID':r.regId,'Name (EN)':r.name,'பெயர்':r.nameTa||'','School/College':r.school||'','Phone':r.phone||'','Email':r.email||'','Creative Type':r.creativeType||'','Registered':new Date(r.id).toLocaleString('en-IN')}));
@@ -879,7 +879,7 @@ function exportCreativeCSV(){
   const csv=[h.join(','),...rows.map(r=>h.map(k=>'"'+(r[k]+'').replace(/"/g,'""')+'"').join(','))].join('\n');
   const b=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'});
   const a=document.createElement('a');a.href=URL.createObjectURL(b);
-  a.download='TamilMandiram_Creative_'+new Date().toISOString().slice(0,10)+'.csv';a.click();
+  a.download='TamilMandram_Creative_'+new Date().toISOString().slice(0,10)+'.csv';a.click();
 }
 </script>
 </body>
