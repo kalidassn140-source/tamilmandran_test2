@@ -405,10 +405,10 @@ const sP=a=>localStorage.setItem(PK,JSON.stringify(a));
 // Must point at the SAME script URL and key used in index.html
 // so both pages read/write the same Google Sheet.
 const CONFIG = {
-  GOOGLE_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbwoLB8KUGRmrI2hasbd5g8heqvMk8CDhsB59qRicc84Rxmc7BKrPOtsAx-iK8GqsoaPtQ/exec',
+  GOOGLE_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbwsGhrir85AT5YzBfBWeqyEsG_q7IcDfDX3oH9vOnHHhOVfXGWR6pe0fCpY8Gb61-v94g/exec',
   CLOUD_KEY: 'KALIdass63804271182006.',
 };
-function cloudReady(){ return CONFIG.GOOGLE_SCRIPT_URL && CONFIG.GOOGLE_SCRIPT_URL !== 'https://script.google.com/macros/s/AKfycbwoLB8KUGRmrI2hasbd5g8heqvMk8CDhsB59qRicc84Rxmc7BKrPOtsAx-iK8GqsoaPtQ/exec'; }
+function cloudReady(){ return !!(CONFIG.GOOGLE_SCRIPT_URL && CONFIG.GOOGLE_SCRIPT_URL.indexOf('script.google.com') !== -1); }
 async function cloudList(sheetName){
   if(!cloudReady()) return null;
   try{
