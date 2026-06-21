@@ -141,7 +141,7 @@ tr:hover td{background:rgba(255,255,255,.02)}
       <img src="../assets/logo.png" alt="Logo" onload="this.style.zIndex=2;this.previousElementSibling.style.display='none'" onerror="this.style.display='none'">
     </div>
     <h2>நிர்வாக உள்நுழைவு</h2>
-    <p>Admin Login · Tamil Mandram</p>
+    <p>Admin Login · Tamil Mandiram</p>
     <div class="lf"><label>Username</label><input type="text" id="au" placeholder="Enter username" autocomplete="off"></div>
     <div class="lf"><label>Email</label><input type="email" id="ae" placeholder="Enter email"></div>
     <div class="lf"><label>Password</label><input type="password" id="ap" placeholder="Enter password" onkeydown="if(event.key==='Enter')doLogin()"></div>
@@ -385,9 +385,9 @@ tr:hover td{background:rgba(255,255,255,.02)}
 
 <script>
 const ADMINS=[
-  {username:'tamiladmin', email:'admin@tamilMandram.com',    password:'Tamil@2026',    role:'Director',    emoji:'👑',access:'limited'},
-  {username:'president',  email:'president@tamilMandram.com',password:'Mandram@2026', role:'President',   emoji:'🏛️',access:'full'},
-  {username:'coordinator',email:'coord@tamilMandram.com',    password:'Coord@2026',    role:'Coordinator', emoji:'📋',access:'limited'},
+  {username:'tamiladmin', email:'admin@tamilmandiram.com',    password:'Tamil@2026',    role:'Director',    emoji:'👑',access:'limited'},
+  {username:'president',  email:'president@tamilmandiram.com',password:'Mandiram@2026', role:'President',   emoji:'🏛️',access:'full'},
+  {username:'coordinator',email:'coord@tamilmandiram.com',    password:'Coord@2026',    role:'Coordinator', emoji:'📋',access:'limited'},
 ];
 const STORE='tm_members',SPK='tm_student_posts',NK='tm_notice_data',PK='tm_notice_pending',COK='tm_count_override';
 let CA=null,filtered=[],pg=1,likeId=null;
@@ -400,6 +400,68 @@ const gN=()=>{try{return JSON.parse(localStorage.getItem(NK)||'{}')}catch{return
 const sN=d=>localStorage.setItem(NK,JSON.stringify(d));
 const gP=()=>{try{return JSON.parse(localStorage.getItem(PK)||'[]')}catch{return[]}};
 const sP=a=>localStorage.setItem(PK,JSON.stringify(a));
+
+// ── SHARED CLOUD STORAGE (Google Sheets via Apps Script) ──
+// Must point at the SAME script URL and key used in index.html
+// so both pages read/write the same Google Sheet.
+const CONFIG = {
+  GOOGLE_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbwsGhrir85AT5YzBfBWeqyEsG_q7IcDfDX3oH9vOnHHhOVfXGWR6pe0fCpY8Gb61-v94g/exec',
+  CLOUD_KEY: 'KALIdass63804271182006.',
+};
+function cloudReady(){ return CONFIG.GOOGLE_SCRIPT_URL && CONFIG.GOOGLE_SCRIPT_URL !== 'https://script.google.com/macros/s/AKfycbwsGhrir85AT5YzBfBWeqyEsG_q7IcDfDX3oH9vOnHHhOVfXGWR6pe0fCpY8Gb61-v94g/exec'; }
+async function cloudList(sheetName){
+  if(!cloudReady()) return null;
+  try{
+    const res = await fetch(CONFIG.GOOGLE_SCRIPT_URL+'?action=list&sheet='+encodeURIComponent(sheetName));
+    const j = await res.json();
+    return j.ok ? j.rows : null;
+  }catch(e){ console.error('[cloud] list failed:', e); return null; }
+}
+async function cloudSave(sheetName, id, data){
+  if(!cloudReady()) return null;
+  try{
+    const res = await fetch(CONFIG.GOOGLE_SCRIPT_URL, {
+      method:'POST',
+      headers:{'Content-Type':'text/plain;charset=utf-8'},
+      body: JSON.stringify({ action:'save', sheet:sheetName, id:id, data:data, key:CONFIG.CLOUD_KEY })
+    });
+    const j = await res.json();
+    return j.ok ? j.row : null;
+  }catch(e){ console.error('[cloud] save failed:', e); return null; }
+}
+async function cloudDelete(sheetName, id){
+  if(!cloudReady()) return null;
+  try{
+    const res = await fetch(CONFIG.GOOGLE_SCRIPT_URL, {
+      method:'POST',
+      headers:{'Content-Type':'text/plain;charset=utf-8'},
+      body: JSON.stringify({ action:'delete', sheet:sheetName, id:id, key:CONFIG.CLOUD_KEY })
+    });
+    const j = await res.json();
+    return !!j.ok;
+  }catch(e){ console.error('[cloud] delete failed:', e); return false; }
+}
+function mergeById(cloudRows, localRows){
+  if(!cloudRows) return localRows;
+  return [...cloudRows, ...localRows.filter(l=>!cloudRows.some(c=>String(c.id)===String(l.id)))];
+}
+async function syncFromCloud(){
+  if(!cloudReady()) return;
+  const [members, posts, pending, regs, noticeRows] = await Promise.all([
+    cloudList('Members'), cloudList('CreativePosts'), cloudList('Pending'),
+    cloudList('CreativeRegistrations'), cloudList('Notices')
+  ]);
+  if(members) sM(mergeById(members, gM()));
+  if(posts) sSP(mergeById(posts, gSP()));
+  if(pending) sP(mergeById(pending, gP()));
+  if(regs) saveCR(mergeById(regs, getCR()));
+  if(noticeRows){
+    const cur = noticeRows.find(r=>r.id==='current');
+    if(cur) sN(cur);
+  }
+  renderStats();renderTable();renderNotice();renderPosts();
+  if(typeof renderCreative==='function' && CA && CA.access==='full') renderCreative();
+}
 
 function doLogin(){
   const u=document.getElementById('au').value.trim(),e=document.getElementById('ae').value.trim(),p=document.getElementById('ap').value;
@@ -417,9 +479,10 @@ function boot(){
   document.getElementById('login-page').style.display='none';
   document.getElementById('app').classList.add('show');
   document.getElementById('abadge').textContent=CA.role+' — '+CA.username;
-  document.getElementById('topsub').textContent='Tamil Mandram · '+CA.role;
+  document.getElementById('topsub').textContent='Tamil Mandiram · '+CA.role;
   buildNav();buildHead();buildTalentFilter();renderStats();renderTable();renderNotice();renderPosts();
   if(CA.access==='full')renderAdmins();
+  syncFromCloud();
 }
 
 function buildNav(){
@@ -536,6 +599,7 @@ function goP(n){pg=n;renderTable()}
 function delM(id){
   if(!confirm('Delete this member?'))return;
   sM(gM().filter(m=>m.id!==id&&m.timestamp!==id));
+  cloudDelete('Members', id);
   renderStats();renderTable();
 }
 function viewM(m){
@@ -564,8 +628,8 @@ function toRows(){
   const isFull=CA.access==='full';
   return gM().map((m,i)=>({'#':i+1,'Name(EN)':m.nameEn||'','பெயர்':m.nameTa||'','Education':m.education||'','School':m.schoolName||'','Standard':m.standard||'','College':m.collegeName||'','Dept':m.department||'','Company':m.company||'','Role':m.jobRole||'','City':m.city||'','Phone':isFull?(m.phone||''):'—','Email':isFull?(m.email||''):'—','Talents':m.talents||'','Other':m.othersDescription||'','Joined':m.timestamp||m.joinedAt||''}));
 }
-function exportExcel(){const r=toRows();if(!r.length){alert('No members.');return}const ws=XLSX.utils.json_to_sheet(r);const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,'Members',ws);XLSX.writeFile(wb,'TamilMandram_'+new Date().toISOString().slice(0,10)+'.xlsx')}
-function exportCSV(){const r=toRows();if(!r.length){alert('No members.');return}const h=Object.keys(r[0]);const csv=[h.join(','),...r.map(row=>h.map(k=>'"'+(row[k]+'').replace(/"/g,'""')+'"').join(','))].join('\n');const b=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='TamilMandram_'+new Date().toISOString().slice(0,10)+'.csv';a.click()}
+function exportExcel(){const r=toRows();if(!r.length){alert('No members.');return}const ws=XLSX.utils.json_to_sheet(r);const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,'Members',ws);XLSX.writeFile(wb,'TamilMandiram_'+new Date().toISOString().slice(0,10)+'.xlsx')}
+function exportCSV(){const r=toRows();if(!r.length){alert('No members.');return}const h=Object.keys(r[0]);const csv=[h.join(','),...r.map(row=>h.map(k=>'"'+(row[k]+'').replace(/"/g,'""')+'"').join(','))].join('\n');const b=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='TamilMandiram_'+new Date().toISOString().slice(0,10)+'.csv';a.click()}
 
 // NOTICE
 function renderNotice(){
@@ -628,7 +692,7 @@ function saveNt(t){
     nd.ue={desc:document.getElementById('ue-desc').value.trim()};
   }
   nd.updatedAt=Date.now();
-  sN(nd);cancelEd(t);renderNotice();syncNotice();
+  sN(nd);cloudSave('Notices','current',nd);cancelEd(t);renderNotice();syncNotice();
 }
 function syncNotice(){
   const nd=gN();
@@ -669,7 +733,7 @@ function submitRec(){
     rec.perfName=pn;
     rec.perfTalent=document.getElementById('rec-perf-talent').value.trim();
   }
-  const p=gP();p.push(rec);sP(p);
+  const p=gP();p.push(rec);sP(p);cloudSave('Pending',rec.id,rec);
   document.getElementById('rec-type').value='';document.getElementById('rec-from').value='';document.getElementById('rec-text').value='';
   document.getElementById('rec-perf-name').value='';document.getElementById('rec-perf-talent').value='';
   toggleRecFields();
@@ -685,9 +749,9 @@ function approveR(i){
   } else {
     nd.ue=(nd.ue&&nd.ue.desc)?{desc:nd.ue.desc+'\n'+r.text}:{desc:r.text};
   }
-  sN(nd);p.splice(i,1);sP(p);renderNotice();syncNotice();
+  sN(nd);cloudSave('Notices','current',nd);p.splice(i,1);sP(p);cloudDelete('Pending',r.id);renderNotice();syncNotice();
 }
-function rejectR(i){if(!confirm('Reject this recommendation?'))return;const p=gP();p.splice(i,1);sP(p);renderNotice();}
+function rejectR(i){if(!confirm('Reject this recommendation?'))return;const p=gP();const r=p[i];p.splice(i,1);sP(p);if(r)cloudDelete('Pending',r.id);renderNotice();}
 
 // POSTS
 function renderPosts(){
@@ -710,8 +774,8 @@ function renderPosts(){
   </tr>`).join('');
 }
 function openLike(id){const p=gSP().find(x=>x.id===id);if(!p)return;likeId=id;document.getElementById('le-title').textContent=p.title;document.getElementById('le-val').value=p.likes||0;document.getElementById('like-modal').classList.add('show');setTimeout(()=>document.getElementById('le-val').focus(),100);}
-function saveLike(){const v=parseInt(document.getElementById('le-val').value)||0;const posts=gSP();const i=posts.findIndex(x=>x.id===likeId);if(i!==-1){posts[i].likes=Math.max(0,v);sSP(posts);}document.getElementById('like-modal').classList.remove('show');likeId=null;renderPosts();}
-function delPost(id){if(!confirm('Delete this post?'))return;sSP(gSP().filter(p=>p.id!==id));renderPosts();}
+function saveLike(){const v=parseInt(document.getElementById('le-val').value)||0;const posts=gSP();const i=posts.findIndex(x=>x.id===likeId);if(i!==-1){posts[i].likes=Math.max(0,v);sSP(posts);cloudSave('CreativePosts',posts[i].id,posts[i]);}document.getElementById('like-modal').classList.remove('show');likeId=null;renderPosts();}
+function delPost(id){if(!confirm('Delete this post?'))return;sSP(gSP().filter(p=>p.id!==id));cloudDelete('CreativePosts',id);renderPosts();}
 function viewPost(id){
   const p=gSP().find(x=>x.id===id);if(!p)return;
   const comms=(p.comments||[]).map(c=>`<div style="background:var(--s2);border-radius:6px;padding:.5rem .75rem;margin-bottom:.5rem"><b style="color:var(--accent);font-size:.78rem">${c.name}</b><p style="font-size:.82rem;color:var(--text);margin-top:.2rem">${c.text}</p></div>`).join('');
@@ -797,6 +861,7 @@ function renderCreative(){
 function delCR(id){
   if(!confirm('Remove this creative registration?'))return;
   saveCR(getCR().filter(r=>r.id!==id));
+  cloudDelete('CreativeRegistrations',id);
   renderCreative();
 }
 
@@ -805,7 +870,7 @@ function exportCreativeExcel(){
   if(!rows.length){alert('No registrations.');return}
   const ws=XLSX.utils.json_to_sheet(rows);const wb=XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb,'Creative',ws);
-  XLSX.writeFile(wb,'TamilMandram_Creative_'+new Date().toISOString().slice(0,10)+'.xlsx');
+  XLSX.writeFile(wb,'TamilMandiram_Creative_'+new Date().toISOString().slice(0,10)+'.xlsx');
 }
 function exportCreativeCSV(){
   const rows=getCR().map(r=>({'Reg ID':r.regId,'Name (EN)':r.name,'பெயர்':r.nameTa||'','School/College':r.school||'','Phone':r.phone||'','Email':r.email||'','Creative Type':r.creativeType||'','Registered':new Date(r.id).toLocaleString('en-IN')}));
@@ -814,7 +879,7 @@ function exportCreativeCSV(){
   const csv=[h.join(','),...rows.map(r=>h.map(k=>'"'+(r[k]+'').replace(/"/g,'""')+'"').join(','))].join('\n');
   const b=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'});
   const a=document.createElement('a');a.href=URL.createObjectURL(b);
-  a.download='TamilMandram_Creative_'+new Date().toISOString().slice(0,10)+'.csv';a.click();
+  a.download='TamilMandiram_Creative_'+new Date().toISOString().slice(0,10)+'.csv';a.click();
 }
 </script>
 </body>
