@@ -567,7 +567,7 @@ option{background:#181210;color:#F0E8D8}
 // 3. Your Telegram Chat ID
 // ════════════════════════════════════════
 const CONFIG = {
-  GOOGLE_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbwGR_3D4MAp8WBMZoHLKkJq82UnULEOvWD331G3skIUbVj_bdQt_WTgwnw5mXHlMbDk/exec',
+  GOOGLE_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbysqo7BsD97Ew1siHZevMUS29lZTVGcXhFWnhuhhOundP7Iv18q8kWQerta6cMshCMl/exec',
   TELEGRAM_BOT_TOKEN: 'YOUR_BOT_TOKEN_HERE',
   TELEGRAM_CHAT_ID: 'YOUR_CHAT_ID_HERE',
 };
@@ -987,7 +987,7 @@ async function submitForm(){
   let googleOk=false,telegramOk=false;
 
   // Send to Google Sheets
-  if(CONFIG.GOOGLE_SCRIPT_URL && CONFIG.GOOGLE_SCRIPT_URL !== 'https://script.google.com/macros/s/AKfycbwGR_3D4MAp8WBMZoHLKkJq82UnULEOvWD331G3skIUbVj_bdQt_WTgwnw5mXHlMbDk/exec'){
+  if(CONFIG.GOOGLE_SCRIPT_URL && CONFIG.GOOGLE_SCRIPT_URL !== 'https://script.google.com/macros/s/AKfycbysqo7BsD97Ew1siHZevMUS29lZTVGcXhFWnhuhhOundP7Iv18q8kWQerta6cMshCMl/exec'){
     try{
       await fetch(CONFIG.GOOGLE_SCRIPT_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(member),mode:'no-cors'});
       googleOk=true;
