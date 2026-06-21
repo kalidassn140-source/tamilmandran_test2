@@ -567,7 +567,7 @@ option{background:#181210;color:#F0E8D8}
 // 3. Your Telegram Chat ID
 // ════════════════════════════════════════
 const CONFIG = {
-  GOOGLE_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbwsGhrir85AT5YzBfBWeqyEsG_q7IcDfDX3oH9vOnHHhOVfXGWR6pe0fCpY8Gb61-v94g/exec',
+  GOOGLE_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbwoLB8KUGRmrI2hasbd5g8heqvMk8CDhsB59qRicc84Rxmc7BKrPOtsAx-iK8GqsoaPtQ/exec',
   CLOUD_KEY: 'KALIdass63804271182006.',
   TELEGRAM_BOT_TOKEN: 'YOUR_BOT_TOKEN_HERE',
   TELEGRAM_CHAT_ID: 'YOUR_CHAT_ID_HERE',
@@ -576,7 +576,7 @@ const CONFIG = {
 // ── SHARED CLOUD STORAGE (Google Sheets via Apps Script) ──
 // Falls back silently to whatever's in localStorage if the
 // script URL hasn't been configured yet.
-function cloudReady(){ return CONFIG.GOOGLE_SCRIPT_URL && CONFIG.GOOGLE_SCRIPT_URL !== 'https://script.google.com/macros/s/AKfycbwsGhrir85AT5YzBfBWeqyEsG_q7IcDfDX3oH9vOnHHhOVfXGWR6pe0fCpY8Gb61-v94g/exec'; }
+function cloudReady(){ return CONFIG.GOOGLE_SCRIPT_URL && CONFIG.GOOGLE_SCRIPT_URL !== 'https://script.google.com/macros/s/AKfycbwoLB8KUGRmrI2hasbd5g8heqvMk8CDhsB59qRicc84Rxmc7BKrPOtsAx-iK8GqsoaPtQ/exec'; }
 async function cloudList(sheetName){
   if(!cloudReady()) return null;
   try{
