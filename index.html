@@ -1022,6 +1022,26 @@ async function submitForm(){
     googleOk = !!saved;
   }
 
+  // ══════════════════════════════════════════════════
+  // TEMPORARY DEBUG POPUP — shows exactly what the cloud
+  // save attempt returned, as a plain on-screen message.
+  // Delete this whole block once everything is confirmed working.
+  // ══════════════════════════════════════════════════
+  try{
+    const dbgRes = await fetch(CONFIG.GOOGLE_SCRIPT_URL, {
+      method:'POST',
+      headers:{'Content-Type':'text/plain;charset=utf-8'},
+      body: JSON.stringify({ action:'save', sheet:'Members', id:memberId+'_debug', data:member, key:CONFIG.CLOUD_KEY })
+    });
+    const dbgText = await dbgRes.text();
+    alert('CLOUD SAVE RESULT:\n\n' + dbgText);
+  }catch(dbgErr){
+    alert('CLOUD SAVE FAILED WITH ERROR:\n\n' + dbgErr);
+  }
+  // ══════════════════════════════════════════════════
+  // END TEMPORARY DEBUG
+  // ══════════════════════════════════════════════════
+
   // Send Telegram notification
   if(CONFIG.TELEGRAM_BOT_TOKEN && CONFIG.TELEGRAM_BOT_TOKEN !== 'YOUR_BOT_TOKEN_HERE'){
     const msg=`🪔 *New Tamil Mandram Member!*\n\n👤 *Name:* ${nen} | ${nta}\n🎓 *Education:* ${edu}\n🏙 *City:* ${city}\n📞 *Phone:* ${phone}\n📧 *Email:* ${email}\n🎭 *Talents:* ${member.talents}\n📅 ${member.timestamp}`;
