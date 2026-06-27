@@ -4,6 +4,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin — தமிழ் மன்றம்</title>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+<script>
+// ── Firebase (same config as index.html) ──
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyDNUvT7S8quL_OZfHPr5VcNfT2UrupXfbc",
+  authDomain: "tamil-mandram-test.firebaseapp.com",
+  databaseURL: "https://tamil-36cac-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "tamil-mandram-test"
+};
+firebase.initializeApp(FIREBASE_CONFIG);
+const _fb = firebase.database();
+</script>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Tamil:wght@400;700&family=Noto+Sans+Tamil:wght@400;500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
@@ -401,52 +414,78 @@ const sN=d=>localStorage.setItem(NK,JSON.stringify(d));
 const gP=()=>{try{return JSON.parse(localStorage.getItem(PK)||'[]')}catch{return[]}};
 const sP=a=>localStorage.setItem(PK,JSON.stringify(a));
 
-// ── SHARED CLOUD STORAGE (Google Sheets via Apps Script) ──
-// Must point at the SAME script URL and key used in index.html
-// so both pages read/write the same Google Sheet.
+// ════════════════════════════════════════════════════
+// DASHBOARD CLOUD CONFIG
+// Same 3-layer system as index.html:
+// Firebase (instant) + Google Sheet (background backup)
+// ════════════════════════════════════════════════════
 const CONFIG = {
-  GOOGLE_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbwsGhrir85AT5YzBfBWeqyEsG_q7IcDfDX3oH9vOnHHhOVfXGWR6pe0fCpY8Gb61-v94g/exec',
+  GOOGLE_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbwoLB8KUGRmrI2hasbd5g8heqvMk8CDhsB59qRicc84Rxmc7BKrPOtsAx-iK8GqsoaPtQ/exec',
   CLOUD_KEY: 'KALIdass63804271182006.',
 };
-function cloudReady(){ return !!(CONFIG.GOOGLE_SCRIPT_URL && CONFIG.GOOGLE_SCRIPT_URL.indexOf('script.google.com') !== -1); }
-async function cloudList(sheetName){
-  if(!cloudReady()) return null;
-  try{
-    const res = await fetch(CONFIG.GOOGLE_SCRIPT_URL+'?action=list&sheet='+encodeURIComponent(sheetName));
-    const j = await res.json();
-    return j.ok ? j.rows : null;
-  }catch(e){ console.error('[cloud] list failed:', e); return null; }
+
+// ── Firebase helpers ──
+async function fbSave(path, id, data) {
+  try { await _fb.ref(path + '/' + id).set({ ...data, id }); return true; }
+  catch(e) { console.error('[firebase] save:', e); return false; }
 }
-async function cloudSave(sheetName, id, data){
-  if(!cloudReady()) return null;
-  try{
-    const res = await fetch(CONFIG.GOOGLE_SCRIPT_URL, {
-      method:'POST',
-      headers:{'Content-Type':'text/plain;charset=utf-8'},
-      body: JSON.stringify({ action:'save', sheet:sheetName, id:id, data:data, key:CONFIG.CLOUD_KEY })
-    });
-    const j = await res.json();
-    return j.ok ? j.row : null;
-  }catch(e){ console.error('[cloud] save failed:', e); return null; }
+async function fbList(path) {
+  try {
+    const snap = await _fb.ref(path).get();
+    if (!snap.exists()) return [];
+    return Object.values(snap.val());
+  } catch(e) { return null; }
 }
-async function cloudDelete(sheetName, id){
-  if(!cloudReady()) return null;
-  try{
-    const res = await fetch(CONFIG.GOOGLE_SCRIPT_URL, {
-      method:'POST',
-      headers:{'Content-Type':'text/plain;charset=utf-8'},
-      body: JSON.stringify({ action:'delete', sheet:sheetName, id:id, key:CONFIG.CLOUD_KEY })
-    });
-    const j = await res.json();
-    return !!j.ok;
-  }catch(e){ console.error('[cloud] delete failed:', e); return false; }
+async function fbDelete(path, id) {
+  try { await _fb.ref(path + '/' + id).remove(); } catch(e) {}
+}
+
+// ── Google Sheet helpers (silent background backup) ──
+function sheetReady(){ return !!(CONFIG.GOOGLE_SCRIPT_URL && CONFIG.GOOGLE_SCRIPT_URL.includes('script.google.com')); }
+function sheetSave(sheetName, id, data) {
+  if (!sheetReady()) return;
+  fetch(CONFIG.GOOGLE_SCRIPT_URL, {
+    method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify({ action: 'save', sheet: sheetName, id, data, key: CONFIG.CLOUD_KEY })
+  }).catch(e => console.warn('[sheet] backup failed (non-critical):', e));
+}
+function sheetDelete(sheetName, id) {
+  if (!sheetReady()) return;
+  fetch(CONFIG.GOOGLE_SCRIPT_URL, {
+    method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify({ action: 'delete', sheet: sheetName, id, key: CONFIG.CLOUD_KEY })
+  }).catch(() => {});
+}
+async function sheetList(sheetName) {
+  if (!sheetReady()) return null;
+  try {
+    const res = await fetch(CONFIG.GOOGLE_SCRIPT_URL + '?action=list&sheet=' + encodeURIComponent(sheetName));
+    const j = await res.json(); return j.ok ? j.rows : null;
+  } catch(e) { return null; }
+}
+
+// ── Unified API (same interface as before — no other code needs to change) ──
+function cloudReady() { return true; }
+async function cloudSave(sheetName, id, data) {
+  const ok = await fbSave(sheetName, id, data);
+  sheetSave(sheetName, id, data);
+  return ok;
+}
+async function cloudList(sheetName) {
+  const rows = await fbList(sheetName);
+  if (rows !== null) return rows;
+  return sheetList(sheetName);
+}
+async function cloudDelete(sheetName, id) {
+  await fbDelete(sheetName, id);
+  sheetDelete(sheetName, id);
 }
 function mergeById(cloudRows, localRows){
   if(!cloudRows) return localRows;
   return [...cloudRows, ...localRows.filter(l=>!cloudRows.some(c=>String(c.id)===String(l.id)))];
 }
 async function syncFromCloud(){
-  if(!cloudReady()) return;
+  // Initial sync from Firebase on login
   const [members, posts, pending, regs, noticeRows] = await Promise.all([
     cloudList('Members'), cloudList('CreativePosts'), cloudList('Pending'),
     cloudList('CreativeRegistrations'), cloudList('Notices')
@@ -455,12 +494,64 @@ async function syncFromCloud(){
   if(posts) sSP(mergeById(posts, gSP()));
   if(pending) sP(mergeById(pending, gP()));
   if(regs) saveCR(mergeById(regs, getCR()));
-  if(noticeRows){
+  if(noticeRows && noticeRows.length){
     const cur = noticeRows.find(r=>r.id==='current');
     if(cur) sN(cur);
   }
   renderStats();renderTable();renderNotice();renderPosts();
   if(typeof renderCreative==='function' && CA && CA.access==='full') renderCreative();
+}
+
+// ════════════════════════════════════════════════════════
+// REAL-TIME DASHBOARD LISTENERS
+// New members, posts, notices appear instantly — no reload.
+// ════════════════════════════════════════════════════════
+function startDashboardListeners() {
+  // Members — show new registrations the instant they arrive
+  _fb.ref('Members').on('value', snap => {
+    if (!CA) return;
+    const rows = snap.exists() ? Object.values(snap.val()) : [];
+    sM(rows);
+    renderStats();
+    renderTable();
+    // Rebuild talent filter if new talents appear
+    const sel = document.getElementById('f-talent');
+    if (sel && sel.options.length <= 1) buildTalentFilter();
+    // Update member count override input if visible
+    const ov = localStorage.getItem('tm_count_override');
+    const cv = document.getElementById('cnt-val');
+    if (cv && ov === null) cv.value = rows.length;
+  });
+
+  // Notice / Top Performers — shows admin edits instantly on dashboard preview too
+  _fb.ref('Notices/current').on('value', snap => {
+    if (!CA) return;
+    if (snap.exists()) { sN(snap.val()); renderNotice(); }
+  });
+
+  // Student posts — new/edited posts appear instantly
+  _fb.ref('CreativePosts').on('value', snap => {
+    if (!CA) return;
+    const rows = snap.exists() ? Object.values(snap.val()) : [];
+    sSP(rows);
+    renderPosts();
+  });
+
+  // Pending recommendations
+  _fb.ref('Pending').on('value', snap => {
+    if (!CA) return;
+    const rows = snap.exists() ? Object.values(snap.val()) : [];
+    sP(rows);
+    renderNotice();
+  });
+
+  // Creative registrations (president only)
+  _fb.ref('CreativeRegistrations').on('value', snap => {
+    if (!CA || CA.access !== 'full') return;
+    const rows = snap.exists() ? Object.values(snap.val()) : [];
+    saveCR(rows);
+    if (typeof renderCreative === 'function') renderCreative();
+  });
 }
 
 function doLogin(){
@@ -483,6 +574,7 @@ function boot(){
   buildNav();buildHead();buildTalentFilter();renderStats();renderTable();renderNotice();renderPosts();
   if(CA.access==='full')renderAdmins();
   syncFromCloud();
+  startDashboardListeners(); // real-time push from Firebase
 }
 
 function buildNav(){
