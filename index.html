@@ -4,6 +4,22 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>தமிழ் மன்றம் | Tamil Mandram</title>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+<script>
+// ══════════════════════════════════════════════════
+// FIREBASE CONFIG — replace with your project values
+// Get from: console.firebase.google.com → Project Settings → Your apps → Web
+// ══════════════════════════════════════════════════
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyDNUvT7S8quL_OZfHPr5VcNfT2UrupXfbc",
+  authDomain: "tamil-mandram-test.firebaseapp.com",
+  databaseURL: "https://tamil-36cac-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "tamil-mandram-test"
+};
+firebase.initializeApp(FIREBASE_CONFIG);
+const _fb = firebase.database();
+</script>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Tamil:wght@400;600;700&family=Noto+Sans+Tamil:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -567,35 +583,76 @@ option{background:#181210;color:#F0E8D8}
 // 3. Your Telegram Chat ID
 // ════════════════════════════════════════
 const CONFIG = {
-  GOOGLE_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbwsGhrir85AT5YzBfBWeqyEsG_q7IcDfDX3oH9vOnHHhOVfXGWR6pe0fCpY8Gb61-v94g/exec',
+  // ── Google Apps Script URL (keep for Sheet backup) ──
+  GOOGLE_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbwoLB8KUGRmrI2hasbd5g8heqvMk8CDhsB59qRicc84Rxmc7BKrPOtsAx-iK8GqsoaPtQ/exec',
   CLOUD_KEY: 'KALIdass63804271182006.',
+  // ── Telegram (optional) ──
   TELEGRAM_BOT_TOKEN: 'YOUR_BOT_TOKEN_HERE',
   TELEGRAM_CHAT_ID: 'YOUR_CHAT_ID_HERE',
 };
 
-// ── SHARED CLOUD STORAGE (Google Sheets via Apps Script) ──
-// Falls back silently to whatever's in localStorage if the
-// script URL hasn't been configured yet.
-function cloudReady(){ return !!(CONFIG.GOOGLE_SCRIPT_URL && CONFIG.GOOGLE_SCRIPT_URL.indexOf('script.google.com') !== -1); }
-async function cloudList(sheetName){
-  if(!cloudReady()) return null;
-  try{
-    const res = await fetch(CONFIG.GOOGLE_SCRIPT_URL+'?action=list&sheet='+encodeURIComponent(sheetName));
+// ════════════════════════════════════════════════════
+// LAYER 1 — Firebase (instant, real-time)
+// Primary storage. All reads/writes go here first.
+// ════════════════════════════════════════════════════
+async function fbSave(path, id, data) {
+  try { await _fb.ref(path + '/' + id).set({ ...data, id }); return true; }
+  catch(e) { console.error('[firebase] save failed:', e); return false; }
+}
+async function fbList(path) {
+  try {
+    const snap = await _fb.ref(path).get();
+    if (!snap.exists()) return [];
+    return Object.values(snap.val());
+  } catch(e) { console.error('[firebase] list failed:', e); return null; }
+}
+async function fbDelete(path, id) {
+  try { await _fb.ref(path + '/' + id).remove(); return true; }
+  catch(e) { console.error('[firebase] delete failed:', e); return false; }
+}
+
+// ════════════════════════════════════════════════════
+// LAYER 2 — Google Sheets (backup, admin spreadsheet view)
+// Runs silently in background after Firebase save.
+// User never waits for this — it's fire-and-forget.
+// ════════════════════════════════════════════════════
+function sheetReady(){ return !!(CONFIG.GOOGLE_SCRIPT_URL && CONFIG.GOOGLE_SCRIPT_URL.includes('script.google.com')); }
+function sheetSave(sheetName, id, data) {
+  if (!sheetReady()) return;
+  fetch(CONFIG.GOOGLE_SCRIPT_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify({ action: 'save', sheet: sheetName, id, data, key: CONFIG.CLOUD_KEY })
+  }).catch(e => console.warn('[sheet] backup save failed (non-critical):', e));
+}
+async function sheetList(sheetName) {
+  if (!sheetReady()) return null;
+  try {
+    const res = await fetch(CONFIG.GOOGLE_SCRIPT_URL + '?action=list&sheet=' + encodeURIComponent(sheetName));
     const j = await res.json();
     return j.ok ? j.rows : null;
-  }catch(e){ console.error('[cloud] list failed:', e); return null; }
+  } catch(e) { return null; }
 }
-async function cloudSave(sheetName, id, data){
-  if(!cloudReady()) return null;
-  try{
-    const res = await fetch(CONFIG.GOOGLE_SCRIPT_URL, {
-      method:'POST',
-      headers:{'Content-Type':'text/plain;charset=utf-8'},
-      body: JSON.stringify({ action:'save', sheet:sheetName, id:id, data:data, key:CONFIG.CLOUD_KEY })
-    });
-    const j = await res.json();
-    return j.ok ? j.row : null;
-  }catch(e){ console.error('[cloud] save failed:', e); return null; }
+
+// ════════════════════════════════════════════════════
+// UNIFIED API — used throughout the page
+// cloudSave: Firebase (instant) + Sheet (background)
+// cloudList: Firebase first, Sheet as fallback
+// cloudReady: always true (Firebase always ready)
+// ════════════════════════════════════════════════════
+function cloudReady() { return true; }
+async function cloudSave(sheetName, id, data) {
+  const fbOk = await fbSave(sheetName, id, data);
+  sheetSave(sheetName, id, data); // background, no await
+  return fbOk;
+}
+async function cloudList(sheetName) {
+  const rows = await fbList(sheetName);
+  if (rows !== null) return rows;
+  return sheetList(sheetName); // fallback
+}
+async function cloudDelete(sheetName, id) {
+  await fbDelete(sheetName, id);
 }
 
 // Logo load handler
@@ -1022,25 +1079,7 @@ async function submitForm(){
     googleOk = !!saved;
   }
 
-  // ══════════════════════════════════════════════════
-  // TEMPORARY DEBUG POPUP — shows exactly what the cloud
-  // save attempt returned, as a plain on-screen message.
-  // Delete this whole block once everything is confirmed working.
-  // ══════════════════════════════════════════════════
-  try{
-    const dbgRes = await fetch(CONFIG.GOOGLE_SCRIPT_URL, {
-      method:'POST',
-      headers:{'Content-Type':'text/plain;charset=utf-8'},
-      body: JSON.stringify({ action:'save', sheet:'Members', id:memberId+'_debug', data:member, key:CONFIG.CLOUD_KEY })
-    });
-    const dbgText = await dbgRes.text();
-    alert('CLOUD SAVE RESULT:\n\n' + dbgText);
-  }catch(dbgErr){
-    alert('CLOUD SAVE FAILED WITH ERROR:\n\n' + dbgErr);
-  }
-  // ══════════════════════════════════════════════════
-  // END TEMPORARY DEBUG
-  // ══════════════════════════════════════════════════
+  // [debug block removed]
 
   // Send Telegram notification
   if(CONFIG.TELEGRAM_BOT_TOKEN && CONFIG.TELEGRAM_BOT_TOKEN !== 'YOUR_BOT_TOKEN_HERE'){
@@ -1083,18 +1122,16 @@ async function submitForm(){
 // ════════════════════════════════════════════
 // MEMBER COUNT — public hero badge
 // ════════════════════════════════════════════
+// updateMemberCount is now handled by the real-time Firebase listener above
+// Keeping this as a one-shot fallback for first load before listener fires
 async function updateMemberCount() {
   try {
-    var override = localStorage.getItem('tm_count_override');
-    var count;
-    if (override !== null) {
-      count = parseInt(override);
-    } else {
-      const cloudRows = await cloudList('Members');
-      count = cloudRows ? cloudRows.length : JSON.parse(localStorage.getItem('tm_members')||'[]').length;
-    }
-    var el = document.getElementById('member-count-text');
-    if(el) el.textContent = count;
+    const override = localStorage.getItem('tm_count_override');
+    const el = document.getElementById('member-count-text');
+    if (!el) return;
+    if (override !== null) { el.textContent = parseInt(override); return; }
+    const snap = await _fb.ref('Members').get();
+    el.textContent = snap.exists() ? Object.keys(snap.val()).length : 0;
   } catch(e) {}
 }
 updateMemberCount();
@@ -1152,9 +1189,74 @@ async function loadNoticeFromAdmin() {
   } catch(e) { console.error('Notice load error:', e); }
 }
 
-loadNoticeFromAdmin();
-// Refresh every 30 seconds in case admin updated from same browser
-setInterval(loadNoticeFromAdmin, 30000);
+// ════════════════════════════════════════════════════
+// REAL-TIME LISTENERS — Firebase pushes instantly
+// No polling needed. Updates in < 300ms across devices.
+// ════════════════════════════════════════════════════
+function startRealtimeListeners() {
+  // Notice Board + Top Performers — instant push from admin
+  _fb.ref('Notices/current').on('value', snap => {
+    const nd = snap.exists() ? snap.val() : {};
+    localStorage.setItem('tm_notice_data', JSON.stringify(nd));
+
+    // Top Performers
+    const tpEl = document.getElementById('top-performer-content');
+    const tpUpdEl = document.getElementById('tp-updated');
+    if (tpEl) {
+      const performers = nd.topPerformers || ((nd.tp && nd.tp.name) ? [nd.tp] : []);
+      if (performers.length) {
+        let html = '';
+        performers.forEach((p, i) => {
+          if (!p || !p.name) return;
+          html += `<div style="display:flex;align-items:flex-start;gap:.6rem;margin-bottom:.6rem;padding-bottom:.6rem;border-bottom:1px solid rgba(200,65,11,.15)">
+            <span style="background:var(--saffron);color:#fff;font-size:.65rem;font-weight:700;padding:2px 7px;border-radius:12px;flex-shrink:0;margin-top:2px">${i+1}</span>
+            <div><div style="font-weight:600;color:var(--maroon)">${p.name}</div>
+            ${p.talent ? `<div style="font-size:.78rem;color:var(--saffron)">${p.talent}</div>` : ''}
+            ${p.desc   ? `<div style="font-size:.8rem;margin-top:.2rem">${p.desc}</div>` : ''}
+            </div></div>`;
+        });
+        tpEl.innerHTML = html || '<p style="color:var(--muted);font-size:.82rem;font-style:italic">விரைவில் அறிவிக்கப்படும்...</p>';
+        if (tpUpdEl && nd.updatedAt) tpUpdEl.textContent = 'Updated: ' + new Date(nd.updatedAt).toLocaleDateString('en-IN');
+      } else {
+        tpEl.innerHTML = '<p style="color:var(--muted);font-size:.82rem;font-style:italic">விரைவில் அறிவிக்கப்படும்...</p>';
+      }
+    }
+
+    // Upcoming Events
+    const ueEl = document.getElementById('upcoming-events-content');
+    const ueUpdEl = document.getElementById('ue-updated');
+    if (ueEl) {
+      if (nd.ue && nd.ue.desc) {
+        const lines = nd.ue.desc.split('\n').filter(l => l.trim());
+        ueEl.innerHTML = lines.map(l => {
+          if (l.startsWith('*') || l.startsWith('-')) return `<div style="display:flex;gap:.5rem;margin-bottom:.4rem"><span style="color:var(--saffron);flex-shrink:0">▸</span><span>${l.slice(1).trim()}</span></div>`;
+          if (l.startsWith('#')) return `<p style="font-weight:700;color:var(--maroon);margin-bottom:.35rem">${l.slice(1).trim()}</p>`;
+          return `<p style="margin-bottom:.35rem">${l}</p>`;
+        }).join('') || '<p style="color:var(--muted);font-size:.82rem;font-style:italic">விரைவில் அறிவிக்கப்படும்...</p>';
+        if (ueUpdEl && nd.updatedAt) ueUpdEl.textContent = 'Updated: ' + new Date(nd.updatedAt).toLocaleDateString('en-IN');
+      } else {
+        ueEl.innerHTML = '<p style="color:var(--muted);font-size:.82rem;font-style:italic">விரைவில் அறிவிக்கப்படும்...</p>';
+      }
+    }
+  });
+
+  // Member count — updates live when anyone registers
+  _fb.ref('Members').on('value', snap => {
+    const count = snap.exists() ? Object.keys(snap.val()).length : 0;
+    const override = localStorage.getItem('tm_count_override');
+    const el = document.getElementById('member-count-text');
+    if (el) el.textContent = override !== null ? parseInt(override) : count;
+  });
+
+  // Student posts — updates live
+  _fb.ref('CreativePosts').on('value', snap => {
+    if (!snap.exists()) return;
+    const posts = Object.values(snap.val()).sort((a,b) => b.id - a.id);
+    savePosts(posts);
+    renderPosts();
+  });
+}
+startRealtimeListeners();
 
 
 
@@ -1172,13 +1274,15 @@ function getPosts(){
 function savePosts(arr){ localStorage.setItem(SP_KEY, JSON.stringify(arr)) }
 function saveLiked(){ localStorage.setItem('tm_liked_posts', JSON.stringify([...likedPosts])) }
 async function syncPostsFromCloud(){
-  const cloudRows = await cloudList('CreativePosts');
-  if(!cloudRows) return;
-  const local = getPosts();
-  const merged = [...cloudRows, ...local.filter(l=>!cloudRows.some(c=>String(c.id)===String(l.id)))];
-  merged.sort((a,b)=>b.id-a.id);
-  savePosts(merged);
-  renderPosts();
+  // Firebase real-time listener handles this now (startRealtimeListeners)
+  // This function kept for backward compatibility if called elsewhere
+  try {
+    const rows = await fbList('CreativePosts');
+    if (!rows || !rows.length) return;
+    rows.sort((a,b) => b.id - a.id);
+    savePosts(rows);
+    renderPosts();
+  } catch(e) {}
 }
 
 // ── RENDER GRID ──
