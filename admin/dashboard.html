@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin — தமிழ் மன்றம்</title>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 <script>
 // ── Firebase (same config as index.html) ──
 const FIREBASE_CONFIG = {
@@ -15,7 +15,8 @@ const FIREBASE_CONFIG = {
   projectId: "tamil-mandram-test"
 };
 firebase.initializeApp(FIREBASE_CONFIG);
-const _fb = firebase.database();
+// Pass databaseURL explicitly — required for non-US regional databases (asia-southeast1)
+const _fb = firebase.database(firebase.app(), FIREBASE_CONFIG.databaseURL);
 </script>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Tamil:wght@400;700&family=Noto+Sans+Tamil:wght@400;500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
@@ -151,7 +152,7 @@ tr:hover td{background:rgba(255,255,255,.02)}
   <div class="login-box">
     <div class="login-logo-wrap">
       <span class="fb">🪔</span>
-      <img src="../assets/logo.png" alt="Logo" onload="this.style.zIndex=2;this.previousElementSibling.style.display='none'" onerror="this.style.display='none'">
+      <img src="assets/logo.png" alt="Logo" onload="this.style.zIndex=2;this.previousElementSibling.style.display='none'" onerror="this.style.display='none'">
     </div>
     <h2>நிர்வாக உள்நுழைவு</h2>
     <p>Admin Login · Tamil Mandram</p>
@@ -160,7 +161,7 @@ tr:hover td{background:rgba(255,255,255,.02)}
     <div class="lf"><label>Password</label><input type="password" id="ap" placeholder="Enter password" onkeydown="if(event.key==='Enter')doLogin()"></div>
     <button class="btn-login" onclick="doLogin()">உள்நுழை — Login</button>
     <p class="login-err" id="lerr">❌ Invalid credentials. Please try again.</p>
-    <a class="back-link" href="../index.html">← Back to Website</a>
+    <a class="back-link" href="index.html">← Back to Website</a>
   </div>
 </div>
 
@@ -169,7 +170,7 @@ tr:hover td{background:rgba(255,255,255,.02)}
     <div style="display:flex;align-items:center;gap:.75rem">
       <div class="topbar-logo">
         <span class="fb">🪔</span>
-        <img src="../assets/logo.png" alt="" onload="this.style.zIndex=2;this.previousElementSibling.style.display='none'" onerror="this.style.display='none'">
+        <img src="assets/logo.png" alt="" onload="this.style.zIndex=2;this.previousElementSibling.style.display='none'" onerror="this.style.display='none'">
       </div>
       <div>
         <div class="topbar-brand">தமிழ் மன்றம்</div>
@@ -256,7 +257,7 @@ tr:hover td{background:rgba(255,255,255,.02)}
               <input class="ni" id="tp-desc-5" placeholder="சாதனை (Achievement)">
             </div>
             <div style="display:flex;gap:.5rem;margin-top:.5rem">
-              <button class="bs2" onclick="saveNt('tp')" style="flex:1">Publish All</button>
+              <button class="bs2" id="btn-save-tp" onclick="saveNt('tp')" style="flex:1">Publish All</button>
               <button class="bg" onclick="cancelEd('tp')">Cancel</button>
             </div>
           </div>
@@ -268,7 +269,7 @@ tr:hover td{background:rgba(255,255,255,.02)}
           <div id="ue-ed" style="display:none">
             <textarea class="nta" id="ue-desc" placeholder="Events...&#10;One event per line" rows="5"></textarea>
             <div style="display:flex;gap:.5rem;margin-top:.5rem">
-              <button class="bs2" onclick="saveNt('ue')" style="flex:1">Publish</button>
+              <button class="bs2" id="btn-save-ue" onclick="saveNt('ue')" style="flex:1">Publish</button>
               <button class="bg" onclick="cancelEd('ue')">Cancel</button>
             </div>
           </div>
@@ -338,7 +339,7 @@ tr:hover td{background:rgba(255,255,255,.02)}
               <p style="font-size:.74rem;color:rgba(245,215,142,.52);letter-spacing:.08em;margin-bottom:.8rem">T A M I L &nbsp; M A N D I R A M</p>
               <div style="width:70px;height:70px;border-radius:50%;border:3px solid #B8860B;background:rgba(184,134,11,.1);margin:.75rem auto;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center">
                 <span id="adm-seal-fb" style="position:absolute;font-size:1.8rem;z-index:0">🪔</span>
-                <img src="../assets/seal.png" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:50%;z-index:1" onerror="this.style.display='none'" onload="document.getElementById('adm-seal-fb').style.display='none'">
+                <img src="assets/seal.png" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:50%;z-index:1" onerror="this.style.display='none'" onload="document.getElementById('adm-seal-fb').style.display='none'">
               </div>
               <p style="font-family:'Noto Serif Tamil',serif;font-size:.84rem;color:rgba(245,215,142,.48);line-height:1.85;margin:.75rem 0;font-style:italic">நன்றி மறப்பது நன்றன்று — நன்றல்லது<br>அன்றே மறப்பது நன்று</p>
               <div style="width:55px;height:1.5px;background:linear-gradient(90deg,transparent,#B8860B,transparent);margin:.75rem auto"></div>
@@ -348,12 +349,12 @@ tr:hover td{background:rgba(255,255,255,.02)}
               <div style="width:120px;height:1px;background:linear-gradient(90deg,transparent,rgba(184,134,11,.4),transparent);margin:1rem auto"></div>
               <div style="display:flex;justify-content:center;gap:2.5rem">
                 <div style="text-align:center">
-                  <div style="height:40px;display:flex;align-items:center;justify-content:center"><img src="../assets/signature.png" style="height:38px;max-width:110px;object-fit:contain;opacity:.85" onerror="this.style.visibility='hidden'"></div>
+                  <div style="height:40px;display:flex;align-items:center;justify-content:center"><img src="assets/signature.png" style="height:38px;max-width:110px;object-fit:contain;opacity:.85" onerror="this.style.visibility='hidden'"></div>
                   <div style="width:100px;height:1px;background:rgba(245,215,142,.3);margin:.3rem auto .25rem"></div>
                   <span style="font-size:.58rem;color:rgba(245,215,142,.42);letter-spacing:.08em;text-transform:uppercase;font-family:'Noto Sans Tamil',sans-serif">இயக்குநர்</span>
                 </div>
                 <div style="text-align:center">
-                  <div style="height:40px;display:flex;align-items:center;justify-content:center"><img src="../assets/signature2.png" style="height:38px;max-width:110px;object-fit:contain;opacity:.85" onerror="this.style.visibility='hidden'"></div>
+                  <div style="height:40px;display:flex;align-items:center;justify-content:center"><img src="assets/signature2.png" style="height:38px;max-width:110px;object-fit:contain;opacity:.85" onerror="this.style.visibility='hidden'"></div>
                   <div style="width:100px;height:1px;background:rgba(245,215,142,.3);margin:.3rem auto .25rem"></div>
                   <span style="font-size:.58rem;color:rgba(245,215,142,.42);letter-spacing:.08em;text-transform:uppercase;font-family:'Noto Sans Tamil',sans-serif">தலைவர்</span>
                 </div>
@@ -420,7 +421,7 @@ const sP=a=>localStorage.setItem(PK,JSON.stringify(a));
 // Firebase (instant) + Google Sheet (background backup)
 // ════════════════════════════════════════════════════
 const CONFIG = {
-  GOOGLE_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbwoLB8KUGRmrI2hasbd5g8heqvMk8CDhsB59qRicc84Rxmc7BKrPOtsAx-iK8GqsoaPtQ/exec',
+  GOOGLE_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbwsGhrir85AT5YzBfBWeqyEsG_q7IcDfDX3oH9vOnHHhOVfXGWR6pe0fCpY8Gb61-v94g/exec',
   CLOUD_KEY: 'KALIdass63804271182006.',
 };
 
@@ -629,17 +630,25 @@ function renderStats(){
     <div class="sc"><div class="sc-icon">✍</div><div class="sc-val">${sp.length}</div><div class="sc-lbl">Student Posts</div></div>`;
 }
 
-function saveCnt(){
+async function saveCnt(){
   const v=parseInt(document.getElementById('cnt-val').value)||0;
   localStorage.setItem(COK,v);
   const el=document.getElementById('member-count-text');if(el)el.textContent=v;
-  alert('✅ Member count updated to '+v+' on website.');
+  // BUG3 FIX: push override to Firebase so index.html updates instantly
+  try {
+    await _fb.ref('Config/memberCountOverride').set(v);
+    alert('✅ Member count updated to '+v+' — visible on website instantly.');
+  } catch(e) {
+    alert('✅ Member count saved locally. Firebase sync failed: '+e.message);
+  }
 }
-function resetCnt(){
+async function resetCnt(){
   localStorage.removeItem(COK);
   const a=gM().length;
   document.getElementById('cnt-val').value=a;
   const el=document.getElementById('member-count-text');if(el)el.textContent=a;
+  // Remove override from Firebase so index.html shows real count again
+  try { await _fb.ref('Config/memberCountOverride').remove(); } catch(e){}
   alert('✅ Reset to actual count: '+a);
 }
 
@@ -768,10 +777,9 @@ function editN(t){
   if(t==='ue'&&nd.ue)document.getElementById('ue-desc').value=nd.ue.desc||'';
 }
 function cancelEd(t){document.getElementById(t+'-ed').style.display='none';document.getElementById(t+'-act').style.display='block';}
-function saveNt(t){
+async function saveNt(t){
   const nd=gN();
   if(t==='tp'){
-    // collect up to 5 performers
     const performers=[];
     for(let i=1;i<=5;i++){
       const nm=(document.getElementById('tp-name-'+i)||{}).value?.trim()||'';
@@ -784,7 +792,22 @@ function saveNt(t){
     nd.ue={desc:document.getElementById('ue-desc').value.trim()};
   }
   nd.updatedAt=Date.now();
-  sN(nd);cloudSave('Notices','current',nd);cancelEd(t);renderNotice();syncNotice();
+  sN(nd);
+  // Get publish button by ID (safe — no nested-quote querySelector crash)
+  const btnId = t==='tp' ? 'btn-save-tp' : 'btn-save-ue';
+  const btn = document.getElementById(btnId);
+  if(btn){ btn.textContent='⏳ Publishing...'; btn.disabled=true; }
+  // Write to Firebase — index.html listener receives this instantly
+  try {
+    await _fb.ref('Notices/current').set({...nd, id:'current'});
+    sheetSave('Notices','current',nd);
+    if(btn){ btn.textContent='✅ Published!'; setTimeout(()=>{ btn.textContent=(t==='tp'?'Publish All':'Publish'); btn.disabled=false; },2500); }
+  } catch(e) {
+    console.error('[saveNt] Firebase write failed:',e);
+    if(btn){ btn.textContent='❌ Failed — retry'; btn.disabled=false; }
+    alert('Firebase write failed: '+e.message+'\n\nGo to Firebase Console → Realtime Database → Rules → paste the rules from README → click Publish.');
+  }
+  cancelEd(t); renderNotice();
 }
 function syncNotice(){
   const nd=gN();
@@ -841,7 +864,10 @@ function approveR(i){
   } else {
     nd.ue=(nd.ue&&nd.ue.desc)?{desc:nd.ue.desc+'\n'+r.text}:{desc:r.text};
   }
-  sN(nd);cloudSave('Notices','current',nd);p.splice(i,1);sP(p);cloudDelete('Pending',r.id);renderNotice();syncNotice();
+  sN(nd);
+  _fb.ref('Notices/current').set({...nd,id:'current'}).catch(e=>console.error(e));
+  sheetSave('Notices','current',nd);
+  p.splice(i,1);sP(p);cloudDelete('Pending',r.id);renderNotice();syncNotice();
 }
 function rejectR(i){if(!confirm('Reject this recommendation?'))return;const p=gP();const r=p[i];p.splice(i,1);sP(p);if(r)cloudDelete('Pending',r.id);renderNotice();}
 
