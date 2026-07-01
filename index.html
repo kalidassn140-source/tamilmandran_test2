@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>தமிழ் மன்றம் | Tamil Mandram</title>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 <script>
 // ══════════════════════════════════════════════════
 // FIREBASE CONFIG — replace with your project values
@@ -18,7 +18,8 @@ const FIREBASE_CONFIG = {
   projectId: "tamil-mandram-test"
 };
 firebase.initializeApp(FIREBASE_CONFIG);
-const _fb = firebase.database();
+// Pass databaseURL explicitly — required for non-US regional databases (asia-southeast1)
+const _fb = firebase.database(firebase.app(), FIREBASE_CONFIG.databaseURL);
 </script>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Tamil:wght@400;600;700&family=Noto+Sans+Tamil:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -571,7 +572,7 @@ option{background:#181210;color:#F0E8D8}
     </div>
     <div class="ft-col"><h4>இணைப்புகள்</h4><a href="#culture"><span class="ft-icon">🏛️</span>தமிழ் பாரம்பரியம்</a><a href="#register"><span class="ft-icon">📝</span>பதிவு செய்க</a></div>
   </div>
-  <div class="admin-strip"><a class="admin-link" href="admin/dashboard.html">⚙ Admin</a></div>
+  <div class="admin-strip"><a class="admin-link" href="dashboard.html">⚙ Admin</a></div>
   <div class="ft-disclaimer"><p class="disclaimer">இந்த குழு இன்னும் அரசாங்கத்தினால் பதிவு செய்யப்படவில்லை. இது மாணவர்களுடைய ஒருங்கிணைப்பிற்காக மட்டுமே உருவாக்கப்பட்டு வருகிறது. மாணவர்களின் தேவையைப் பொருட்டு இதனை அரசாங்கத்தில் பதிவு செய்வது குறித்து ஆலோசித்து முடிவெடுக்கப்படும் — தமிழ் மன்ற ஒருங்கிணைப்புத் தலைவர்கள்.</p></div>
 </footer>
 
@@ -584,7 +585,7 @@ option{background:#181210;color:#F0E8D8}
 // ════════════════════════════════════════
 const CONFIG = {
   // ── Google Apps Script URL (keep for Sheet backup) ──
-  GOOGLE_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbwoLB8KUGRmrI2hasbd5g8heqvMk8CDhsB59qRicc84Rxmc7BKrPOtsAx-iK8GqsoaPtQ/exec',
+  GOOGLE_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbwsGhrir85AT5YzBfBWeqyEsG_q7IcDfDX3oH9vOnHHhOVfXGWR6pe0fCpY8Gb61-v94g/exec',
   CLOUD_KEY: 'KALIdass63804271182006.',
   // ── Telegram (optional) ──
   TELEGRAM_BOT_TOKEN: 'YOUR_BOT_TOKEN_HERE',
@@ -1142,10 +1143,17 @@ updateMemberCount();
 async function loadNoticeFromAdmin() {
   try {
     let nd = JSON.parse(localStorage.getItem('tm_notice_data') || '{}');
-    const cloudRows = await cloudList('Notices');
-    if (cloudRows) {
-      const cur = cloudRows.find(r => r.id === 'current');
-      if (cur) { nd = cur; localStorage.setItem('tm_notice_data', JSON.stringify(nd)); }
+    // Read directly from Firebase path (instant, correct)
+    try {
+      const snap = await _fb.ref('Notices/current').get();
+      if (snap.exists()) { nd = snap.val(); localStorage.setItem('tm_notice_data', JSON.stringify(nd)); }
+    } catch(fe) {
+      // Firebase failed — fallback to sheet
+      const cloudRows = await cloudList('Notices');
+      if (cloudRows && cloudRows.length) {
+        const cur = cloudRows.find(r => r.id === 'current');
+        if (cur) { nd = cur; localStorage.setItem('tm_notice_data', JSON.stringify(nd)); }
+      }
     }
 
     // Top Performer(s)
@@ -1195,9 +1203,18 @@ async function loadNoticeFromAdmin() {
 // ════════════════════════════════════════════════════
 function startRealtimeListeners() {
   // Notice Board + Top Performers — instant push from admin
+  // Firebase pushes changes here within 300ms when admin saves from dashboard
   _fb.ref('Notices/current').on('value', snap => {
     const nd = snap.exists() ? snap.val() : {};
     localStorage.setItem('tm_notice_data', JSON.stringify(nd));
+    // BUG1 FIX: Remove loading spinners so content is visible
+    const tpSpin = document.getElementById('tp-loading');
+    if (tpSpin) tpSpin.remove();
+    const ueSpin = document.getElementById('ue-loading');
+    if (ueSpin) ueSpin.remove();
+    // BUG2 FIX: correct element ID for Chrome repaint
+    const nb = document.getElementById('notice-section');
+    if (nb) { nb.style.opacity = '0.99'; setTimeout(() => nb.style.opacity = '1', 50); }
 
     // Top Performers
     const tpEl = document.getElementById('top-performer-content');
@@ -1241,17 +1258,28 @@ function startRealtimeListeners() {
   });
 
   // Member count — updates live when anyone registers
+  // Also listens for president's manual override from dashboard
+  let _realMemberCount = 0;
+  let _countOverride = null;
+
   _fb.ref('Members').on('value', snap => {
-    const count = snap.exists() ? Object.keys(snap.val()).length : 0;
-    const override = localStorage.getItem('tm_count_override');
+    _realMemberCount = snap.exists() ? Object.keys(snap.val()).length : 0;
     const el = document.getElementById('member-count-text');
-    if (el) el.textContent = override !== null ? parseInt(override) : count;
+    if (el) el.textContent = _countOverride !== null ? _countOverride : _realMemberCount;
   });
 
-  // Student posts — updates live
+  // BUG3 FIX: Listen for president's count override from Firebase
+  _fb.ref('Config/memberCountOverride').on('value', snap => {
+    _countOverride = snap.exists() ? snap.val() : null;
+    const el = document.getElementById('member-count-text');
+    if (el) el.textContent = _countOverride !== null ? _countOverride : _realMemberCount;
+  });
+
+  // Student posts — updates live (likes, new posts, deletions)
   _fb.ref('CreativePosts').on('value', snap => {
-    if (!snap.exists()) return;
-    const posts = Object.values(snap.val()).sort((a,b) => b.id - a.id);
+    const posts = snap.exists() ? Object.values(snap.val()).sort((a,b) => b.id - a.id) : [];
+    // BUG4 FIX: write fresh data to storage THEN render so renderPosts sees latest likes
+    localStorage.setItem('tm_student_posts', JSON.stringify(posts));
     savePosts(posts);
     renderPosts();
   });
